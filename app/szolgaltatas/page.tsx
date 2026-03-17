@@ -11,13 +11,19 @@ const CTA_URL = "https://cal.com/attila-nagy-8uefco/30min";
 /*  DATA                                                               */
 /* ------------------------------------------------------------------ */
 
+const targetAudience = [
+  "Nem a szerencsére akarsz hagyatkozni — hanem tudni, honnan jön a következő ügyfél.",
+  "Vannak ügyfeleid, de szeretnéd, ha a kiszolgálás nem venné el a napod nagy részét.",
+  "Szeretnéd, ha a vállalkozásod működése átlátható lenne, és nem kellene mindent fejben tartani.",
+];
+
 const pillars = [
   {
     id: "ugyfelszerzes",
     navLabel: "I. Ügyfélszerzés",
     image: "/images/pillar-1.webp",
     description:
-      "Felépítünk egy ügyfélszerzési útvonalat, ami az ajánlások mellett is dolgozik – hogy a megfelelő emberek megtaláljanak, és felismerjék a szolgáltatásod értékét.",
+      "Felépítünk egy ügyfélszerzési útvonalat, ami az ajánlások mellett is dolgozik — hogy a megfelelő emberek megtaláljanak, és felismerjék a szolgáltatásod értékét.",
     results: [
       "Konverzióra optimalizált értékesítési rendszer",
       "Személyi asszisztens az érdeklődők előszűrésére",
@@ -60,11 +66,11 @@ const pillars = [
       },
       {
         title: "Automatikus utánkövetés",
-        desc: "Emlékeztetők, visszajelzés kérése és üzenetek a megfelelő pillanatban – anélkül, hogy neked kellene fejben tartanod.",
+        desc: "Emlékeztetők, visszajelzés kérése és üzenetek a megfelelő pillanatban — anélkül, hogy neked kellene fejben tartanod.",
       },
       {
         title: "AI támogatott ügyfélkezelés",
-        desc: "A rutinkérdéseket a te hangodban kezeli, a komolyabb ügyeket pedig hozzád irányítja – így az ügyfél mindig gyors választ kap.",
+        desc: "A rutinkérdéseket a te hangodban kezeli, a komolyabb ügyeket pedig hozzád irányítja — így az ügyfél mindig gyors választ kap.",
       },
       {
         title: "Visszajelzés kérő automatikák",
@@ -72,7 +78,7 @@ const pillars = [
       },
       {
         title: "Konzultáció előkészítés",
-        desc: "A konzultáció előtt az ügyfél megkapja, amire szüksége van – kérdőív, felkészítő anyag, emlékeztető.",
+        desc: "A konzultáció előtt az ügyfél megkapja, amire szüksége van — kérdőív, felkészítő anyag, emlékeztető.",
       },
       {
         title: "Konzultáció utánkövetés",
@@ -110,7 +116,7 @@ const pillars = [
       },
       {
         title: "Szakmai események automatizálása",
-        desc: "Automatizált regisztráció, emlékeztetők és visszanézhető felvételek – legyen szó élő vagy online eseményekről.",
+        desc: "Automatizált regisztráció, emlékeztetők és visszanézhető felvételek — legyen szó élő vagy online eseményekről.",
       },
       {
         title: "AI csapat",
@@ -122,7 +128,7 @@ const pillars = [
       },
       {
         title: "Heti összesítők",
-        desc: "AI asszisztensed hetente egyszer kapsz egy összesítőt, ami a legfontosabbakat mutatja – pénzügyek, ügyfelek, kampányok.",
+        desc: "AI asszisztensed hetente egyszer kapsz egy összesítőt, ami a legfontosabbakat mutatja — pénzügyek, ügyfelek, kampányok.",
       },
     ],
   },
@@ -166,34 +172,44 @@ const processSteps = [
   },
 ];
 
+const ctaSteps = [
+  {
+    title: "Konzultáció",
+    desc: "Átbeszéljük a helyzetedet, a céljaidat és a kihívásaidat, hogy valóban megértsem, hol tartasz most.",
+  },
+  {
+    title: "Őszinte vélemény",
+    desc: "Őszinte véleményt mondok arról, hogy a te élethelyzetedben merre érdemes elindulnod.",
+  },
+  {
+    title: "Iránymutatás",
+    desc: "Ha most nem a szolgáltatásom a számodra legjobb megoldás, azt is megmondom és a megfelelő szakemberrel összekapcsollak.",
+  },
+  {
+    title: "Egyéni árajánlat",
+    desc: "Ha viszont mindketten úgy érezzük, hogy érdemes lenne együtt dolgozni, küldök egy személyre szóló árajánlatot.",
+  },
+];
+
 const faqCategories = [
   {
     name: "Folyamat",
     items: [
       {
-        q: "Mennyi idő alatt épül fel a rendszer?",
-        a: "Általában 6–8 hét alatt elkészül a teljes rendszer. Az első 2 hétben a stratégiai tervezés és diagnosztika történik, utána következik az implementáció.",
+        q: "Mennyi idő alatt látok eredményt?",
+        a: "Az első érzékelhető változások már 4-6 héten belül megjelennek — főleg a háttérműködés rendezése után, ahol sok vállalkozó hetente 5-10 órát nyer vissza. A teljes rendszer 4-6 hónap alatt áll össze, de nem kell megvárni a végét: minden lépés önmagában is értéket teremt.",
       },
       {
-        q: "Mennyire kell technikailag érteni hozzá?",
-        a: "Egyáltalán nem kell technikai tudás. Mindent mi építünk fel, és úgy adjuk át, hogy önállóan tudj vele dolgozni. A betanítás is a folyamat része.",
+        q: "Nekem kell érteni az AI-hoz, hogy működjön?",
+        a: "Nem. Az én feladatom, hogy a rendszerek úgy működjenek, hogy te csak használod őket — nem karbantartod. A betanítás és az önálló működés biztosítása az együttműködés része.",
       },
       {
-        q: "Mi történik, ha közben megváltoznak az igényeim?",
-        a: "A rendszer rugalmas, és a folyamat során folyamatosan egyeztetünk. Ha változik az irány, alkalmazkodunk.",
-      },
-    ],
-  },
-  {
-    name: "Árazás",
-    items: [
-      {
-        q: "Mennyibe kerül a szolgáltatás?",
-        a: "Az árajánlatot mindig egyedileg készítjük a konzultáció alapján. Nincs egységcsomag – mindenki azt kapja, amire szüksége van.",
+        q: "Mi történik, ha már van vállalkozásom és ügyfeleim?",
+        a: "Nem építünk le semmit, ami már működik. A diagnosztika fázisban felmérjük, mi van már a helyén, és csak azt fejlesztjük tovább, ami valóban szűk keresztmetszet. A változtatások fokozatosan, a napi munkád mellé kerülnek be.",
       },
       {
-        q: "Van részletfizetési lehetőség?",
-        a: "Igen, rugalmas fizetési lehetőséget biztosítunk. A részleteket a konzultáción beszéljük meg.",
+        q: "Mennyi időt kell nekem beletenni ebbe?",
+        a: "Hetente 2-4 óra aktív együttműködést igényel a folyamat — főleg az elején, amikor a rendszereket a te vállalkozásodhoz szabjuk. A cél az, hogy ez az idő folyamatosan csökkenjen, ahogy a rendszerek átvesznek feladatokat.",
       },
     ],
   },
@@ -201,33 +217,35 @@ const faqCategories = [
     name: "Garancia",
     items: [
       {
-        q: "Mi van, ha nem vagyok elégedett?",
-        a: "Az első 30 napban teljes pénzvisszatérítési garanciát vállalunk. Ha úgy érzed, nem hozza az eredményt, visszakapod a teljes összeget.",
+        q: "Garantált az eredmény?",
+        a: "Amit garantálok: strukturált folyamatot, átlátható rendszereket és egy működő alapot, amelyen tovább tudsz építeni. Az eredmény nagyrészt azon múlik, hogy mennyire következetesen alkalmazzuk együtt a felépített rendszereket.",
       },
       {
-        q: "Kapok támogatást az átadás után is?",
-        a: "Igen, az átadás utáni 1 hónapban teljes támogatást biztosítunk: kérdések, elakadások, finomhangolás.",
+        q: "Vállalsz garanciát?",
+        a: "Igen, természetesen 100% garanciát vállalok a munkámra. Ha az első hónap után úgy érzed, hogy nem térül meg számodra a befektetés, és nem látod a vállalkozásod fejlődését, nem kell fizetned. Minden addig elért eredmény, amit közösen hoztunk létre, tied marad, díjtalanul. A célom, hogy a létező legjobb minőségű szolgáltatást nyújtsam a piacon, és tudom, hogy ez a legfontosabb a növekedésem szempontjából.",
       },
     ],
   },
-];
-
-const ctaValues = [
   {
-    title: "Konzultáció",
-    desc: "Átbeszéljük a helyzetedet, és megértjük, hol tartasz most, és hová szeretnél eljutni.",
-  },
-  {
-    title: "Őszinte vélemény",
-    desc: "Őszinte véleményt mondok arról, hogy a te helyzetedben mi az, ami valóban segíthet.",
-  },
-  {
-    title: "Iránymutatás",
-    desc: "Ha most nem a szolgáltatásom a megoldás, akkor is kapsz egy irányt, amerre érdemes elindulni.",
-  },
-  {
-    title: "Egyéni árajánlat",
-    desc: "Ha viszont mindketten úgy érezzük, hogy érdemes együtt dolgozni, készítek egy személyre szabott ajánlatot.",
+    name: "Árazás és együttműködés",
+    items: [
+      {
+        q: "Hogyan kezdjük?",
+        a: "Egy bevezető konzultációval, ahol feltérképezzük, hol tartasz most, és mire van leginkább szükséged. Ebből készül egy terv, és ha mindketten úgy látjuk, hogy van értelme, indulunk.",
+      },
+      {
+        q: "Nekem is dolgoznom kell rajta, vagy mindent ti csináltok?",
+        a: "Az elején közösen dolgozunk, mert a te vállalkozásodat senki nem ismeri jobban nálad. Utána a napi működéshez minimális beavatkozás kell tőled — erre készítjük fel az egészet.",
+      },
+      {
+        q: "Mennyibe kerül?",
+        a: "A pontos árat a bevezető konzultáción beszéljük meg, mert függ attól, melyik területen kezdünk és milyen mélységben. A legtöbb projektünk 400 000 – 600 000 forint közötti tartományban van. Alapító ügyfeleknek kedvezményes feltételekkel dolgozunk.",
+      },
+      {
+        q: "Van lehetőség részletfizetésre?",
+        a: "Igen, természetesen! Tudom, hogy ez nagy befektetés lehet valaki számára, ezért biztosítunk részletfizetési lehetőséget, hogy könnyebben elérhető legyen mindenki számára.",
+      },
+    ],
   },
 ];
 
@@ -238,33 +256,38 @@ const ctaValues = [
 export default function SzolgaltatasPage() {
   const [activeTab, setActiveTab] = useState(0);
   const [openFaq, setOpenFaq] = useState<string | null>(null);
+  const [activeFaqCat, setActiveFaqCat] = useState(0);
 
   const pillar = pillars[activeTab];
 
+  const toggleFaq = (key: string) =>
+    setOpenFaq((prev) => (prev === key ? null : key));
+
   return (
-    <div className="bg-white" style={{ fontFamily: "'Merriweather', serif" }}>
+    <>
       {/* ===== HERO ===== */}
-      <section className="pt-32 pb-20 px-6">
-        <div className="mx-auto max-w-[1200px]">
+      <section className="section-padding-md">
+        <div className="container-main">
           <Reveal>
-            <h1 className="text-3xl md:text-[2.5rem] font-bold leading-snug tracking-tight text-[#1a1a1a] max-w-2xl">
+            <p className="label-small text-text-48 mb-4">Szolgáltatás</p>
+            <h1 className="text-h1 text-text max-w-[720px]">
               Hiszünk abban, hogy a tudásod érték
             </h1>
           </Reveal>
           <Reveal delay={150}>
-            <p className="mt-6 text-base md:text-lg leading-relaxed text-[#6b7280] max-w-2xl font-light">
+            <p className="text-body text-text-64 mt-6 max-w-[620px]">
               Szolgáltatásunk fő célja az egyéni vállalkozók támogatása egy
               hatékony és fenntartható üzleti rendszer felépítésében.
             </p>
           </Reveal>
           <Reveal delay={300}>
-            <div className="mt-12 rounded-2xl overflow-hidden">
+            <div className="mt-12 overflow-hidden rounded-lg">
               <Image
                 src="/images/service-image.webp"
                 alt="Expert Flow szolgáltatás"
-                width={1200}
-                height={600}
-                className="w-full h-auto object-cover"
+                width={940}
+                height={480}
+                className="image-cover"
                 priority
               />
             </div>
@@ -272,27 +295,44 @@ export default function SzolgaltatasPage() {
         </div>
       </section>
 
-      {/* ===== THREE PILLARS - TABS ===== */}
-      <section className="py-20 px-6 bg-[#f7f7f5]">
-        <div className="mx-auto max-w-[1200px]">
+      {/* ===== KINEK SZÓL ===== */}
+      <section className="section-padding-sm" style={{ backgroundColor: "var(--color-bg-stone)" }}>
+        <div className="container-main">
           <Reveal>
-            <h2 className="text-2xl md:text-3xl font-bold text-[#1a1a1a] mb-12 text-center">
-              Három pillér, egy rendszer
-            </h2>
+            <p className="label-small text-text-48 mb-3">Célcsoport</p>
+            <h2 className="text-h2 text-text">Kinek szól?</h2>
+            <p className="text-body text-text-64 mt-4">Neked szól, ha:</p>
+          </Reveal>
+
+          <div className="mt-12 flex flex-col gap-0">
+            {targetAudience.map((text, i) => (
+              <Reveal key={i} delay={i * 120}>
+                <div className="service-item">
+                  <div className="text-medium">{String(i + 1).padStart(2, "0")}</div>
+                  <p className="text-body text-text">{text}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== THREE PILLARS — TABS ===== */}
+      <section className="section-dark section-padding-md">
+        <div className="container-main">
+          <Reveal>
+            <p className="label-small text-light-48 mb-3">Rendszer</p>
+            <h2 className="text-h2 text-light">Három pillér, egy rendszer</h2>
           </Reveal>
 
           {/* Tab navigation */}
           <Reveal delay={100}>
-            <div className="flex flex-wrap justify-center gap-6 md:gap-12 mb-16">
+            <div className="mt-12 flex gap-0 border-b border-[#ffffff14]">
               {pillars.map((p, i) => (
                 <button
                   key={p.id}
                   onClick={() => setActiveTab(i)}
-                  className={`tab-btn text-sm md:text-base pb-2 ${
-                    activeTab === i
-                      ? "active text-[#1a1a1a] font-bold"
-                      : "text-[#6b7280] font-light"
-                  }`}
+                  className={`tab-item ${activeTab === i ? "active" : ""}`}
                 >
                   {p.navLabel}
                 </button>
@@ -301,41 +341,39 @@ export default function SzolgaltatasPage() {
           </Reveal>
 
           {/* Tab content */}
-          <div className="grid md:grid-cols-2 gap-12 items-start">
-            {/* Left - Image */}
+          <div className="mt-12 grid-2col items-start">
+            {/* Left — Image */}
             <Reveal key={`img-${activeTab}`}>
-              <div className="rounded-2xl overflow-hidden">
+              <div className="overflow-hidden rounded-lg">
                 <Image
                   src={pillar.image}
                   alt={pillar.navLabel}
-                  width={600}
-                  height={400}
-                  className="w-full h-auto object-cover"
+                  width={460}
+                  height={320}
+                  className="image-cover"
                 />
               </div>
             </Reveal>
 
-            {/* Right - Description + Results */}
+            {/* Right — Description + Results */}
             <div>
               <Reveal key={`desc-${activeTab}`}>
-                <p className="text-base leading-relaxed text-[#1a1a1a] font-light mb-8">
+                <p className="text-body text-light-88">
                   {pillar.description}
                 </p>
               </Reveal>
 
               <Reveal key={`results-${activeTab}`} delay={100}>
-                <div className="space-y-3 mb-8">
-                  <p className="text-xs uppercase tracking-widest text-[#6b7280] font-bold mb-4">
-                    Eredmények
-                  </p>
-                  {pillar.results.map((r, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <span className="mt-1.5 block h-2 w-2 rounded-full bg-[#1a1a1a] shrink-0" />
-                      <span className="text-sm text-[#1a1a1a] font-light">
-                        {r}
-                      </span>
-                    </div>
-                  ))}
+                <div className="mt-8">
+                  <p className="label-small text-light-48 mb-4">Eredmények</p>
+                  <div className="flex flex-col gap-3">
+                    {pillar.results.map((r, i) => (
+                      <div key={i} className="flex items-start gap-3">
+                        <span className="mt-2 block h-1.5 w-1.5 rounded-full bg-light shrink-0" />
+                        <span className="text-small text-light-88">{r}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </Reveal>
             </div>
@@ -344,19 +382,17 @@ export default function SzolgaltatasPage() {
           {/* Solutions grid */}
           <Reveal key={`solutions-${activeTab}`} delay={200}>
             <div className="mt-16">
-              <p className="text-xs uppercase tracking-widest text-[#6b7280] font-bold mb-8 text-center">
-                Megoldások
-              </p>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <p className="label-small text-light-48 mb-8 text-center">Megoldások</p>
+              <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))" }}>
                 {pillar.solutions.map((s, i) => (
                   <div
                     key={i}
-                    className="bg-white rounded-xl p-6 border border-[#e5e5e5]"
+                    className="card-pricing"
                   >
-                    <h4 className="text-sm font-bold text-[#1a1a1a] mb-2">
+                    <h4 className="text-small font-semibold text-light mb-2">
                       {s.title}
                     </h4>
-                    <p className="text-sm text-[#6b7280] font-light leading-relaxed">
+                    <p className="text-small text-light-64" style={{ lineHeight: 1.6 }}>
                       {s.desc}
                     </p>
                   </div>
@@ -368,31 +404,41 @@ export default function SzolgaltatasPage() {
       </section>
 
       {/* ===== PROCESS TIMELINE ===== */}
-      <section className="py-20 px-6">
-        <div className="mx-auto max-w-[1200px]">
+      <section className="section-padding-md">
+        <div className="container-main">
           <Reveal>
-            <h2 className="text-2xl md:text-3xl font-bold text-[#1a1a1a] mb-4 text-center">
-              Együttműködés folyamata
-            </h2>
-            <p className="text-base text-[#6b7280] font-light text-center mb-16 max-w-xl mx-auto">
+            <p className="label-small text-text-48 mb-3">Folyamat</p>
+            <h2 className="text-h2 text-text">Együttműködés folyamata</h2>
+            <p className="text-body text-text-64 mt-3 max-w-[540px]">
               Hét lépésben a stratégiától az önálló működésig.
             </p>
           </Reveal>
 
-          <div className="relative max-w-2xl mx-auto">
+          <div className="relative mt-16 flex flex-col gap-0 pl-14">
+            {/* vertical line */}
+            <div
+              className="absolute top-0 bottom-0 w-px"
+              style={{ left: 19, backgroundColor: "var(--color-text-8)" }}
+            />
+
             {processSteps.map((step, i) => (
               <Reveal key={step.num} delay={i * 80}>
-                <div className="relative pl-16 pb-12">
-                  {/* Connector line */}
-                  {i < processSteps.length - 1 && <div className="step-line" />}
-                  {/* Number */}
-                  <div className="step-number absolute left-0 top-0">
-                    {step.num}
+                <div className="relative pb-10">
+                  {/* Number circle */}
+                  <div
+                    className="absolute flex items-center justify-center rounded-full border bg-bg"
+                    style={{
+                      left: -56,
+                      top: 0,
+                      width: 40,
+                      height: 40,
+                      borderColor: "var(--color-text-16)",
+                    }}
+                  >
+                    <span className="label-small text-text">{step.num}</span>
                   </div>
-                  <h3 className="text-lg font-bold text-[#1a1a1a] mb-2">
-                    {step.title}
-                  </h3>
-                  <p className="text-sm text-[#6b7280] font-light leading-relaxed">
+                  <h3 className="text-h5 text-text font-medium">{step.title}</h3>
+                  <p className="text-small text-text-64 mt-2 max-w-[540px]" style={{ lineHeight: 1.6 }}>
                     {step.desc}
                   </p>
                 </div>
@@ -402,12 +448,12 @@ export default function SzolgaltatasPage() {
         </div>
       </section>
 
-      {/* ===== CTA ===== */}
-      <section className="py-20 px-6 bg-[#f7f7f5]">
-        <div className="mx-auto max-w-[1200px]">
+      {/* ===== CTA WITH ATTILA ===== */}
+      <section className="section-padding-md" style={{ backgroundColor: "var(--color-bg-stone)" }}>
+        <div className="container-main">
           <Reveal>
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-xl md:text-2xl font-bold text-[#1a1a1a] leading-relaxed mb-12">
+            <div className="text-center max-w-[720px] mx-auto">
+              <h2 className="text-h3 text-text" style={{ lineHeight: 1.35 }}>
                 Ha most azon gondolkodtál, hogy mindez jól hangzik, de nem
                 tudod, a te helyzetedre is működhet-e, akkor pontosan erről
                 érdemes beszélnünk.
@@ -416,7 +462,7 @@ export default function SzolgaltatasPage() {
           </Reveal>
 
           <Reveal delay={150}>
-            <div className="flex flex-col md:flex-row items-center gap-12 max-w-4xl mx-auto">
+            <div className="mt-16 flex flex-col items-center gap-12 md:flex-row md:items-start">
               {/* Portrait */}
               <div className="shrink-0">
                 <Image
@@ -424,20 +470,21 @@ export default function SzolgaltatasPage() {
                   alt="Nagy Attila"
                   width={200}
                   height={200}
-                  className="rounded-2xl object-cover w-[200px] h-[200px]"
+                  className="rounded-lg object-cover"
+                  style={{ width: 200, height: 200 }}
                 />
               </div>
 
               {/* Value propositions */}
-              <div className="space-y-6 flex-1">
-                {ctaValues.map((item, i) => (
+              <div className="flex-1 flex flex-col gap-6">
+                {ctaSteps.map((item, i) => (
                   <div key={i} className="flex items-start gap-3">
-                    <span className="mt-1.5 block h-2 w-2 rounded-full bg-[#1a1a1a] shrink-0" />
+                    <span className="mt-2 block h-1.5 w-1.5 rounded-full bg-text shrink-0" />
                     <div>
-                      <span className="text-sm font-bold text-[#1a1a1a]">
+                      <span className="text-small font-semibold text-text">
                         {item.title}
                       </span>
-                      <span className="text-sm text-[#6b7280] font-light">
+                      <span className="text-small text-text-64">
                         {" — "}
                         {item.desc}
                       </span>
@@ -445,12 +492,12 @@ export default function SzolgaltatasPage() {
                   </div>
                 ))}
 
-                <div className="pt-4">
+                <div className="mt-4">
                   <a
                     href={CTA_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-primary"
+                    className="btn-dark"
                   >
                     Jelentkezek konzultációra
                   </a>
@@ -462,57 +509,75 @@ export default function SzolgaltatasPage() {
       </section>
 
       {/* ===== FAQ ===== */}
-      <section className="py-20 px-6">
-        <div className="mx-auto max-w-[800px]">
+      <section className="section-padding-md">
+        <div className="container-main">
           <Reveal>
-            <h2 className="text-2xl md:text-3xl font-bold text-[#1a1a1a] mb-12 text-center">
-              Gyakran ismételt kérdések
-            </h2>
+            <p className="label-small text-text-48 mb-3">GYIK</p>
+            <h2 className="text-h2 text-text">Gyakran ismételt kérdések</h2>
           </Reveal>
 
-          {faqCategories.map((cat) => (
-            <div key={cat.name} className="mb-10">
-              <Reveal>
-                <p className="text-xs uppercase tracking-widest text-[#6b7280] font-bold mb-4">
+          {/* FAQ category tabs */}
+          <Reveal delay={100}>
+            <div className="mt-10 flex gap-0 border-b" style={{ borderColor: "var(--color-text-8)" }}>
+              {faqCategories.map((cat, i) => (
+                <button
+                  key={cat.name}
+                  onClick={() => {
+                    setActiveFaqCat(i);
+                    setOpenFaq(null);
+                  }}
+                  className={`tab-item ${activeFaqCat === i ? "active" : ""}`}
+                >
                   {cat.name}
-                </p>
-              </Reveal>
-
-              {cat.items.map((item, i) => {
-                const key = `${cat.name}-${i}`;
-                const isOpen = openFaq === key;
-
-                return (
-                  <Reveal key={key} delay={i * 60}>
-                    <div className="border-b border-[#e5e5e5]">
-                      <button
-                        onClick={() => setOpenFaq(isOpen ? null : key)}
-                        className="w-full flex items-center justify-between py-5 text-left"
-                      >
-                        <span className="text-sm font-bold text-[#1a1a1a] pr-4">
-                          {item.q}
-                        </span>
-                        <span
-                          className={`text-xl text-[#6b7280] transition-transform duration-300 shrink-0 ${
-                            isOpen ? "rotate-45" : ""
-                          }`}
-                        >
-                          +
-                        </span>
-                      </button>
-                      <div className={`faq-answer ${isOpen ? "open" : ""}`}>
-                        <p className="text-sm text-[#6b7280] font-light leading-relaxed pb-5">
-                          {item.a}
-                        </p>
-                      </div>
-                    </div>
-                  </Reveal>
-                );
-              })}
+                </button>
+              ))}
             </div>
-          ))}
+          </Reveal>
+
+          <div className="mt-8">
+            {faqCategories[activeFaqCat].items.map((item, i) => {
+              const key = `${faqCategories[activeFaqCat].name}-${i}`;
+              const isOpen = openFaq === key;
+
+              return (
+                <Reveal key={key} delay={i * 60}>
+                  <div className="divider" />
+                  <div className="py-5">
+                    <button
+                      onClick={() => toggleFaq(key)}
+                      className="w-full flex items-center justify-between text-left"
+                    >
+                      <span className="text-body font-medium text-text pr-4">
+                        {item.q}
+                      </span>
+                      <span
+                        className="shrink-0 text-xl text-text-48 transition-transform duration-300"
+                        style={{
+                          transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
+                        }}
+                      >
+                        +
+                      </span>
+                    </button>
+                    <div
+                      className="overflow-hidden transition-all duration-300"
+                      style={{
+                        maxHeight: isOpen ? 500 : 0,
+                        opacity: isOpen ? 1 : 0,
+                      }}
+                    >
+                      <p className="text-small text-text-64 pt-4" style={{ lineHeight: 1.6 }}>
+                        {item.a}
+                      </p>
+                    </div>
+                  </div>
+                </Reveal>
+              );
+            })}
+            <div className="divider" />
+          </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

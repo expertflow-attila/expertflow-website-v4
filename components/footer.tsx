@@ -1,121 +1,119 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const footerLinks = [
   { href: "/szolgaltatas", label: "Szolgáltatás" },
+  { href: "/araink", label: "Áraink" },
   { href: "/rolam", label: "Rólam" },
   { href: "/referenciak", label: "Referenciák" },
+  { href: "/kapcsolat", label: "Kapcsolat" },
 ];
 
-const CTA_URL = "https://cal.com/attila-nagy-8uefco/30min";
+const legalLinks = [
+  { href: "/adatvedelmi", label: "Adatvédelem" },
+  { href: "/aszf", label: "ÁSZF" },
+  { href: "/cookie", label: "Cookie" },
+];
 
 export default function Footer() {
   return (
     <footer
-      className="w-full bg-white border-t border-[#e5e5e5]"
-      style={{ fontFamily: "'Merriweather', serif" }}
+      className="w-full bg-[#0a0a0b]"
+      style={{ fontFamily: "Arial, sans-serif" }}
     >
-      {/* Main footer content */}
-      <div className="mx-auto max-w-[1200px] px-6 py-[60px]">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
-          {/* Column 1 — Brand */}
-          <div>
-            <Link
-              href="/"
-              className="text-[18px] font-bold tracking-wide text-[#1a1a1a]"
-            >
-              Expert Flow
-            </Link>
-            <p className="mt-4 text-[13px] leading-[1.8] text-[#6b7280]">
-              AI-alapú rendszert építünk egyéni vállalkozók köré, hogy a
-              szakértelmükre fókuszálhassanak.
-            </p>
+      <div className="mx-auto max-w-[1200px] px-6 py-16">
+        {/* Top section: logo, links, social */}
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-10">
+          {/* Logo */}
+          <Link href="/" className="shrink-0">
+            <Image
+              src="/images/brand.png"
+              alt="Expert Flow"
+              width={140}
+              height={32}
+              className="h-8 w-auto"
+            />
+          </Link>
 
-            {/* Social links */}
-            <div className="mt-6 flex items-center gap-5">
-              <a
-                href="https://youtube.com/@expertflow-attila"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[12px] tracking-wide text-[#6b7280] hover:text-[#1a1a1a] transition-colors"
+          {/* Navigation links */}
+          <nav className="flex flex-wrap items-center gap-6 md:gap-8">
+            {footerLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-[14px] text-[#f6f3f0a3] hover:text-[#f6f3f0] transition-colors"
               >
-                YouTube
-              </a>
-              <a
-                href="#"
-                className="text-[12px] tracking-wide text-[#6b7280] hover:text-[#1a1a1a] transition-colors"
-              >
-                LinkedIn
-              </a>
-            </div>
-          </div>
+                {link.label}
+              </Link>
+            ))}
+          </nav>
 
-          {/* Column 2 — Pages */}
-          <div>
-            <h4 className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#6b7280]">
-              Oldalak
-            </h4>
-            <ul className="mt-5 flex flex-col gap-3">
-              {footerLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-[13px] text-[#6b7280] hover:text-[#1a1a1a] transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Column 3 — Contact */}
-          <div>
-            <h4 className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#6b7280]">
-              Kapcsolat
-            </h4>
-            <p className="mt-5 text-[13px] leading-[1.8] text-[#6b7280]">
-              30 perces ingyenes konzultáció, kötöttségek nélkül.
-            </p>
+          {/* Social icons */}
+          <div className="flex items-center gap-4">
+            {/* YouTube */}
             <a
-              href={CTA_URL}
+              href="https://youtube.com/@expertflow-attila"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-block text-[13px] font-semibold text-[#1a1a1a] hover:underline underline-offset-4 transition-all"
+              className="text-[#f6f3f0a3] hover:text-[#f6f3f0] transition-colors"
+              aria-label="YouTube"
             >
-              Foglalj időpontot&nbsp;&rarr;
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="12" fill="currentColor" />
+                <path
+                  d="M17.73 8.87a1.4 1.4 0 0 0-.99-.99C15.68 7.5 12 7.5 12 7.5s-3.68 0-4.74.38a1.4 1.4 0 0 0-.99.99C6 9.93 6 12 6 12s0 2.07.27 3.13c.15.56.59 1 1 1.14C8.32 16.5 12 16.5 12 16.5s3.68 0 4.74-.38c.4-.15.84-.58.99-1 .27-1.05.27-3.12.27-3.12s0-2.07-.27-3.13Z"
+                  fill="#0a0a0b"
+                />
+                <path d="M10.5 14.25 14.25 12 10.5 9.75v4.5Z" fill="#0a0a0b" />
+              </svg>
+            </a>
+
+            {/* LinkedIn */}
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#f6f3f0a3] hover:text-[#f6f3f0] transition-colors"
+              aria-label="LinkedIn"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="12" fill="currentColor" />
+                <path
+                  d="M8.75 10.5v5.25M8.75 8.25v.01M11.25 15.75v-3a1.5 1.5 0 1 1 3 0v3M11.25 12v-1.5M14.25 15.75v-3"
+                  stroke="#0a0a0b"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </a>
           </div>
         </div>
       </div>
 
+      {/* Divider */}
+      <div className="border-t border-[#ffffff14]" />
+
       {/* Bottom bar */}
-      <div className="border-t border-[#e5e5e5]">
-        <div className="mx-auto max-w-[1200px] px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <span className="text-[12px] text-[#6b7280]">
-            &copy; 2026 Built by Expert Flow
-          </span>
-          <div className="flex items-center gap-4">
-            <Link
-              href="#"
-              className="text-[12px] text-[#6b7280] hover:text-[#1a1a1a] transition-colors"
-            >
-              Adatvédelem
-            </Link>
-            <span className="text-[12px] text-[#d1d5db]">|</span>
-            <Link
-              href="#"
-              className="text-[12px] text-[#6b7280] hover:text-[#1a1a1a] transition-colors"
-            >
-              ÁSZF
-            </Link>
-            <span className="text-[12px] text-[#d1d5db]">|</span>
-            <Link
-              href="#"
-              className="text-[12px] text-[#6b7280] hover:text-[#1a1a1a] transition-colors"
-            >
-              Cookie
-            </Link>
-          </div>
+      <div className="mx-auto max-w-[1200px] px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <span className="text-[12px] text-[#f6f3f0a3]">
+          &copy; 2026 Built by Expert Flow
+        </span>
+
+        <div className="flex items-center gap-1">
+          {legalLinks.map((link, i) => (
+            <span key={link.href} className="flex items-center">
+              <Link
+                href={link.href}
+                className="text-[12px] text-[#f6f3f0a3] hover:text-[#f6f3f0] transition-colors"
+              >
+                {link.label}
+              </Link>
+              {i < legalLinks.length - 1 && (
+                <span className="text-[12px] text-[#f6f3f0a3] mx-1">&middot;</span>
+              )}
+            </span>
+          ))}
         </div>
       </div>
     </footer>

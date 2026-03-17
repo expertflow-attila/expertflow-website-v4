@@ -1,20 +1,11 @@
 import type { Metadata } from "next";
-import { Merriweather } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
 
-const merriweather = Merriweather({
-  variable: "--font-merriweather",
-  subsets: ["latin", "latin-ext"],
-  weight: ["300", "400", "700", "900"],
-  style: ["normal", "italic"],
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  title: "Expert Flow — Egyéni vállalkozók AI rendszere",
-  description: "AI-alapú rendszert építünk egyéni vállalkozók köré, hogy a szakértelmükre fókuszálhassanak.",
+  title: "Expert Flow",
+  description: "AI-alapú rendszereket építünk szolgáltató egyéni vállalkozóknak — ügyfélszerzésre, kiszolgálásra és háttérműködésre. Új eszközök, örök értékek.",
 };
 
 export default function RootLayout({
@@ -24,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="hu">
-      <body className={`${merriweather.variable} antialiased`}>
+      <body className="antialiased">
         <Navigation />
         <main>{children}</main>
         <Footer />

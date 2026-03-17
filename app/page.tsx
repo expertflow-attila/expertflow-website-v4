@@ -9,421 +9,300 @@ import { Reveal } from "@/components/scroll-reveal";
 /*  DATA                                                               */
 /* ------------------------------------------------------------------ */
 
-const partners = [
-  "Supabase",
-  "Vercel",
-  "GitHub",
-  "PostHog",
-  "Claude",
-  "Notion",
-  "OpenAI",
-  "Slack",
-  "Midjourney",
-  "Ollama",
-  "Resend",
-  "Runway",
-  "Figma",
-  "Telegram",
+const marqueeImages = [
+  { src: "/images/showcase-1.webp", className: "" },
+  { src: "/images/showcase-2.webp", className: "large" },
+  { src: "/images/showcase-3.webp", className: "" },
+  { src: "/images/marquee-cube.webp", className: "cube" },
+  { src: "/images/showcase-4.webp", className: "" },
+  { src: "/images/about-b.webp", className: "large" },
+  { src: "/images/showcase-5.webp", className: "" },
+  { src: "/images/service-image.webp", className: "" },
+  { src: "/images/showcase-6.webp", className: "cube" },
 ];
 
-const pillars = [
+const serviceTabs = [
   {
-    label: "I. Ügyfélszerzés",
+    name: "Ügyfélszerzés",
     image: "/images/pillar-1.webp",
-    description:
-      "Felépítünk egy ügyfélszerzési útvonalat, ami az ajánlások mellett is dolgozik — hogy a megfelelő emberek megtaláljanak, és felismerjék a szolgáltatásod értékét.",
-    results: [
-      "Konverzióra optimalizált értékesítési rendszer",
-      "Személyi assziszten az érdeklődők előszűrésére",
-      "Automatizált email marketing és utánkövetés",
-    ],
-    solutions: [
-      "Weboldal és landoló oldal",
-      "Személyi asszisztens",
-      "Közösségek és kampányok",
-      "Előszűrés és kvalifikáció",
-    ],
+    label: "ÜGYFÉLSZERZÉS",
+    title: "Leegyszerűsítem az ügyfélszerzés folyamatát.",
+    desc: "Olyan rendszert építünk ami a háttérben dolgozik – hogy a meglévő ügyfeleid kiszolgálására fordíthasd az energiád.",
   },
   {
-    label: "II. Kiszolgálás",
+    name: "Kiszolgálás",
     image: "/images/pillar-2.webp",
-    description:
-      "Minden ügyfeled ugyanazt a minőségi élményt kapja, függetlenül attól, hogy kettővel dolgozol éppen vagy tízzel, mert minden lépést egy egységes háttérrendszer támogat.",
-    results: [
-      "Professzionális benyomás az első pillanattól az utolsóig",
-      "Több ajánlás elégedett ügyfelektől",
-      "Elkötelezett ügyfelek, akik szívesen fogadják új ajánlataidat",
-    ],
-    solutions: [
-      "Onboarding folyamat",
-      "Automatikus utánkövetés",
-      "AI támogatott ügyfélkezelés",
-      "Visszajelzés kérő automatikák",
-      "Konzultáció előkészítés",
-      "Konzultáció utánkövetés",
-      "Ügyfél tudásbázis",
-    ],
+    label: "KISZOLGÁLÁS",
+    title: "Professzionálissá tesszük az ügyfeleid kiszolgálását.",
+    desc: "Egységes folyamatokat alakítunk ki, hogy minden kliensed ugyanazt a magas színvonalú élményt kapja.",
   },
   {
-    label: "III. Háttérműködés",
+    name: "Háttérműködés",
     image: "/images/pillar-3.webp",
-    description:
-      "A számlázás és az adminisztráció a háttérben fut, minimális beavatkozással, miközben minden adat egy helyre gyűlik, és idővel jobban átlátod, mi működik.",
-    results: [
-      "Stabil háttér, ami nélküled is működik",
-      "Napi 2-3 óra felszabadított idő az admin feladatokból",
-      "Automatizált élő és online események",
-    ],
-    solutions: [
-      "Számlázás és pénzügyi követés",
-      "Üzleti adatbázis",
-      "Adatvezérelt döntések",
-      "Szakmai események automatizálása",
-      "AI csapat",
-      "Átlátható ügyfélkezelés",
-      "Heti összesítők",
-    ],
+    label: "HÁTTÉRMŰKÖDÉS",
+    title: "Fókuszálttá tesszük a vállalkozásod működését.",
+    desc: "Automatizáljuk az ismétlődő háttérfeladatokat, hogy a szakmai fejlődésedre és az ügyfeleidre koncentrálhass.",
   },
 ];
 
 const processSteps = [
   {
     num: "01",
-    title: "Stratégiai konzultáció",
-    desc: "Vállalkozásod működésének feltérképezése, szűk keresztmetszetek azonosítása, prioritások meghatározása, fejlesztési terv készítése.",
+    title: "Jelentkezés",
+    desc: "Konzultáció során részletesen átbeszéljük az igényeidet és céljaidat.",
   },
   {
     num: "02",
-    title: "Diagnosztika",
-    desc: "Részletes audit: meglévő folyamatok dokumentálása, rendszerek felmérése, fejlesztési terv és ütemezés készítése.",
+    title: "Tervezés",
+    desc: "Megtervezzük a weboldalad, funneled és a hozzá kapcsolódó AI workflow-kat.",
   },
   {
     num: "03",
-    title: "Háttérműködés",
-    desc: "Háttérműködés rendezése: CRM beállítás, számlázás automatizálás, naptárkezelés, dokumentumkezelés, belső Agentic AI asszisztens alapok.",
+    title: "Megvalósítás",
+    desc: "Felépítjük a teljes alrendszered, majd integráljuk és tréningezzük az AI-t.",
   },
   {
     num: "04",
-    title: "Kiszolgálás",
-    desc: "Ügyfélélmény rendszerezése: onboarding folyamat, konzultáció-támogatás, feedback rendszer, ügyfélportál felépítése.",
-  },
-  {
-    num: "05",
-    title: "Ügyfélszerzés",
-    desc: "Ügyfélszerzés automatizálása: landing oldal, email marketing, AI lead kvalifikáció, funnel felépítése, analitika beállítása.",
-  },
-  {
-    num: "06",
-    title: "Optimalizálás és átadás",
-    desc: "Rendszerek finomhangolása, dokumentáció, betanítás, önálló működés biztosítása.",
-  },
-  {
-    num: "07",
-    title: "Utókövetés és támogatás",
-    desc: "Egy hónapos támogatás: kérdések megválaszolása, elakadások feloldása, önálló működés elsajátítása.",
+    title: "Támogatás",
+    desc: "Teljeskörű partneri támogatás, folyamatos fejlesztés és havi optimalizálás.",
   },
 ];
 
-const faqData: { category: string; items: { q: string; a: string }[] }[] = [
+const differenceTabs = [
   {
-    category: "Folyamat",
+    name: "Szolgáltatói fókusz",
+    title: "Szolgáltatói fókusz",
+    desc: "Kizárólag szolgáltató vállalkozók számára kínálok személyre szabott megoldásokat, amelyek igazodnak a célközönség igényeihez.",
+  },
+  {
+    name: "Teljes körű megoldások",
+    title: "Teljes körű megoldások",
+    desc: "Nem különálló automatizációkat építek, hanem egy rendszert, ami összeköti a marketinged, az ügyfélkezelésed és a napi működésed.",
+  },
+  {
+    name: "Fenntartható szemlélet",
+    title: "Fenntartható szemlélet",
+    desc: "Nem hiszünk a végtelen növekedésben. Az AI-t arra használjuk, hogy a vállalkozásod stabil, egyszerű és fenntartható legyen. Kevesebb tool, kevesebb stressz, több szabadság.",
+  },
+];
+
+const pillarCards = [
+  {
+    pillar: "1. pillér",
+    name: "Ügyfélszerzés",
+    about: "Kiszámítható ügyfélszerzés minden hónapban.",
     items: [
-      {
-        q: "Mennyi idő alatt látok eredményt?",
-        a: "Az első érzékelhető változások már 4-6 héten belül megjelennek — főleg a háttérműködés rendezése után, ahol sok vállalkozó hetente 5-10 órát nyer vissza. A teljes rendszer 4-6 hónap alatt áll össze, de nem kell megvárni a végét: minden lépés önmagában is értéket teremt.",
-      },
-      {
-        q: "Nekem kell érteni az AI-hoz, hogy működjön?",
-        a: "Nem. Az én feladatom, hogy a rendszerek úgy működjenek, hogy te csak használod őket — nem karbantartod. A betanítás és az önálló működés biztosítása az együttműködés része.",
-      },
-      {
-        q: "Mi történik, ha már van vállalkozásom és ügyfeleim?",
-        a: "Nem építünk le semmit, ami már működik. A diagnosztika fázisban felmérjük, mi van már a helyén, és csak azt fejlesztjük tovább, ami valóban szűk keresztmetszet. A változtatások fokozatosan, a napi munkád mellé kerülnek be.",
-      },
-      {
-        q: "Mennyi időt kell nekem beletenni ebbe?",
-        a: "Hetente 2-4 óra aktív együttműködést igényel a folyamat — főleg az elején, amikor a rendszereket a te vállalkozásodhoz szabjuk. A cél az, hogy ez az idő folyamatosan csökkenjen, ahogy a rendszerek átvesznek feladatokat.",
-      },
+      "Konverzióra optimalizált értékesítési rendszer",
+      "AI asszisztens az érdeklődők előszűrésére",
+      "Automatizált email marketing és utánkövetés",
     ],
   },
   {
-    category: "Árazás",
+    pillar: "2. pillér",
+    name: "Kiszolgálás",
+    about: "Átlátható folyamatok meglévő és új ügyfeleidnek.",
     items: [
-      {
-        q: "Mennyibe kerül?",
-        a: "A pontos árat a bevezető konzultáción beszéljük meg, mert függ attól, melyik területen kezdünk és milyen mélységben. A legtöbb projektünk 300 000 – 600 000 forint közötti tartományban van. Alapító ügyfeleknek kedvezményes feltételekkel dolgozunk.",
-      },
-      {
-        q: "Van lehetőség részletfizetésre?",
-        a: "Igen, természetesen! Tudom, hogy ez nagy befektetés lehet valaki számára, ezért biztosítunk részletfizetési lehetőséget, hogy könnyebben elérhető legyen mindenki számára.",
-      },
+      "Professzionális onboarding minden ügyfélnek",
+      "Személyre szabott ügyfélkezelő rendszer",
+      "Automatikus feedback és elégedettség-mérés",
     ],
   },
   {
-    category: "Garancia",
+    pillar: "3. pillér",
+    name: "Háttérműködés",
+    about: "Rendezett háttér, hogy az ügyfeleidre fókuszálhass.",
     items: [
-      {
-        q: "Garantált az eredmény?",
-        a: "Amit garantálok: strukturált folyamatot, átlátható rendszereket és egy működő alapot, amelyen tovább tudsz építeni. Az eredmény nagyrészt azon múlik, hogy mennyire következetesen alkalmazzuk együtt a felépített rendszereket.",
-      },
-      {
-        q: "Vállalsz garanciát?",
-        a: "Igen, természetesen 100% garanciát vállalok a munkámra. Ha az első hónap után úgy érzed, hogy nem térül meg számodra a befektetés, és nem látod a vállalkozásod fejlődését, nem kell fizetned. Minden addig elért eredmény, amit közösen hoztunk létre, tied marad, díjtalanul. A célom, hogy a létező legjobb minőségű szolgáltatást nyújtsam a piacon, és tudom, hogy ez a legfontosabb a növekedésem szempontjából.",
-      },
+      "Automatizált számlázás és adminisztráció",
+      "AI alapú valós idejű analitika és döntéstámogatás",
+      "Digitális csapatod munkájának összehangolása",
     ],
   },
 ];
+
+/* ------------------------------------------------------------------ */
+/*  Tick SVG                                                           */
+/* ------------------------------------------------------------------ */
+function Tick() {
+  return (
+    <svg className="tick-icon mt-0.5" viewBox="0 0 16 16" fill="none">
+      <path
+        d="M3 8.5L6.5 12L13 4"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 /* ------------------------------------------------------------------ */
 /*  PAGE                                                               */
 /* ------------------------------------------------------------------ */
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState(0);
-  const [openFaq, setOpenFaq] = useState<string | null>(null);
-
-  const toggleFaq = (key: string) =>
-    setOpenFaq((prev) => (prev === key ? null : key));
+  const [serviceTab, setServiceTab] = useState(0);
+  const [diffTab, setDiffTab] = useState(0);
 
   return (
     <>
-      {/* ========== HERO ========== */}
-      <section className="relative overflow-hidden bg-white py-20 md:py-32">
-        {/* dots decoration */}
+      {/* ========== 1. HERO ========== */}
+      <section className="relative overflow-hidden section-padding-lg" style={{ backgroundColor: "var(--color-bg)" }}>
         <Image
           src="/images/dots.svg"
           alt=""
           width={400}
           height={400}
-          className="pointer-events-none absolute -top-10 right-0 opacity-20 select-none"
+          className="dots-decoration -top-10 right-0 opacity-20"
           aria-hidden="true"
         />
 
-        <div className="relative mx-auto max-w-[1200px] px-6">
+        <div className="container-main relative">
           <Reveal>
-            <h1 className="font-serif text-[2.5rem] leading-[1.2] font-bold text-[#1a1a1a] md:text-[3.5rem]">
-              Hiszünk abban, hogy
-              <br />a tudásod érték
-            </h1>
+            <h2 className="text-h1" style={{ color: "var(--color-text)" }}>
+              Vállalkozást építünk szakértelmed köré
+            </h2>
           </Reveal>
 
           <Reveal delay={150}>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[#6b7280]">
-              Szolgáltatásunk fő célja az egyéni vállalkozók támogatása egy
-              hatékony és fenntartható üzleti rendszer felépítésében.
+            <p className="mt-6 max-w-[640px] text-body" style={{ color: "var(--color-text-64)" }}>
+              Olyan rendszert hozunk létre a vállalkozásod köré, amely láthatóvá,
+              értékesíthetővé és skálázhatóvá teszi szakmai tudásodat.
             </p>
-          </Reveal>
-
-          <Reveal delay={300}>
-            <div className="mt-10">
-              <Link
-                href="https://cal.com"
-                className="btn-primary"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Konzultáció
-              </Link>
-            </div>
-          </Reveal>
-
-          <Reveal delay={400}>
-            <div className="mt-16 overflow-hidden rounded-xl">
-              <Image
-                src="/images/about-b.webp"
-                alt="Expert Flow csapat"
-                width={1200}
-                height={600}
-                className="h-auto w-full object-cover"
-                priority
-              />
-            </div>
           </Reveal>
         </div>
       </section>
 
-      {/* ========== MARQUEE ========== */}
-      <section className="overflow-hidden bg-[#f7f7f5] py-8">
-        <div className="marquee-track flex w-max items-center gap-10">
-          {[...partners, ...partners].map((name, i) => (
-            <span
-              key={`${name}-${i}`}
-              className="whitespace-nowrap font-serif text-sm tracking-wide text-[#b0b0b0]"
-            >
-              {name}
-            </span>
+      {/* ========== 2. IMAGE MARQUEE ========== */}
+      <section className="relative overflow-hidden py-8" style={{ backgroundColor: "var(--color-bg)" }}>
+        <div className="shadow-left" />
+        <div className="shadow-right" />
+        <div className="marquee-track">
+          {[...marqueeImages, ...marqueeImages].map((img, i) => (
+            <div key={i} className={`image-wrap-marquee ${img.className}`}>
+              <Image
+                src={img.src}
+                alt=""
+                width={450}
+                height={200}
+                className="image-cover"
+              />
+            </div>
           ))}
         </div>
       </section>
 
-      {/* ========== KINEK SZÓL ========== */}
-      <section className="bg-white py-24 md:py-32">
-        <div className="mx-auto max-w-[1200px] px-6">
+      {/* ========== 3. EBBEN SEGÍTÜNK ========== */}
+      <section className="section-padding-md" style={{ backgroundColor: "var(--color-bg)" }}>
+        <div className="container-main">
           <Reveal>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#6b7280]">
-              Célcsoport
-            </p>
-            <h2 className="mt-3 font-serif text-3xl font-bold text-[#1a1a1a] md:text-4xl">
-              Kinek szól?
-            </h2>
-          </Reveal>
-
-          <div className="mt-16 flex flex-col gap-14">
-            {[
-              "Nem a szerencsére akarsz hagyatkozni — hanem tudni, honnan jön a következő ügyfél.",
-              "Vannak ügyfeleid, de szeretnéd, ha a kiszolgálás nem venné el a napod nagy részét.",
-              "Szeretnéd, ha a vállalkozásod működése átlátható lenne, és nem kellene mindent fejben tartani.",
-            ].map((text, i) => (
-              <Reveal key={i} delay={i * 150}>
-                <div className="flex items-start gap-8">
-                  <span className="step-number shrink-0">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <p className="pt-3 text-lg leading-relaxed text-[#1a1a1a]">
-                    {text}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ========== SHOWCASE ========== */}
-      <section className="bg-white py-24 md:py-32">
-        <div className="mx-auto max-w-[1200px] px-6">
-          <Reveal>
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-              {[1, 2, 3, 4, 5, 6].map((n) => (
-                <div
-                  key={n}
-                  className="overflow-hidden rounded-xl border border-[#e5e5e5]"
-                >
-                  <Image
-                    src={`/images/showcase-${n}.webp`}
-                    alt={`Showcase ${n}`}
-                    width={400}
-                    height={280}
-                    className="h-auto w-full object-cover"
-                  />
-                </div>
-              ))}
+            <div className="service-item" style={{ borderTop: "none", paddingTop: 0 }}>
+              <div>
+                <span className="label-small" style={{ color: "var(--color-text-48)" }}>
+                  EBBEN SEGÍTÜNK
+                </span>
+              </div>
+              <div />
             </div>
           </Reveal>
-        </div>
-      </section>
 
-      {/* ========== THREE PILLARS ========== */}
-      <section className="bg-[#f7f7f5] py-24 md:py-32">
-        <div className="mx-auto max-w-[1200px] px-6">
-          <Reveal>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#6b7280]">
-              Szolgáltatás
-            </p>
-            <h2 className="mt-3 font-serif text-3xl font-bold text-[#1a1a1a] md:text-4xl">
-              Három pillér
+          <Reveal delay={100}>
+            <h2 className="text-h2 mt-2" style={{ color: "var(--color-text)" }}>
+              Segítünk felépíteni szolgáltatói vállalkozásod olyan AI-rendszerek
+              integrálásával, amelyek a háttérből támogatják a működését.
             </h2>
           </Reveal>
 
-          {/* Tabs */}
+          <Reveal delay={200}>
+            <p className="mt-8 max-w-[640px] text-body" style={{ color: "var(--color-text-64)" }}>
+              Abban támogatunk, hogy a hivatásodból olyan vállalkozást építs, amely
+              készen áll az AI-korszak kihívásaira és lehetőségeire.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ========== 4. SZOLGÁLTATÁSUNK (DARK) ========== */}
+      <section className="section-dark section-padding-lg">
+        <div className="container-main">
+          <Reveal>
+            <span className="label-small" style={{ color: "var(--color-light-48)" }}>
+              SZOLGÁLTATÁSUNK
+            </span>
+            <h2 className="text-h2 mt-4" style={{ color: "var(--color-light)" }}>
+              A három legnagyobb kihívásodra fókuszálunk - mert tudjuk, ezek viszik
+              el a legtöbb energiádat.
+            </h2>
+          </Reveal>
+
+          {/* Tab nav */}
           <Reveal delay={150}>
-            <div className="mt-12 flex gap-8 border-b border-[#e5e5e5]">
-              {pillars.map((p, i) => (
+            <div className="mt-12 flex flex-wrap gap-0">
+              {serviceTabs.map((tab, i) => (
                 <button
                   key={i}
-                  onClick={() => setActiveTab(i)}
-                  className={`tab-btn pb-3 font-serif text-sm md:text-base ${
-                    activeTab === i
-                      ? "active text-[#1a1a1a]"
-                      : "text-[#6b7280]"
-                  }`}
+                  onClick={() => setServiceTab(i)}
+                  className={`tab-item ${serviceTab === i ? "active" : ""}`}
                 >
-                  {p.label}
+                  {tab.name}
                 </button>
               ))}
             </div>
           </Reveal>
 
           {/* Tab content */}
-          <div className="mt-12 grid items-start gap-12 md:grid-cols-2">
-            <Reveal key={`img-${activeTab}`}>
-              <div className="overflow-hidden rounded-xl">
+          <div className="mt-12">
+            <Reveal key={`svc-${serviceTab}`}>
+              <div className="card-feature relative" style={{ height: "420px" }}>
                 <Image
-                  src={pillars[activeTab].image}
-                  alt={pillars[activeTab].label}
-                  width={580}
-                  height={400}
-                  className="h-auto w-full object-cover"
+                  src={serviceTabs[serviceTab].image}
+                  alt={serviceTabs[serviceTab].name}
+                  fill
+                  className="object-cover"
+                  style={{ borderRadius: "12px" }}
                 />
+                <div className="overlay-gradient" style={{ borderRadius: "12px" }} />
               </div>
-            </Reveal>
 
-            <Reveal key={`txt-${activeTab}`} delay={100}>
-              <div>
-                <p className="text-base leading-relaxed text-[#6b7280]">
-                  {pillars[activeTab].description}
+              <div className="mt-8">
+                <span className="label-small" style={{ color: "var(--color-light-48)" }}>
+                  {serviceTabs[serviceTab].label}
+                </span>
+                <h3 className="text-h3 mt-3" style={{ color: "var(--color-light)" }}>
+                  {serviceTabs[serviceTab].title}
+                </h3>
+                <p className="mt-4 text-body max-w-[640px]" style={{ color: "var(--color-light-64)" }}>
+                  {serviceTabs[serviceTab].desc}
                 </p>
-
-                <h3 className="mt-8 font-serif text-lg font-bold text-[#1a1a1a]">
-                  Eredmények
-                </h3>
-                <ul className="mt-4 flex flex-col gap-3">
-                  {pillars[activeTab].results.map((r, i) => (
-                    <li key={i} className="flex items-start gap-3 text-[#1a1a1a]">
-                      <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-[#1a1a1a]" />
-                      {r}
-                    </li>
-                  ))}
-                </ul>
-
-                <h3 className="mt-8 font-serif text-lg font-bold text-[#1a1a1a]">
-                  Megoldások
-                </h3>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {pillars[activeTab].solutions.map((s, i) => (
-                    <span
-                      key={i}
-                      className="rounded-full border border-[#e5e5e5] bg-white px-4 py-1.5 text-sm text-[#1a1a1a]"
-                    >
-                      {s}
-                    </span>
-                  ))}
-                </div>
               </div>
             </Reveal>
           </div>
         </div>
       </section>
 
-      {/* ========== PROCESS TIMELINE ========== */}
-      <section className="bg-white py-24 md:py-32">
-        <div className="mx-auto max-w-[1200px] px-6">
+      {/* ========== 5. KÖZÖS MUNKA LÉPÉSEI ========== */}
+      <section className="section-padding-lg" style={{ backgroundColor: "var(--color-bg)" }}>
+        <div className="container-main">
           <Reveal>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#6b7280]">
-              Folyamat
-            </p>
-            <h2 className="mt-3 font-serif text-3xl font-bold text-[#1a1a1a] md:text-4xl">
-              Együttműködés folyamata
+            <span className="label-small" style={{ color: "var(--color-text-48)" }}>
+              Együttműködés
+            </span>
+            <h2 className="text-h2 mt-4" style={{ color: "var(--color-text)" }}>
+              Közös munka lépései
             </h2>
           </Reveal>
 
-          <div className="relative mt-16 flex flex-col gap-12 pl-14">
-            {/* vertical line */}
-            <div className="absolute bottom-0 left-[19px] top-0 w-px bg-[#e5e5e5]" />
-
+          <div className="mt-16">
             {processSteps.map((step, i) => (
               <Reveal key={i} delay={i * 100}>
-                <div className="relative">
-                  {/* dot */}
-                  <div className="absolute -left-14 top-1 flex h-10 w-10 items-center justify-center rounded-full border border-[#e5e5e5] bg-white">
-                    <span className="font-serif text-xs font-bold text-[#1a1a1a]">
-                      {step.num}
-                    </span>
+                <div className="service-item">
+                  <div className="flex items-baseline gap-6">
+                    <span className="text-medium">{step.num}</span>
+                    <h3 className="text-h4" style={{ color: "var(--color-text)" }}>
+                      {step.title}
+                    </h3>
                   </div>
-                  <h3 className="font-serif text-xl font-bold text-[#1a1a1a]">
-                    {step.title}
-                  </h3>
-                  <p className="mt-2 max-w-2xl leading-relaxed text-[#6b7280]">
+                  <p className="text-body pt-2" style={{ color: "var(--color-text-64)" }}>
                     {step.desc}
                   </p>
                 </div>
@@ -433,135 +312,182 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========== CTA SECTION ========== */}
-      <section className="bg-[#f7f7f5] py-24 md:py-32">
-        <div className="mx-auto max-w-[1200px] px-6">
-          <Reveal>
-            <div className="flex flex-col items-center text-center">
-              <div className="h-[200px] w-[200px] overflow-hidden rounded-full">
-                <Image
-                  src="/images/attila.jpg"
-                  alt="Nagy Attila"
-                  width={200}
-                  height={200}
-                  className="h-full w-full object-cover"
-                />
-              </div>
+      {/* ========== 6. MIBEN VAGYUNK MÁS? (DARK) ========== */}
+      <section className="section-dark section-padding-lg">
+        <div className="container-main">
+          <div className="grid-2col">
+            {/* Left side */}
+            <div>
+              <Reveal>
+                <span className="label-small" style={{ color: "var(--color-light-48)" }}>
+                  MIBEN VAGYUNK MÁS?
+                </span>
+                <h2 className="text-h2 mt-4" style={{ color: "var(--color-light)" }}>
+                  Expert Flow különbség
+                </h2>
+                <p className="mt-6 text-body" style={{ color: "var(--color-light-64)" }}>
+                  Mi nem folyamatokat automatizálunk, hanem a vállalkozás egészére
+                  épülő, időtálló megközelítést képviselünk.
+                </p>
+              </Reveal>
 
-              <h2 className="mt-10 max-w-3xl font-serif text-2xl leading-relaxed font-bold text-[#1a1a1a] md:text-3xl">
-                Ha most azon gondolkodtál, hogy mindez jól hangzik, de nem
-                tudod, a te helyzetedre is működhet-e, akkor pontosan erről
-                érdemes beszélnünk.
-              </h2>
+              {/* Vertical tab pills */}
+              <Reveal delay={150}>
+                <div className="mt-10 flex flex-col gap-2">
+                  {differenceTabs.map((tab, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setDiffTab(i)}
+                      className="flex items-center gap-3 rounded-full px-4 py-3 text-left text-small transition-all duration-300"
+                      style={{
+                        backgroundColor: diffTab === i ? "#ffffff14" : "transparent",
+                        color: diffTab === i ? "var(--color-light)" : "var(--color-light-48)",
+                      }}
+                    >
+                      <span
+                        className="h-2 w-2 shrink-0 rounded-full transition-all duration-300"
+                        style={{
+                          backgroundColor: diffTab === i ? "var(--color-light)" : "var(--color-light-32)",
+                        }}
+                      />
+                      {tab.name}
+                    </button>
+                  ))}
+                </div>
+              </Reveal>
             </div>
+
+            {/* Right side — content card */}
+            <div className="flex items-center">
+              <Reveal key={`diff-${diffTab}`}>
+                <div className="card-pricing">
+                  <h3 className="text-h4" style={{ color: "var(--color-light)" }}>
+                    {differenceTabs[diffTab].title}
+                  </h3>
+                  <p className="mt-4 text-body" style={{ color: "var(--color-light-64)" }}>
+                    {differenceTabs[diffTab].desc}
+                  </p>
+                </div>
+              </Reveal>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========== 7. AGENTIC AI — Pillar Cards (DARK) ========== */}
+      <section className="section-dark section-padding-lg relative">
+        <div className="container-main relative">
+          <Reveal>
+            <span className="label-small" style={{ color: "var(--color-light-48)" }}>
+              AGENTIC AI
+            </span>
+            <h1 className="text-h1 mt-4" style={{ color: "var(--color-light)" }}>
+              Egyéni szolgáltatásunk
+            </h1>
+            <p className="mt-6 max-w-[640px] text-body" style={{ color: "var(--color-light-64)" }}>
+              Három alappillér, amelyek az eszközök és platformok változásától
+              függetlenül mindig meghatározzák egy vállalkozás sikerét.
+            </p>
           </Reveal>
 
           <Reveal delay={200}>
-            <div className="mt-16 grid gap-8 md:grid-cols-2">
-              {[
-                {
-                  title: "Konzultáció",
-                  desc: "Átbeszéljük a helyzetedet, a céljaidat és a kihívásaidat, hogy valóban megértsem, hol tartasz most.",
-                },
-                {
-                  title: "Őszinte vélemény",
-                  desc: "Őszinte véleményt mondok arról, hogy a te élethelyzetedben merre érdemes elindulnod.",
-                },
-                {
-                  title: "Iránymutatás",
-                  desc: "Ha most nem a szolgáltatásom a számodra legjobb megoldás, azt is megmondom és a megfelelő szakemberrel összekapcsollak.",
-                },
-                {
-                  title: "Egyéni árajánlat",
-                  desc: "Ha viszont mindketten úgy érezzük, hogy érdemes lenne együtt dolgozni, küldök egy személyre szóló árajánlatot.",
-                },
-              ].map((item, i) => (
-                <div key={i} className="rounded-xl border border-[#e5e5e5] bg-white p-8">
-                  <h3 className="font-serif text-lg font-bold text-[#1a1a1a]">
-                    {item.title}
+            <div className="mt-16 grid-3col">
+              {pillarCards.map((card, i) => (
+                <div key={i} className="card-pricing flex flex-col">
+                  <span className="label-small" style={{ color: "var(--color-light-48)" }}>
+                    {card.pillar}
+                  </span>
+                  <h3 className="text-h4 mt-3" style={{ color: "var(--color-light)" }}>
+                    {card.name}
                   </h3>
-                  <p className="mt-3 leading-relaxed text-[#6b7280]">
-                    {item.desc}
+                  <p className="mt-3 text-small" style={{ color: "var(--color-light-64)" }}>
+                    {card.about}
                   </p>
+
+                  <div className="divider mt-6 mb-6" />
+
+                  <span className="label-small mb-4" style={{ color: "var(--color-light-48)" }}>
+                    FÓKUSZ
+                  </span>
+                  <ul className="flex flex-col gap-3">
+                    {card.items.map((item, j) => (
+                      <li key={j} className="flex items-start gap-3 text-small" style={{ color: "var(--color-light-88)" }}>
+                        <Tick />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               ))}
             </div>
           </Reveal>
 
-          <Reveal delay={300}>
-            <div className="mt-12 flex justify-center">
-              <Link
-                href="https://cal.com"
-                className="btn-primary"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Jelentkezek konzultációra
-              </Link>
-            </div>
+          <Image
+            src="/images/dots.svg"
+            alt=""
+            width={300}
+            height={300}
+            className="dots-decoration -bottom-10 -right-10 opacity-10"
+            aria-hidden="true"
+          />
+        </div>
+      </section>
+
+      {/* ========== 8. TOVÁBBI RÉSZLETEK ========== */}
+      <section className="section-dark" style={{ paddingBottom: "80px" }}>
+        <div className="container-main flex justify-center gap-4 flex-wrap">
+          <Reveal>
+            <Link href="/szolgaltatas" className="btn-outline-light">
+              További részletek
+            </Link>
+          </Reveal>
+          <Reveal delay={100}>
+            <Link href="/araink" className="btn-outline-light">
+              Áraink
+            </Link>
           </Reveal>
         </div>
       </section>
 
-      {/* ========== FAQ ========== */}
-      <section className="bg-white py-24 md:py-32">
-        <div className="mx-auto max-w-[1200px] px-6">
-          <Reveal>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#6b7280]">
-              GYIK
-            </p>
-            <h2 className="mt-3 font-serif text-3xl font-bold text-[#1a1a1a] md:text-4xl">
-              Gyakran ismételt kérdések
-            </h2>
-          </Reveal>
+      {/* ========== 9. ABOUT ========== */}
+      <section className="section-padding-lg" style={{ backgroundColor: "var(--color-bg)" }}>
+        <div className="container-main">
+          <div className="grid-2col items-stretch">
+            {/* Left — portrait */}
+            <Reveal>
+              <div className="h-full overflow-hidden rounded-lg">
+                <Image
+                  src="/images/attila.jpg"
+                  alt="Nagy Attila"
+                  width={460}
+                  height={600}
+                  className="image-cover h-full w-full"
+                />
+              </div>
+            </Reveal>
 
-          <div className="mt-16 flex flex-col gap-12">
-            {faqData.map((cat) => (
-              <Reveal key={cat.category}>
-                <div>
-                  <h3 className="font-serif text-xl font-bold text-[#1a1a1a]">
-                    {cat.category}
-                  </h3>
-
-                  <div className="mt-6 flex flex-col divide-y divide-[#e5e5e5]">
-                    {cat.items.map((item, i) => {
-                      const key = `${cat.category}-${i}`;
-                      const isOpen = openFaq === key;
-
-                      return (
-                        <div key={key} className="py-5">
-                          <button
-                            onClick={() => toggleFaq(key)}
-                            className="flex w-full items-center justify-between text-left"
-                          >
-                            <span className="font-serif text-base font-bold text-[#1a1a1a] pr-4">
-                              {item.q}
-                            </span>
-                            <span
-                              className="shrink-0 text-xl text-[#6b7280] transition-transform duration-300"
-                              style={{
-                                transform: isOpen
-                                  ? "rotate(45deg)"
-                                  : "rotate(0deg)",
-                              }}
-                            >
-                              +
-                            </span>
-                          </button>
-                          <div
-                            className={`faq-answer ${isOpen ? "open" : ""}`}
-                          >
-                            <p className="pt-4 leading-relaxed text-[#6b7280]">
-                              {item.a}
-                            </p>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
+            {/* Right — text */}
+            <Reveal delay={150}>
+              <div className="flex flex-col justify-center">
+                <div className="divider mb-8" />
+                <span className="label-small" style={{ color: "var(--color-text-48)" }}>
+                  Rólam
+                </span>
+                <h3 className="text-h3 mt-4" style={{ color: "var(--color-text)" }}>
+                  Üdvözöllek az oldalamon!
+                </h3>
+                <p className="mt-6 text-body" style={{ color: "var(--color-text-64)" }}>
+                  Nagy Attilának hívnak és célom, azoknak az egyéni vállalkozóknak a
+                  támogatása, akik szeretnék a legtöbbet kihozni hivatásukból, miközben
+                  másokat támogatnak megszerzett tudásukkal.
+                </p>
+                <div className="mt-8">
+                  <Link href="/rolam" className="btn-outline">
+                    Ismerj meg jobban
+                  </Link>
                 </div>
-              </Reveal>
-            ))}
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>

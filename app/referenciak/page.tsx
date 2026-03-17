@@ -2,12 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 
+const CTA_URL = "https://cal.com/attila-nagy-8uefco/30min";
+
 const references = [
   {
     image: "/images/ref-1.webp",
     name: "Gömbicz Kata",
-    role: "Klinikai pszichológus",
-    specialties: "Autogén tréning / LMBTQ+ specializáció",
+    role: "Pszichológus",
+    specialties: "Klinikai pszichológus · Autogén tréning · LMBTQ+ specializáció",
   },
   {
     image: "/images/ref-2.webp",
@@ -55,86 +57,56 @@ const steps = [
 
 export default function ReferenciakPage() {
   return (
-    <main className="min-h-screen bg-white font-light text-[#1a1a1a]">
-      {/* HERO */}
-      <section className="mx-auto max-w-[1200px] px-6 pt-32 pb-20">
-        <Reveal>
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#6b7280]">
-            Referenciák
-          </p>
-          <h1
-            className="mb-6 text-4xl font-bold leading-tight tracking-tight md:text-5xl"
-            style={{ fontFamily: "Merriweather, serif" }}
-          >
-            Akikkel eddig dolgoztam
-          </h1>
-          <p className="max-w-2xl text-lg leading-relaxed text-[#6b7280]">
-            Minden projektben más a szakma, más a kihívás &mdash; de a
-            megközelítés ugyanaz: először megértem, hogyan dolgozol és kinek
-            segítesz, és csak utána építek.
-          </p>
-        </Reveal>
-      </section>
-
-      {/* REFERENCE CARDS */}
-      <section className="mx-auto max-w-[1200px] px-6 pb-24">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-          {references.map((ref, i) => (
-            <Reveal key={ref.name} delay={i * 100}>
-              <div className="group overflow-hidden rounded-xl border border-[#e5e5e5] bg-white p-6 transition-all duration-300 hover:border-[#c5c5c5] hover:shadow-lg">
-                <div className="relative mb-5 aspect-[16/10] w-full overflow-hidden rounded-2xl">
-                  <Image
-                    src={ref.image}
-                    alt={`${ref.name} – ${ref.role}`}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <h3 className="mb-1 text-xl font-bold">{ref.name}</h3>
-                <p className="mb-2 text-sm font-medium text-[#6b7280]">
-                  {ref.role}
-                </p>
-                <p className="mb-4 text-base text-[#6b7280]">
-                  {ref.specialties}
-                </p>
-                <Link
-                  href="#"
-                  className="inline-block text-sm font-medium text-[#1a1a1a] underline underline-offset-4 transition-colors hover:text-[#6b7280]"
-                >
-                  További részletek &rarr;
-                </Link>
-              </div>
-            </Reveal>
-          ))}
+    <>
+      {/* ========== HERO ========== */}
+      <section className="section-padding-md">
+        <div className="container-main">
+          <Reveal>
+            <p className="label-small text-text-48 mb-4">Referenciák</p>
+            <h1 className="text-h1 text-text max-w-3xl">
+              Akikkel eddig dolgoztam
+            </h1>
+          </Reveal>
+          <Reveal delay={150}>
+            <p className="mt-6 text-body text-text-48 max-w-2xl">
+              Minden projektben más a szakma, más a kihívás &mdash; de a
+              megközelítés ugyanaz: először megértem, hogyan dolgozol és kinek
+              segítesz, és csak utána építek.
+            </p>
+          </Reveal>
         </div>
       </section>
 
-      {/* APPROACH */}
-      <section className="mx-auto max-w-[1200px] px-6 pb-24">
-        <Reveal>
-          <h2
-            className="mb-12 text-3xl font-bold tracking-tight md:text-4xl"
-            style={{ fontFamily: "Merriweather, serif" }}
-          >
-            Hogyan dolgozom?
-          </h2>
-        </Reveal>
-        <div className="relative pl-10">
-          {/* Vertical line */}
-          <div className="absolute left-4 top-0 h-full w-px bg-[#e5e5e5]" />
-          <div className="flex flex-col gap-12">
-            {steps.map((step, i) => (
-              <Reveal key={step.number} delay={i * 120}>
-                <div className="relative">
-                  {/* Dot on the line */}
-                  <div className="absolute -left-[26px] top-1 h-3 w-3 rounded-full border-2 border-[#1a1a1a] bg-white" />
-                  <p className="mb-1 text-xs font-semibold uppercase tracking-[0.15em] text-[#6b7280]">
-                    {step.number}
-                  </p>
-                  <h3 className="mb-2 text-xl font-bold">{step.title}</h3>
-                  <p className="text-base text-[#6b7280]">
-                    {step.description}
-                  </p>
+      {/* ========== REFERENCE CARDS ========== */}
+      <section className="pb-20 md:pb-32">
+        <div className="container-main">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {references.map((ref, i) => (
+              <Reveal key={ref.name} delay={i * 100}>
+                <div className="group overflow-hidden rounded-xl border border-text-8 bg-bg-card transition-all duration-300 hover:border-text-16 hover:shadow-lg">
+                  <div className="relative aspect-[16/10] w-full overflow-hidden">
+                    <Image
+                      src={ref.image}
+                      alt={`${ref.name} – ${ref.role}`}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <p className="label-small text-text-48 mb-1">
+                      {ref.role}
+                    </p>
+                    <h3 className="text-h4 text-text mb-2">{ref.name}</h3>
+                    <p className="text-small text-text-48 mb-5">
+                      {ref.specialties}
+                    </p>
+                    <Link
+                      href="#"
+                      className="text-small font-medium text-text underline underline-offset-4 transition-colors hover:text-text-64"
+                    >
+                      További részletek &rarr;
+                    </Link>
+                  </div>
                 </div>
               </Reveal>
             ))}
@@ -142,30 +114,65 @@ export default function ReferenciakPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="mx-auto max-w-[1200px] px-6 pb-32">
-        <Reveal>
-          <div className="text-center">
-            <h2
-              className="mb-4 text-3xl font-bold tracking-tight md:text-4xl"
-              style={{ fontFamily: "Merriweather, serif" }}
-            >
-              A következő referencia a tiéd lehet
+      {/* ========== APPROACH / PROCESS ========== */}
+      <section className="section-dark section-padding-md">
+        <div className="container-main">
+          <Reveal>
+            <p className="label-small text-light-48 mb-4">Megközelítés</p>
+            <h2 className="text-h2 text-light mb-16">
+              Hogyan dolgozom?
             </h2>
-            <p className="mb-8 text-lg text-[#6b7280]">
-              30 perces konzultáció. Ingyenes. Értékesítés nélkül.
-            </p>
-            <a
-              href="https://cal.com/attila-nagy-8uefco/30min"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block rounded-full bg-[#1a1a1a] px-8 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#333]"
-            >
-              Konzultáció foglalás
-            </a>
+          </Reveal>
+
+          <div className="relative pl-14">
+            {/* Vertical line */}
+            <div className="absolute bottom-0 left-[19px] top-0 w-px bg-light-16" />
+
+            <div className="flex flex-col gap-12">
+              {steps.map((step, i) => (
+                <Reveal key={step.number} delay={i * 120}>
+                  <div className="relative">
+                    {/* Number circle on the line */}
+                    <div className="absolute -left-14 top-1 flex h-10 w-10 items-center justify-center rounded-full border border-light-16 bg-bg-dark">
+                      <span className="text-small font-semibold text-light">
+                        {step.number}
+                      </span>
+                    </div>
+                    <h3 className="text-h4 text-light mb-2">{step.title}</h3>
+                    <p className="text-body text-light-48 max-w-xl">
+                      {step.description}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
           </div>
-        </Reveal>
+        </div>
       </section>
-    </main>
+
+      {/* ========== CTA ========== */}
+      <section className="section-padding-lg">
+        <div className="container-main">
+          <Reveal>
+            <div className="text-center">
+              <h2 className="text-h2 text-text mb-4">
+                A következő referencia a tiéd lehet
+              </h2>
+              <p className="text-body text-text-48 mb-10">
+                30 perces konzultáció. Ingyenes. Értékesítés nélkül.
+              </p>
+              <a
+                href={CTA_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-dark"
+              >
+                Konzultáció foglalás
+              </a>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+    </>
   );
 }
