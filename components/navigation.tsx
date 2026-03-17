@@ -24,7 +24,7 @@ export default function Navigation() {
         backgroundColor: "#f6f3f0bd",
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",
-        fontFamily: "Arial, Helvetica, sans-serif",
+        fontFamily: "var(--font-sans)",
       }}
     >
       <nav className="mx-auto max-w-[1200px] flex items-center justify-between px-6 py-4">

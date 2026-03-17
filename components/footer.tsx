@@ -19,7 +19,7 @@ export default function Footer() {
   return (
     <footer
       className="w-full bg-[#0a0a0b]"
-      style={{ fontFamily: "Arial, sans-serif" }}
+      style={{ fontFamily: "var(--font-sans)" }}
     >
       <div className="mx-auto max-w-[1200px] px-6 py-16">
         {/* Top section: logo, links, social */}
