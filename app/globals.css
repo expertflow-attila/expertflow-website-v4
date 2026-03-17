@@ -324,6 +324,15 @@ body {
   color: var(--color-light);
 }
 
+/* Focus visible (keyboard navigation) */
+*:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+.section-dark *:focus-visible {
+  outline-color: var(--color-light);
+}
+
 /* Selection */
 ::selection {
   background: var(--color-text);
@@ -342,6 +351,13 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+}
+
+/* Solutions grid (auto-fill responsive) */
+.grid-solutions {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
 }
 
 /* Form elements */

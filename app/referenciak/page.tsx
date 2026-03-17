@@ -1,6 +1,11 @@
+import { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
+
+export const metadata: Metadata = {
+  title: "Referenciák",
+  description: "Akikkel eddig dolgoztam — minden projektben más a szakma, más a kihívás, de a megközelítés ugyanaz.",
+};
 
 const CTA_URL = "https://cal.com/attila-nagy-8uefco/30min";
 
@@ -90,6 +95,7 @@ export default function ReferenciakPage() {
                       alt={`${ref.name} – ${ref.role}`}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                      sizes="(max-width: 768px) 100vw, 50vw"
                     />
                   </div>
                   <div className="p-6">
@@ -100,12 +106,9 @@ export default function ReferenciakPage() {
                     <p className="text-small text-text-48 mb-5">
                       {ref.specialties}
                     </p>
-                    <Link
-                      href="#"
-                      className="text-small font-medium text-text underline underline-offset-4 transition-colors hover:text-text-64"
-                    >
-                      További részletek &rarr;
-                    </Link>
+                    <span className="inline-block rounded-full bg-text-8 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-text-48">
+                      Hamarosan
+                    </span>
                   </div>
                 </div>
               </Reveal>

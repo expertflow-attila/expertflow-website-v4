@@ -70,7 +70,7 @@ export default function Footer() {
 
             {/* LinkedIn */}
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/nagyattila-expertflow/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#f6f3f0a3] hover:text-[#f6f3f0] transition-colors"

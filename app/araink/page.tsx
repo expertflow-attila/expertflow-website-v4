@@ -102,7 +102,7 @@ const faq = [
 /* ------------------------------------------------------------------ */
 /*  Tick SVG                                                           */
 /* ------------------------------------------------------------------ */
-function Tick({ light }: { light?: boolean }) {
+function Tick() {
   return (
     <svg className="tick-icon mt-0.5" viewBox="0 0 16 16" fill="none">
       <path

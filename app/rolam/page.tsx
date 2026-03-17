@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 
 export const metadata: Metadata = {
@@ -115,7 +114,7 @@ export default function RolamPage() {
                 mert megbízik benned. Mert ott vagy, amikor kell. Mert te
                 vállalod a felelősséget azért, amit mondasz és teszel.
               </p>
-              <p className="text-h3 text-text !font-400">
+              <p className="text-h3 text-text" style={{ fontWeight: 400 }}>
                 Ezt az AI nem tudja.
               </p>
               <p>
@@ -272,12 +271,14 @@ export default function RolamPage() {
               <p className="mt-4 text-h5 text-text-48">
                 30 perces konzultáció. Ingyenes. Kötöttségek nélkül.
               </p>
-              <Link
-                href="https://cal.com/expertflow/konzultacio"
+              <a
+                href="https://cal.com/attila-nagy-8uefco/30min"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-dark mt-10 inline-flex"
               >
                 Konzultáció
-              </Link>
+              </a>
             </div>
           </Reveal>
         </div>

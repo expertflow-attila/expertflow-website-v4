@@ -159,9 +159,9 @@ export default function Home() {
 
         <div className="container-main relative">
           <Reveal>
-            <h2 className="text-h1" style={{ color: "var(--color-text)" }}>
+            <h1 className="text-h1" style={{ color: "var(--color-text)" }}>
               Vállalkozást építünk szakértelmed köré
-            </h2>
+            </h1>
           </Reveal>
 
           <Reveal delay={150}>
@@ -381,9 +381,9 @@ export default function Home() {
             <span className="label-small" style={{ color: "var(--color-light-48)" }}>
               AGENTIC AI
             </span>
-            <h1 className="text-h1 mt-4" style={{ color: "var(--color-light)" }}>
+            <h2 className="text-h1 mt-4" style={{ color: "var(--color-light)" }}>
               Egyéni szolgáltatásunk
-            </h1>
+            </h2>
             <p className="mt-6 max-w-[640px] text-body" style={{ color: "var(--color-light-64)" }}>
               Három alappillér, amelyek az eszközök és platformok változásától
               függetlenül mindig meghatározzák egy vállalkozás sikerét.

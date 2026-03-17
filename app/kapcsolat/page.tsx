@@ -122,8 +122,9 @@ export default function KapcsolatPage() {
                 ) : (
                   <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                     <div>
-                      <label className="form-label">Név</label>
+                      <label htmlFor="contact-name" className="form-label">Név</label>
                       <input
+                        id="contact-name"
                         type="text"
                         required
                         className="form-input"
@@ -133,8 +134,9 @@ export default function KapcsolatPage() {
                       />
                     </div>
                     <div>
-                      <label className="form-label">Email</label>
+                      <label htmlFor="contact-email" className="form-label">Email</label>
                       <input
+                        id="contact-email"
                         type="email"
                         required
                         className="form-input"
@@ -144,8 +146,9 @@ export default function KapcsolatPage() {
                       />
                     </div>
                     <div>
-                      <label className="form-label">Üzenet</label>
+                      <label htmlFor="contact-message" className="form-label">Üzenet</label>
                       <textarea
+                        id="contact-message"
                         required
                         className="form-textarea"
                         placeholder="Miben segíthetek?"

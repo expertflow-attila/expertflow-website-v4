@@ -128,7 +128,7 @@ const pillars = [
       },
       {
         title: "Heti összesítők",
-        desc: "AI asszisztensed hetente egyszer kapsz egy összesítőt, ami a legfontosabbakat mutatja — pénzügyek, ügyfelek, kampányok.",
+        desc: "AI asszisztensedtől hetente egyszer kapsz egy összesítőt, ami a legfontosabbakat mutatja — pénzügyek, ügyfelek, kampányok.",
       },
     ],
   },
@@ -383,7 +383,7 @@ export default function SzolgaltatasPage() {
           <Reveal key={`solutions-${activeTab}`} delay={200}>
             <div className="mt-16">
               <p className="label-small text-light-48 mb-8 text-center">Megoldások</p>
-              <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))" }}>
+              <div className="grid-solutions">
                 {pillar.solutions.map((s, i) => (
                   <div
                     key={i}
