@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Reveal } from "@/components/scroll-reveal";
+import { MagneticButton } from "@/components/magnetic-button";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -296,7 +297,7 @@ export default function SzolgaltatasPage() {
       </section>
 
       {/* ===== KINEK SZÓL ===== */}
-      <section className="section-padding-sm" style={{ backgroundColor: "var(--color-bg-stone)" }}>
+      <section className="section-padding-sm bg-stone">
         <div className="container-main">
           <Reveal>
             <p className="label-small text-text-48 mb-3">Célcsoport</p>
@@ -392,7 +393,7 @@ export default function SzolgaltatasPage() {
                     <h4 className="text-small font-semibold text-light mb-2">
                       {s.title}
                     </h4>
-                    <p className="text-small text-light-64" style={{ lineHeight: 1.6 }}>
+                    <p className="text-small text-light-64 leading-body">
                       {s.desc}
                     </p>
                   </div>
@@ -416,29 +417,17 @@ export default function SzolgaltatasPage() {
 
           <div className="relative mt-16 flex flex-col gap-0 pl-14">
             {/* vertical line */}
-            <div
-              className="absolute top-0 bottom-0 w-px"
-              style={{ left: 19, backgroundColor: "var(--color-text-8)" }}
-            />
+            <div className="timeline-line" />
 
             {processSteps.map((step, i) => (
               <Reveal key={step.num} delay={i * 80}>
                 <div className="relative pb-10">
                   {/* Number circle */}
-                  <div
-                    className="absolute flex items-center justify-center rounded-full border bg-bg"
-                    style={{
-                      left: -56,
-                      top: 0,
-                      width: 40,
-                      height: 40,
-                      borderColor: "var(--color-text-16)",
-                    }}
-                  >
+                  <div className="timeline-circle">
                     <span className="label-small text-text">{step.num}</span>
                   </div>
                   <h3 className="text-h5 text-text font-medium">{step.title}</h3>
-                  <p className="text-small text-text-64 mt-2 max-w-[540px]" style={{ lineHeight: 1.6 }}>
+                  <p className="text-small text-text-64 mt-2 max-w-[540px] leading-body">
                     {step.desc}
                   </p>
                 </div>
@@ -449,11 +438,11 @@ export default function SzolgaltatasPage() {
       </section>
 
       {/* ===== CTA WITH ATTILA ===== */}
-      <section className="section-padding-md" style={{ backgroundColor: "var(--color-bg-stone)" }}>
+      <section className="section-padding-md bg-stone">
         <div className="container-main">
           <Reveal>
             <div className="text-center max-w-[720px] mx-auto">
-              <h2 className="text-h3 text-text" style={{ lineHeight: 1.35 }}>
+              <h2 className="text-h3 text-text leading-snug">
                 Ha most azon gondolkodtál, hogy mindez jól hangzik, de nem
                 tudod, a te helyzetedre is működhet-e, akkor pontosan erről
                 érdemes beszélnünk.
@@ -470,8 +459,7 @@ export default function SzolgaltatasPage() {
                   alt="Nagy Attila"
                   width={200}
                   height={200}
-                  className="rounded-lg object-cover"
-                  style={{ width: 200, height: 200 }}
+                  className="rounded-lg object-cover w-[200px] h-[200px]"
                 />
               </div>
 
@@ -493,14 +481,13 @@ export default function SzolgaltatasPage() {
                 ))}
 
                 <div className="mt-4">
-                  <a
+                  <MagneticButton
                     href={CTA_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="btn-dark"
+                    strength={0.25}
                   >
                     Jelentkezek konzultációra
-                  </a>
+                  </MagneticButton>
                 </div>
               </div>
             </div>
@@ -518,7 +505,7 @@ export default function SzolgaltatasPage() {
 
           {/* FAQ category tabs */}
           <Reveal delay={100}>
-            <div className="mt-10 flex gap-0 border-b" style={{ borderColor: "var(--color-text-8)" }}>
+            <div className="mt-10 flex gap-0 border-b border-text-8">
               {faqCategories.map((cat, i) => (
                 <button
                   key={cat.name}
@@ -551,22 +538,15 @@ export default function SzolgaltatasPage() {
                         {item.q}
                       </span>
                       <span
-                        className="shrink-0 text-xl text-text-48 transition-transform duration-300"
-                        style={{
-                          transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
-                        }}
+                        className={`shrink-0 text-xl text-text-48 transition-transform duration-300 ${isOpen ? "rotate-45" : ""}`}
                       >
                         +
                       </span>
                     </button>
                     <div
-                      className="overflow-hidden transition-all duration-300"
-                      style={{
-                        maxHeight: isOpen ? 500 : 0,
-                        opacity: isOpen ? 1 : 0,
-                      }}
+                      className={`faq-answer ${isOpen ? "open" : ""}`}
                     >
-                      <p className="text-small text-text-64 pt-4" style={{ lineHeight: 1.6 }}>
+                      <p className="text-small text-text-64 pt-4 leading-body">
                         {item.a}
                       </p>
                     </div>

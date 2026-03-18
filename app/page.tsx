@@ -135,7 +135,7 @@ export default function Home() {
 
         <div className="container-main relative">
           <Reveal>
-            <h1 className="text-h1" style={{ color: "var(--color-text)" }}>
+            <h1 className="text-h1 text-text">
               Vállalkozást építünk
               <br />
               szakértelmed köré
@@ -143,7 +143,7 @@ export default function Home() {
           </Reveal>
 
           <Reveal delay={200}>
-            <p className="mt-8 text-body" style={{ color: "var(--color-text-64)" }}>
+            <p className="mt-8 text-body text-text-64">
               Olyan rendszert hozunk létre a vállalkozásod köré, amely láthatóvá,
               értékesíthetővé és skálázhatóvá teszi szakmai tudásodat.
             </p>
@@ -179,18 +179,18 @@ export default function Home() {
       <section className="section-padding-md bg-bg">
         <div className="container-main">
           <Reveal>
-            <span className="label-small" style={{ color: "var(--color-text-48)" }}>EBBEN SEGÍTÜNK</span>
+            <span className="label-small text-text-48">EBBEN SEGÍTÜNK</span>
           </Reveal>
 
           <Reveal delay={100}>
-            <h2 className="text-h2 mt-5" style={{ color: "var(--color-text)" }}>
+            <h2 className="text-h2 mt-5 text-text">
               Segítünk felépíteni szolgáltatói vállalkozásod olyan AI-rendszerek
               integrálásával, amelyek a háttérből támogatják a működését.
             </h2>
           </Reveal>
 
           <Reveal delay={250}>
-            <p className="mt-8 text-body" style={{ color: "var(--color-text-64)" }}>
+            <p className="mt-8 text-body text-text-64">
               Abban támogatunk, hogy a hivatásodból olyan vállalkozást építs, amely
               készen áll az AI-korszak kihívásaira és lehetőségeire.
             </p>
@@ -202,8 +202,8 @@ export default function Home() {
       <section className="section-dark section-padding-lg">
         <div className="container-main">
           <Reveal>
-            <span className="label-small" style={{ color: "var(--color-light-48)" }}>SZOLGÁLTATÁSUNK</span>
-            <h2 className="text-h2 mt-5" style={{ color: "var(--color-light)" }}>
+            <span className="label-small text-light-48">SZOLGÁLTATÁSUNK</span>
+            <h2 className="text-h2 mt-5 text-light">
               A három legnagyobb kihívásodra fókuszálunk — mert tudjuk, ezek viszik el a legtöbb energiádat.
             </h2>
           </Reveal>
@@ -228,19 +228,19 @@ export default function Home() {
                   fill
                   sizes="(max-width: 768px) 100vw, 940px"
                   className="object-cover"
-                  style={{ borderRadius: "12px" }}
+                  className="rounded-xl"
                 />
-                <div className="overlay-gradient" style={{ borderRadius: "12px" }} />
+                <div className="overlay-gradient rounded-xl" />
               </div>
 
               <div className="mt-10">
-                <span className="label-small" style={{ color: "var(--color-light-48)" }}>
+                <span className="label-small text-light-48">
                   {serviceTabs[serviceTab].label}
                 </span>
-                <h3 className="text-h3 mt-3" style={{ color: "var(--color-light)" }}>
+                <h3 className="text-h3 mt-3 text-light">
                   {serviceTabs[serviceTab].title}
                 </h3>
-                <p className="mt-4 text-body" style={{ color: "var(--color-light-64)" }}>
+                <p className="mt-4 text-body text-light-64">
                   {serviceTabs[serviceTab].desc}
                 </p>
               </div>
@@ -254,7 +254,7 @@ export default function Home() {
         <div className="container-main">
           <Reveal>
             <span className="label-small text-text-48">Együttműködés</span>
-            <h2 className="text-h2 mt-5" style={{ color: "var(--color-text)" }}>Közös munka lépései</h2>
+            <h2 className="text-h2 mt-5 text-text">Közös munka lépései</h2>
           </Reveal>
 
           <StaggerContainer staggerDelay={0.1}>
@@ -264,9 +264,9 @@ export default function Home() {
                   <div className="service-item">
                     <div className="flex items-baseline gap-6">
                       <span className="text-medium">{step.num}</span>
-                      <h3 className="text-h4" style={{ color: "var(--color-text)" }}>{step.title}</h3>
+                      <h3 className="text-h4 text-text">{step.title}</h3>
                     </div>
-                    <p className="text-body pt-2" style={{ color: "var(--color-text-64)" }}>{step.desc}</p>
+                    <p className="text-body pt-2 text-text-64">{step.desc}</p>
                   </div>
                 </StaggerItem>
               ))}
@@ -281,9 +281,9 @@ export default function Home() {
           <div className="grid-2col">
             <div>
               <Reveal>
-                <span className="label-small" style={{ color: "var(--color-light-48)" }}>MIBEN VAGYUNK MÁS?</span>
-                <h2 className="text-h2 mt-5" style={{ color: "var(--color-light)" }}>Expert Flow különbség</h2>
-                <p className="mt-6 text-body" style={{ color: "var(--color-light-64)" }}>
+                <span className="label-small text-light-48">MIBEN VAGYUNK MÁS?</span>
+                <h2 className="text-h2 mt-5 text-light">Expert Flow különbség</h2>
+                <p className="mt-6 text-body text-light-64">
                   Mi nem folyamatokat automatizálunk, hanem a vállalkozás egészére épülő, időtálló megközelítést képviselünk.
                 </p>
               </Reveal>
@@ -294,16 +294,9 @@ export default function Home() {
                     <button
                       key={i}
                       onClick={() => setDiffTab(i)}
-                      className="flex items-center gap-3 rounded-full px-4 py-3 text-left text-small transition-all duration-300"
-                      style={{
-                        backgroundColor: diffTab === i ? "#ffffff10" : "transparent",
-                        color: diffTab === i ? "var(--color-light)" : "var(--color-light-48)",
-                      }}
+                      className={`diff-tab-btn ${diffTab === i ? "active" : ""}`}
                     >
-                      <span
-                        className="h-2 w-2 shrink-0 rounded-full transition-all duration-300"
-                        style={{ backgroundColor: diffTab === i ? "var(--color-light)" : "var(--color-light-32)" }}
-                      />
+                      <span className={`diff-tab-dot ${diffTab === i ? "active" : ""}`} />
                       {tab.name}
                     </button>
                   ))}
@@ -314,8 +307,8 @@ export default function Home() {
             <div className="flex items-center">
               <Reveal key={`diff-${diffTab}`}>
                 <div className="card-pricing">
-                  <h3 className="text-h4" style={{ color: "var(--color-light)" }}>{differenceTabs[diffTab].title}</h3>
-                  <p className="mt-4 text-body" style={{ color: "var(--color-light-64)" }}>{differenceTabs[diffTab].desc}</p>
+                  <h3 className="text-h4 text-light">{differenceTabs[diffTab].title}</h3>
+                  <p className="mt-4 text-body text-light-64">{differenceTabs[diffTab].desc}</p>
                 </div>
               </Reveal>
             </div>
@@ -327,9 +320,9 @@ export default function Home() {
       <section className="section-dark section-padding-lg relative">
         <div className="container-main relative">
           <Reveal>
-            <span className="label-small" style={{ color: "var(--color-light-48)" }}>AGENTIC AI</span>
-            <h2 className="text-h1 mt-5" style={{ color: "var(--color-light)" }}>Egyéni szolgáltatásunk</h2>
-            <p className="mt-6 text-body" style={{ color: "var(--color-light-64)" }}>
+            <span className="label-small text-light-48">AGENTIC AI</span>
+            <h2 className="text-h1 mt-5 text-light">Egyéni szolgáltatásunk</h2>
+            <p className="mt-6 text-body text-light-64">
               Három alappillér, amelyek az eszközök és platformok változásától függetlenül mindig meghatározzák egy vállalkozás sikerét.
             </p>
           </Reveal>
@@ -339,16 +332,16 @@ export default function Home() {
               {pillarCards.map((card, i) => (
                 <StaggerItem key={i}>
                   <div className="card-pricing flex flex-col h-full">
-                    <span className="label-small" style={{ color: "var(--color-light-48)" }}>{card.pillar}</span>
-                    <h3 className="text-h4 mt-3" style={{ color: "var(--color-light)" }}>{card.name}</h3>
-                    <p className="mt-3 text-small" style={{ color: "var(--color-light-64)" }}>{card.about}</p>
+                    <span className="label-small text-light-48">{card.pillar}</span>
+                    <h3 className="text-h4 mt-3 text-light">{card.name}</h3>
+                    <p className="mt-3 text-small text-light-64">{card.about}</p>
 
                     <div className="divider mt-6 mb-6" />
 
-                    <span className="label-small mb-4" style={{ color: "var(--color-light-48)" }}>FÓKUSZ</span>
+                    <span className="label-small mb-4 text-light-48">FÓKUSZ</span>
                     <ul className="flex flex-col gap-3">
                       {card.items.map((item, j) => (
-                        <li key={j} className="flex items-start gap-3 text-small" style={{ color: "var(--color-light-88)" }}>
+                        <li key={j} className="flex items-start gap-3 text-small text-light-88">
                           <Tick />
                           {item}
                         </li>
@@ -365,7 +358,7 @@ export default function Home() {
       </section>
 
       {/* ========== 8. CTA BUTTONS ========== */}
-      <section className="section-dark" style={{ paddingBottom: "80px" }}>
+      <section className="section-dark pb-20">
         <div className="container-main flex justify-center gap-4 flex-wrap">
           <Reveal>
             <Link href="/szolgaltatas" className="btn-outline-light">További részletek</Link>
@@ -395,9 +388,9 @@ export default function Home() {
             <Reveal delay={200}>
               <div>
                 <div className="divider mb-10" />
-                <span className="label-small" style={{ color: "var(--color-text-48)" }}>Rólam</span>
-                <h3 className="text-h3 mt-4" style={{ color: "var(--color-text)" }}>Üdvözöllek az oldalamon!</h3>
-                <p className="mt-6 text-body" style={{ color: "var(--color-text-64)" }}>
+                <span className="label-small text-text-48">Rólam</span>
+                <h3 className="text-h3 mt-4 text-text">Üdvözöllek az oldalamon!</h3>
+                <p className="mt-6 text-body text-text-64">
                   Nagy Attilának hívnak. Célom azoknak az egyéni vállalkozóknak a
                   támogatása, akik szeretnék a legtöbbet kihozni hivatásukból, miközben
                   másokat támogatnak megszerzett tudásukkal.

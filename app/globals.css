@@ -305,11 +305,18 @@ body {
   transform: scale(1.03);
   box-shadow: 0 16px 48px #100f1230;
 }
+/* Pricing card base text colors */
+.card-pricing .label-small { color: var(--color-text-48); }
+.card-pricing .text-small { color: var(--color-text-64); }
+.card-pricing .price-unit { color: var(--color-text-48); }
+.card-pricing li { color: var(--color-text); }
+/* Pricing highlighted overrides */
 .card-pricing.highlighted .label-small { color: var(--color-light-48); }
 .card-pricing.highlighted .text-h4 { color: var(--color-light); }
 .card-pricing.highlighted .text-small { color: var(--color-light-64); }
 .card-pricing.highlighted .tick-icon { color: var(--color-light-64); }
 .card-pricing.highlighted .divider { background-color: #ffffff14; }
+.card-pricing.highlighted li { color: var(--color-light-88); }
 .card-pricing.highlighted .btn-dark {
   background-color: var(--color-light);
   color: var(--color-text);
@@ -487,7 +494,45 @@ body {
 }
 
 /* Tailwind-kompatibilis color utility-k inline style-ok helyett */
+/* Background utilities */
 .bg-bg { background-color: var(--color-bg); }
+.bg-stone { background-color: var(--color-bg-stone); }
+
+/* Line-height utilities */
+.leading-body { line-height: 1.6; }
+.leading-legal { line-height: 1.7; }
+
+/* Timeline circle */
+.timeline-circle {
+  position: absolute;
+  left: -56px;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  border: 1px solid var(--color-text-16);
+  background-color: var(--color-bg);
+}
+.section-dark .timeline-circle {
+  border-color: var(--color-light-16);
+  background-color: var(--color-bg-dark);
+}
+
+/* Timeline vertical line */
+.timeline-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 19px;
+  width: 1px;
+  background-color: var(--color-text-8);
+}
+.section-dark .timeline-line {
+  background-color: var(--color-light-16);
+}
 .text-text { color: var(--color-text); }
 .text-text-64 { color: var(--color-text-64); }
 .text-text-48 { color: var(--color-text-48); }
@@ -498,6 +543,116 @@ body {
 .text-light-64 { color: var(--color-light-64); }
 .text-light-48 { color: var(--color-light-48); }
 .text-light-32 { color: var(--color-light-32); }
+
+/* FAQ accordion */
+.faq-answer {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+.faq-answer.open {
+  max-height: 500px;
+  opacity: 1;
+}
+
+/* Difference tabs */
+.diff-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 100px;
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--color-light-48);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.diff-tab-btn.active {
+  background-color: #ffffff10;
+  color: var(--color-light);
+}
+.diff-tab-dot {
+  display: block;
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 100%;
+  background-color: var(--color-light-32);
+  transition: all 0.3s ease;
+}
+.diff-tab-dot.active {
+  background-color: var(--color-light);
+}
+
+/* Navigation — taste-skill: no opacity-only hover, spring-aware transitions */
+.nav-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  background-color: var(--color-bg-nav);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.nav-link {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+.nav-link:hover {
+  color: var(--color-accent);
+}
+.nav-cta {
+  display: inline-block;
+  border-radius: 100px;
+  background-color: var(--color-accent);
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-light);
+  text-decoration: none;
+  transition: background-color 0.25s ease, transform 0.25s ease;
+}
+.nav-cta:hover {
+  background-color: #4a4a4b;
+  transform: translateY(-1px);
+}
+
+/* Footer */
+.footer-link {
+  font-size: 14px;
+  color: var(--color-light-64);
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+.footer-link:hover {
+  color: var(--color-light);
+}
+.footer-legal {
+  font-size: 12px;
+  color: var(--color-light-64);
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+.footer-legal:hover {
+  color: var(--color-light);
+}
+.footer-social {
+  color: var(--color-light-64);
+  transition: color 0.25s ease;
+}
+.footer-social:hover {
+  color: var(--color-light);
+}
 
 /* Responsive */
 @media (max-width: 991px) {

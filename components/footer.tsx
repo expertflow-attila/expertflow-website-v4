@@ -17,10 +17,7 @@ const legalLinks = [
 
 export default function Footer() {
   return (
-    <footer
-      className="w-full bg-[#0a0a0b]"
-      style={{ fontFamily: "var(--font-sans)" }}
-    >
+    <footer className="w-full bg-[--color-bg-dark]">
       <div className="mx-auto max-w-[1200px] px-6 py-16">
         {/* Top section: logo, links, social */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-10">
@@ -41,7 +38,7 @@ export default function Footer() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-[14px] text-[#f6f3f0a3] hover:text-[#f6f3f0] transition-colors"
+                className="footer-link"
               >
                 {link.label}
               </Link>
@@ -55,7 +52,7 @@ export default function Footer() {
               href="https://youtube.com/@expertflow-attila"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#f6f3f0a3] hover:text-[#f6f3f0] transition-colors"
+              className="footer-social"
               aria-label="YouTube"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -73,7 +70,7 @@ export default function Footer() {
               href="https://www.linkedin.com/in/nagyattila-expertflow/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#f6f3f0a3] hover:text-[#f6f3f0] transition-colors"
+              className="footer-social"
               aria-label="LinkedIn"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -96,7 +93,7 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="mx-auto max-w-[1200px] px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <span className="text-[12px] text-[#f6f3f0a3]">
+        <span className="text-[12px] text-light-64">
           &copy; 2026 Built by Expert Flow
         </span>
 
@@ -105,12 +102,12 @@ export default function Footer() {
             <span key={link.href} className="flex items-center">
               <Link
                 href={link.href}
-                className="text-[12px] text-[#f6f3f0a3] hover:text-[#f6f3f0] transition-colors"
+                className="footer-legal"
               >
                 {link.label}
               </Link>
               {i < legalLinks.length - 1 && (
-                <span className="text-[12px] text-[#f6f3f0a3] mx-1">&middot;</span>
+                <span className="text-[12px] text-light-64 mx-1">&middot;</span>
               )}
             </span>
           ))}

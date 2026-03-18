@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
+import { MagneticButton } from "@/components/magnetic-button";
 
 const CTA_URL = "https://cal.com/attila-nagy-8uefco/30min";
 
@@ -144,7 +145,7 @@ export default function AraikPage() {
       </section>
 
       {/* ===== PRICING CARDS ===== */}
-      <section className="section-padding-sm" style={{ paddingTop: 0 }}>
+      <section className="section-padding-sm pt-0">
         <div className="container-main">
           <Reveal delay={200}>
             <div className="grid-3col">
@@ -153,17 +154,17 @@ export default function AraikPage() {
                   key={i}
                   className={`card-pricing flex flex-col ${pkg.highlighted ? "highlighted" : ""}`}
                 >
-                  <span className="label-small mb-3" style={{ color: pkg.highlighted ? "var(--color-light-48)" : "var(--color-text-48)" }}>
+                  <span className="label-small mb-3">
                     {pkg.label}
                   </span>
                   <h3 className="text-h4 mb-2">{pkg.name}</h3>
                   <div className="flex items-baseline gap-1 mb-4">
                     <span className="text-h3 font-normal">{pkg.price}</span>
-                    <span className="text-small" style={{ color: pkg.highlighted ? "var(--color-light-48)" : "var(--color-text-48)" }}>
+                    <span className="text-small">
                       {pkg.unit}
                     </span>
                   </div>
-                  <p className="text-small mb-6" style={{ color: pkg.highlighted ? "var(--color-light-64)" : "var(--color-text-64)" }}>
+                  <p className="text-small mb-6">
                     {pkg.desc}
                   </p>
 
@@ -178,7 +179,7 @@ export default function AraikPage() {
 
                   <div className="divider mb-6" />
 
-                  <span className="label-small mb-4" style={{ color: pkg.highlighted ? "var(--color-light-48)" : "var(--color-text-48)" }}>
+                  <span className="label-small mb-4">
                     TARTALMAZZA
                   </span>
                   <ul className="flex flex-col gap-3 flex-1">
@@ -186,8 +187,7 @@ export default function AraikPage() {
                       <li
                         key={j}
                         className="flex items-start gap-3 text-small"
-                        style={{ color: pkg.highlighted ? "var(--color-light-88)" : "var(--color-text)" }}
-                      >
+                                             >
                         <Tick />
                         {f}
                       </li>
@@ -215,7 +215,7 @@ export default function AraikPage() {
               <Reveal key={i} delay={i * 100}>
                 <div className="card-pricing h-full">
                   <h3 className="text-h4 text-light mb-3">{g.title}</h3>
-                  <p className="text-small text-light-64" style={{ lineHeight: 1.6 }}>
+                  <p className="text-small text-light-64 leading-body">
                     {g.desc}
                   </p>
                 </div>
@@ -248,17 +248,15 @@ export default function AraikPage() {
                         {item.q}
                       </span>
                       <span
-                        className="shrink-0 text-xl text-text-48 transition-transform duration-300"
-                        style={{ transform: isOpen ? "rotate(45deg)" : "rotate(0deg)" }}
+                        className={`shrink-0 text-xl text-text-48 transition-transform duration-300 ${isOpen ? "rotate-45" : ""}`}
                       >
                         +
                       </span>
                     </button>
                     <div
-                      className="overflow-hidden transition-all duration-300"
-                      style={{ maxHeight: isOpen ? 500 : 0, opacity: isOpen ? 1 : 0 }}
+                      className={`faq-answer ${isOpen ? "open" : ""}`}
                     >
-                      <p className="text-small text-text-64 pt-4" style={{ lineHeight: 1.6 }}>
+                      <p className="text-small text-text-64 pt-4 leading-body">
                         {item.a}
                       </p>
                     </div>
@@ -272,7 +270,7 @@ export default function AraikPage() {
       </section>
 
       {/* ===== CTA ===== */}
-      <section className="section-padding-lg" style={{ backgroundColor: "var(--color-bg-stone)" }}>
+      <section className="section-padding-lg bg-stone">
         <div className="container-main">
           <Reveal>
             <div className="text-center">
@@ -282,14 +280,13 @@ export default function AraikPage() {
               <p className="mt-4 text-h5 text-text-48">
                 30 perces konzultáció. Ingyenes. Kötöttségek nélkül.
               </p>
-              <a
+              <MagneticButton
                 href={CTA_URL}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="btn-dark mt-10 inline-flex"
+                strength={0.25}
               >
                 Konzultáció foglalás
-              </a>
+              </MagneticButton>
             </div>
           </Reveal>
         </div>

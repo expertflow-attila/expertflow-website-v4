@@ -78,7 +78,7 @@ export default function AszfPage() {
             <Reveal key={i} delay={i * 40}>
               <div className="mb-12">
                 <h2 className="text-h4 text-text mb-4">{s.title}</h2>
-                <p className="text-body text-text-64 whitespace-pre-line" style={{ lineHeight: 1.7 }}>
+                <p className="text-body text-text-64 whitespace-pre-line leading-legal">
                   {s.content}
                 </p>
               </div>

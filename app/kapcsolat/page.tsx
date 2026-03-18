@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Reveal } from "@/components/scroll-reveal";
+import { MagneticButton } from "@/components/magnetic-button";
 
 const CTA_URL = "https://cal.com/attila-nagy-8uefco/30min";
 
@@ -103,7 +104,7 @@ export default function KapcsolatPage() {
       </section>
 
       {/* ===== FORM + ATTILA ===== */}
-      <section className="section-padding-md" style={{ backgroundColor: "var(--color-bg-stone)" }}>
+      <section className="section-padding-md bg-stone">
         <div className="container-main">
           <div className="grid-2col items-start">
             {/* Left — Form */}
@@ -177,7 +178,7 @@ export default function KapcsolatPage() {
                   />
                 </div>
                 <h3 className="text-h4 text-text mb-2">Nagy Attila</h3>
-                <p className="text-small text-text-64" style={{ lineHeight: 1.6 }}>
+                <p className="text-small text-text-64 leading-body">
                   Egyéni vállalkozóknak segítek AI-alapú rendszereket
                   felépíteni, amelyek a háttérből támogatják a működést.
                 </p>
@@ -198,29 +199,16 @@ export default function KapcsolatPage() {
           </Reveal>
 
           <div className="relative pl-14">
-            <div
-              className="absolute top-0 bottom-0 w-px"
-              style={{ left: 19, backgroundColor: "var(--color-text-8)" }}
-            />
+            <div className="timeline-line" />
 
             {timeline.map((step, i) => (
               <Reveal key={step.num} delay={i * 80}>
                 <div className="relative pb-10">
-                  <div
-                    className="absolute flex items-center justify-center rounded-full border"
-                    style={{
-                      left: -56,
-                      top: 0,
-                      width: 40,
-                      height: 40,
-                      borderColor: "var(--color-text-16)",
-                      backgroundColor: "var(--color-bg)",
-                    }}
-                  >
+                  <div className="timeline-circle">
                     <span className="label-small text-text">{step.num}</span>
                   </div>
                   <h3 className="text-h5 text-text font-medium">{step.title}</h3>
-                  <p className="text-small text-text-64 mt-2 max-w-[540px]" style={{ lineHeight: 1.6 }}>
+                  <p className="text-small text-text-64 mt-2 max-w-[540px] leading-body">
                     {step.desc}
                   </p>
                 </div>
@@ -241,14 +229,13 @@ export default function KapcsolatPage() {
               <p className="mt-4 text-h5 text-light-48">
                 30 perc. Ingyenes. Kötöttségek nélkül.
               </p>
-              <a
+              <MagneticButton
                 href={CTA_URL}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="btn-outline-light mt-10 inline-flex"
+                strength={0.25}
               >
                 Konzultáció foglalás
-              </a>
+              </MagneticButton>
             </div>
           </Reveal>
         </div>

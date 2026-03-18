@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { MagneticButton } from "@/components/magnetic-button";
 
 const navLinks = [
   { href: "/szolgaltatas", label: "Szolgáltatás" },
@@ -18,15 +19,7 @@ export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header
-      className="fixed top-0 left-0 w-full z-50"
-      style={{
-        backgroundColor: "#f6f3f0bd",
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
-        fontFamily: "var(--font-sans)",
-      }}
-    >
+    <header className="nav-header">
       <nav className="mx-auto max-w-[1200px] flex items-center justify-between px-6 py-4">
         {/* Logo */}
         <Link href="/" className="shrink-0">
@@ -45,7 +38,7 @@ export default function Navigation() {
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="text-[14px] font-normal text-[#100f12] hover:opacity-70 transition-opacity"
+                className="nav-link"
               >
                 {link.label}
               </Link>
@@ -54,14 +47,13 @@ export default function Navigation() {
         </ul>
 
         {/* Desktop CTA */}
-        <a
+        <MagneticButton
           href={CTA_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hidden md:inline-block rounded-full bg-[#363637] px-6 py-2.5 text-[14px] font-normal text-[#f6f3f0] hover:opacity-90 transition-opacity"
+          className="nav-cta hidden md:inline-block"
+          strength={0.2}
         >
           Konzultáció
-        </a>
+        </MagneticButton>
 
         {/* Mobile hamburger */}
         <button
@@ -71,11 +63,11 @@ export default function Navigation() {
         >
           {mobileOpen ? (
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M15 5L5 15M5 5l10 10" stroke="#100f12" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M15 5L5 15M5 5l10 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           ) : (
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M3 5h14M3 10h14M3 15h14" stroke="#100f12" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           )}
         </button>
@@ -83,10 +75,9 @@ export default function Navigation() {
 
       {/* Mobile menu */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+        className={`md:hidden overflow-hidden transition-all duration-300 bg-bg ${
           mobileOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
-        style={{ backgroundColor: "#f6f3f0", fontFamily: "Arial, Helvetica, sans-serif" }}
       >
         <ul className="flex flex-col items-center gap-6 py-8">
           {navLinks.map((link) => (
@@ -94,7 +85,7 @@ export default function Navigation() {
               <Link
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="text-[14px] font-normal text-[#100f12] hover:opacity-70 transition-opacity"
+                className="nav-link"
               >
                 {link.label}
               </Link>
@@ -106,7 +97,7 @@ export default function Navigation() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMobileOpen(false)}
-              className="inline-block rounded-full bg-[#363637] px-6 py-2.5 text-[14px] font-normal text-[#f6f3f0] hover:opacity-90 transition-opacity"
+              className="nav-cta"
             >
               Konzultáció
             </a>
