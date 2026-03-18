@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Reveal } from "@/components/scroll-reveal";
-import { MagneticButton } from "@/components/magnetic-button";
 
 const CTA_URL = "https://cal.com/attila-nagy-8uefco/30min";
 
@@ -229,13 +228,14 @@ export default function KapcsolatPage() {
               <p className="mt-4 text-h5 text-light-48">
                 30 perc. Ingyenes. Kötöttségek nélkül.
               </p>
-              <MagneticButton
+              <a
                 href={CTA_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-outline-light mt-10 inline-flex"
-                strength={0.25}
               >
                 Konzultáció foglalás
-              </MagneticButton>
+              </a>
             </div>
           </Reveal>
         </div>

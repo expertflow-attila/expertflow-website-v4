@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import { Reveal } from "@/components/scroll-reveal";
-import { MagneticButton } from "@/components/magnetic-button";
 
 export const metadata: Metadata = {
   title: "Referenciák",
@@ -165,13 +164,14 @@ export default function ReferenciakPage() {
               <p className="text-body text-text-48 mb-10">
                 30 perces konzultáció. Ingyenes. Értékesítés nélkül.
               </p>
-              <MagneticButton
+              <a
                 href={CTA_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-dark"
-                strength={0.25}
               >
                 Konzultáció foglalás
-              </MagneticButton>
+              </a>
             </div>
           </Reveal>
         </div>

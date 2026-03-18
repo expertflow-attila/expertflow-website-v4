@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { MagneticButton } from "@/components/magnetic-button";
 
 const navLinks = [
   { href: "/szolgaltatas", label: "Szolgáltatás" },
@@ -20,26 +19,27 @@ export default function Navigation() {
 
   return (
     <header className="nav-header">
-      <nav className="mx-auto max-w-[1200px] flex items-center justify-between px-6 py-4">
+      <nav className="nav-wrap">
+        {/* Background blur layer */}
+        <div className="nav-bg" />
+
         {/* Logo */}
-        <Link href="/" className="shrink-0">
+        <Link href="/" className="shrink-0 relative z-[1]">
           <Image
             src="/images/logo.svg"
             alt="Expert Flow"
-            width={160}
-            height={40}
+            width={127}
+            height={32}
             priority
+            className="w-full max-w-[127px]"
           />
         </Link>
 
         {/* Desktop links */}
-        <ul className="hidden md:flex items-center gap-8">
+        <ul className="hidden lg:flex items-center gap-0 relative z-[1]">
           {navLinks.map((link) => (
             <li key={link.href}>
-              <Link
-                href={link.href}
-                className="nav-link"
-              >
+              <Link href={link.href} className="nav-link">
                 {link.label}
               </Link>
             </li>
@@ -47,26 +47,27 @@ export default function Navigation() {
         </ul>
 
         {/* Desktop CTA */}
-        <MagneticButton
+        <a
           href={CTA_URL}
-          className="nav-cta hidden md:inline-block"
-          strength={0.2}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="nav-cta hidden lg:inline-flex relative z-[1]"
         >
           Konzultáció
-        </MagneticButton>
+        </a>
 
         {/* Mobile hamburger */}
         <button
           onClick={() => setMobileOpen((prev) => !prev)}
-          className="md:hidden w-8 h-8 flex items-center justify-center"
+          className="lg:hidden relative z-[1] border border-[rgba(16,15,18,0.32)] rounded-full w-10 h-10 flex items-center justify-center"
           aria-label={mobileOpen ? "Menü bezárása" : "Menü megnyitása"}
         >
           {mobileOpen ? (
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
               <path d="M15 5L5 15M5 5l10 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           ) : (
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
               <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           )}
@@ -75,11 +76,11 @@ export default function Navigation() {
 
       {/* Mobile menu */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-300 bg-bg ${
+        className={`lg:hidden overflow-hidden transition-all duration-300 bg-bg rounded-b-2xl ${
           mobileOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <ul className="flex flex-col items-center gap-6 py-8">
+        <ul className="flex flex-col items-center gap-4 py-8">
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link

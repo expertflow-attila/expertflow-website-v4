@@ -55,7 +55,7 @@ export default function RootLayout({
     <html lang="hu" className={`${dmSans.variable} ${merriweather.variable}`}>
       <body className="antialiased">
         <Navigation />
-        <main className="pt-[72px]">{children}</main>
+        <main className="pt-[80px]">{children}</main>
         <Footer />
       </body>
     </html>

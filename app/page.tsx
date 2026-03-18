@@ -4,7 +4,6 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Reveal, StaggerContainer, StaggerItem } from "@/components/scroll-reveal";
-import { MagneticButton } from "@/components/magnetic-button";
 
 /* ------------------------------------------------------------------ */
 /*  DATA                                                               */
@@ -151,12 +150,12 @@ export default function Home() {
 
           <Reveal delay={350}>
             <div className="mt-10 flex flex-wrap gap-4">
-              <MagneticButton href="https://cal.com/attila-nagy-8uefco/30min" className="btn-dark" strength={0.25}>
+              <a href="https://cal.com/attila-nagy-8uefco/30min" target="_blank" rel="noopener noreferrer" className="btn-dark">
                 Ingyenes konzultáció
-              </MagneticButton>
-              <MagneticButton href="/szolgaltatas" className="btn-outline" strength={0.2}>
+              </a>
+              <Link href="/szolgaltatas" className="btn-outline">
                 Szolgáltatásaink
-              </MagneticButton>
+              </Link>
             </div>
           </Reveal>
         </div>
@@ -227,8 +226,7 @@ export default function Home() {
                   alt={serviceTabs[serviceTab].name}
                   fill
                   sizes="(max-width: 768px) 100vw, 940px"
-                  className="object-cover"
-                  className="rounded-xl"
+                  className="object-cover rounded-xl"
                 />
                 <div className="overlay-gradient rounded-xl" />
               </div>

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Reveal } from "@/components/scroll-reveal";
-import { MagneticButton } from "@/components/magnetic-button";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -481,13 +480,14 @@ export default function SzolgaltatasPage() {
                 ))}
 
                 <div className="mt-4">
-                  <MagneticButton
+                  <a
                     href={CTA_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="btn-dark"
-                    strength={0.25}
                   >
                     Jelentkezek konzultációra
-                  </MagneticButton>
+                  </a>
                 </div>
               </div>
             </div>
