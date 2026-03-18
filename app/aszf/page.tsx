@@ -1,8 +1,7 @@
 import { Metadata } from "next";
-import { Reveal } from "@/components/scroll-reveal";
 
 export const metadata: Metadata = {
-  title: "ÁSZF — Expert Flow",
+  title: "ÁSZF",
   description: "Az Expert Flow Általános Szerződési Feltételei.",
 };
 
@@ -61,28 +60,27 @@ const sections = [
 
 export default function AszfPage() {
   return (
-    <section className="section-padding-md">
-      <div className="container-main">
-        <Reveal>
-          <p className="label-small text-text-48 mb-4">Jogi nyilatkozatok</p>
-          <h1 className="text-h1 text-text mb-4">
-            Általános Szerződési Feltételek
-          </h1>
-          <p className="text-small text-text-48 mb-16">
-            Utolsó frissítés: 2026. március 1.
-          </p>
-        </Reveal>
+    <section className="py-24 lg:py-32">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+        <div className="flex items-center gap-4 mb-8">
+          <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Jogi nyilatkozatok</span>
+          <div className="flex-1 h-px bg-foreground/10" />
+        </div>
+        <h1 className="text-[clamp(2rem,5vw,3.5rem)] font-display leading-[1.1] tracking-tight mb-4">
+          Általános Szerződési Feltételek
+        </h1>
+        <p className="text-sm text-muted-foreground mb-16">
+          Utolsó frissítés: 2026. március 1.
+        </p>
 
         <div className="max-w-[720px]">
           {sections.map((s, i) => (
-            <Reveal key={i} delay={i * 40}>
-              <div className="mb-12">
-                <h2 className="text-h4 text-text mb-4">{s.title}</h2>
-                <p className="text-body text-text-64 whitespace-pre-line leading-legal">
-                  {s.content}
-                </p>
-              </div>
-            </Reveal>
+            <div key={i} className="mb-12">
+              <h2 className="text-xl font-display tracking-tight mb-4">{s.title}</h2>
+              <p className="text-base text-muted-foreground whitespace-pre-line leading-relaxed">
+                {s.content}
+              </p>
+            </div>
           ))}
         </div>
       </div>

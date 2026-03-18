@@ -1,826 +1,199 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
 
 /* ================================================================
-   WEBFLOW DESIGN SYSTEM — pixel-perfect match
-   Source: expertflow.hu Webflow CSS (2026-03-17)
+   DESIGN TOKENS — Optimus design system adapted for Expert Flow
    ================================================================ */
+
+:root {
+  --background: oklch(0.985 0.002 90);
+  --foreground: oklch(0.12 0.01 60);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.12 0.01 60);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.12 0.01 60);
+  --primary: oklch(0.12 0.01 60);
+  --primary-foreground: oklch(0.985 0.002 90);
+  --secondary: oklch(0.96 0.005 90);
+  --secondary-foreground: oklch(0.12 0.01 60);
+  --muted: oklch(0.94 0.005 90);
+  --muted-foreground: oklch(0.45 0.02 60);
+  --accent: oklch(0.92 0.01 90);
+  --accent-foreground: oklch(0.12 0.01 60);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.88 0.01 90);
+  --input: oklch(0.92 0.01 90);
+  --ring: oklch(0.12 0.01 60);
+  --chart-1: oklch(0.12 0.01 60);
+  --chart-2: oklch(0.35 0.02 60);
+  --chart-3: oklch(0.55 0.02 60);
+  --chart-4: oklch(0.70 0.02 60);
+  --chart-5: oklch(0.85 0.01 60);
+  --radius: 0.25rem;
+}
 
 @theme inline {
-  /* Backgrounds */
-  --color-bg: #f6f3f0;
-  --color-bg-dark: #0a0a0b;
-  --color-bg-dark-alt: #100f12;
-  --color-bg-stone: #ebe8e3;
-  --color-bg-card: #f5f3f2;
-  --color-bg-alt: #fcfbfa;
-  --color-bg-nav: rgba(246,243,240,0.64);
-  --color-bg-contact: #efebe8;
-
-  /* Text — dark */
-  --color-text: #100f12;
-  --color-text-88: #100f12e0;
-  --color-text-64: #100f12a3;
-  --color-text-48: #100f127a;
-  --color-text-32: #100f1252;
-  --color-text-16: #100f1229;
-  --color-text-8: #100f1214;
-  --color-text-4: #100f120a;
-
-  /* Text — light */
-  --color-light: #f6f3f0;
-  --color-light-88: #f6f3f0e0;
-  --color-light-64: #f6f3f0a3;
-  --color-light-48: #f6f3f07a;
-  --color-light-32: #f6f3f052;
-  --color-light-16: #f6f3f029;
-
-  /* Accent */
-  --color-accent: #363637;
-  --color-cta: #b6e400;
-  --color-btn-header: #e3e1dd;
-
-  /* Font — from Webflow: Arial is primary */
-  --font-body: Arial, "Helvetica Neue", Helvetica, sans-serif;
-  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
-}
-
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-body);
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-}
-
-a {
-  color: var(--color-text);
-  text-decoration: none;
+  --font-sans: var(--font-instrument), 'Instrument Sans', system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), 'JetBrains Mono', monospace;
+  --font-display: var(--font-instrument-serif), 'Instrument Serif', Georgia, serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
 /* ================================================================
-   SECTION SPACING (matches Webflow tokens)
+   BASE STYLES
    ================================================================ */
-.section-padding-sm { padding-top: 80px; padding-bottom: 80px; }
-.section-padding-md { padding-top: 120px; padding-bottom: 120px; }
-.section-padding-lg { padding-top: 160px; padding-bottom: 160px; }
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
 
 /* ================================================================
-   CONTAINER (Webflow: max-width 1800px, padding 32px sides)
+   UTILITIES — animations, effects, marquee
    ================================================================ */
-.container-main {
-  max-width: 1800px;
-  margin: 0 auto;
-  padding-left: 32px;
-  padding-right: 32px;
-}
-.container-narrow {
-  max-width: 654px;
-  margin: 0 auto;
-}
-.container-mid {
-  max-width: 912px;
-  margin: 0 auto;
-}
-.container-wide {
-  max-width: 1800px;
-  margin: 0 auto;
-  padding-left: 120px;
-  padding-right: 120px;
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .text-stroke {
+    -webkit-text-stroke: 1.5px currentColor;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Marquee */
+  .marquee {
+    animation: marquee 30s linear infinite;
+  }
+  .marquee-reverse {
+    animation: marquee-reverse 25s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @keyframes marquee-reverse {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+
+  /* Line reveal */
+  .line-reveal {
+    clip-path: inset(0 100% 0 0);
+    animation: line-reveal 0.8s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+  }
+  @keyframes line-reveal {
+    to { clip-path: inset(0 0 0 0); }
+  }
+
+  /* Hover lift */
+  .hover-lift {
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .hover-lift:hover {
+    transform: translateY(-4px);
+  }
+
+  /* Letter spin */
+  .letter-spin {
+    display: inline-block;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .letter-spin:hover {
+    transform: rotateY(360deg);
+  }
+
+  /* Character animation */
+  .animate-char-in {
+    animation: char-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    opacity: 0;
+    filter: blur(40px);
+    transform: translateY(100%);
+  }
+  @keyframes char-in {
+    0% {
+      opacity: 0;
+      filter: blur(40px);
+      transform: translateY(100%);
+    }
+    100% {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+  }
+
+  /* Noise overlay */
+  .noise-overlay {
+    position: relative;
+  }
+  .noise-overlay::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* Sketch border */
+  .border-sketch {
+    border: 1px solid transparent;
+    background:
+      linear-gradient(var(--background), var(--background)) padding-box,
+      linear-gradient(135deg, var(--foreground) 25%, transparent 25%, transparent 50%, var(--foreground) 50%, var(--foreground) 75%, transparent 75%) border-box;
+    background-size: 100% 100%, 8px 8px;
+  }
 }
 
 /* ================================================================
-   DARK SECTION
+   SECTION DARK (inverted)
    ================================================================ */
 .section-dark {
-  background-color: var(--color-bg-dark-alt);
-  color: var(--color-light);
-}
-.section-darkest {
-  background-color: var(--color-bg-dark);
-  color: var(--color-light);
-  border-top: 1px solid rgba(246,243,236,0.16);
-  border-bottom: 1px solid rgba(246,243,236,0.16);
-}
-
-/* ================================================================
-   TYPOGRAPHY — Webflow exact values
-   h1-h6 use font-weight 400, body uses 500
-   ================================================================ */
-.text-h1 {
-  font-size: 60px;
-  font-weight: 400;
-  line-height: 64px;
-  letter-spacing: -2.5px;
-  text-wrap: balance;
-}
-.text-h1-2 {
-  font-size: 60px;
-  font-weight: 400;
-  line-height: 60px;
-  letter-spacing: -2.5px;
-}
-.text-h2 {
-  font-size: 48px;
-  font-weight: 400;
-  line-height: 52px;
-  letter-spacing: -2px;
-  text-wrap: balance;
-}
-.text-h3 {
-  font-size: 40px;
-  font-weight: 400;
-  line-height: 44px;
-  letter-spacing: -1px;
-}
-.text-h4 {
-  font-size: 32px;
-  font-weight: 400;
-  line-height: 40px;
-  letter-spacing: -1px;
-}
-.text-h5 {
-  font-size: 28px;
-  font-weight: 500;
-  line-height: 32px;
-  letter-spacing: -1px;
-}
-.text-h6 {
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 28px;
-  letter-spacing: -0.5px;
-}
-.text-body-1 {
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 28px;
-}
-.text-body {
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 24px;
-}
-.text-body-3 {
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 16px;
-}
-.text-small {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-}
-.text-medium {
-  font-size: 96px;
-  font-weight: 500;
-  line-height: 96px;
-  letter-spacing: -4px;
-  color: var(--color-text-16);
-}
-
-/* Labels — Webflow exact */
-.label-small {
-  font-size: 12px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  font-weight: 500;
-  line-height: 16px;
-}
-.label-xs {
-  font-size: 10px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  font-weight: 500;
-  line-height: 12px;
-}
-
-/* Button text */
-.text-button {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
-}
-
-/* ================================================================
-   IMAGES — Webflow exact
-   ================================================================ */
-.image-cover {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.aspect-portrait { aspect-ratio: 3 / 4; }
-.aspect-landscape { aspect-ratio: 16 / 10; }
-.aspect-wide { aspect-ratio: 2 / 1; }
-.aspect-square { aspect-ratio: 1 / 1; }
-.aspect-hero { aspect-ratio: 16 / 7; }
-
-/* ================================================================
-   MARQUEE — Webflow exact sizes
-   ================================================================ */
-@keyframes marquee-scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.marquee-track {
-  display: flex;
-  animation: marquee-scroll 40s linear infinite;
-}
-.marquee-track:hover {
-  animation-play-state: paused;
-}
-
-.image-wrap-marquee {
-  flex-shrink: 0;
-  width: 568px;
-  height: 480px;
-  border-radius: 8px;
-  overflow: hidden;
-  margin-right: 16px;
-}
-.image-wrap-marquee.large {
-  width: 672px;
-}
-.image-wrap-marquee.cube {
-  width: 300px;
-  height: 300px;
-}
-
-/* ================================================================
-   TABS — Webflow dark section tabs
-   ================================================================ */
-.tab-item {
-  cursor: pointer;
-  gap: 12px;
-  color: var(--color-light-64);
-  border-bottom: 1px solid rgba(246,243,236,0.16);
-  padding: 12px 0;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 24px;
-  background: none;
-  transition: padding 0.4s;
-  text-align: left;
-  display: flex;
-  align-items: center;
-}
-.tab-item.active {
-  color: var(--color-light-88);
-  padding-left: 20px;
-}
-/* Light page tabs (for szolgaltatas FAQ, etc.) */
-.tab-item-light {
-  cursor: pointer;
-  padding: 12px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  border-radius: 32px;
-  background: transparent;
-  color: var(--color-text-48);
-  transition: background-color 0.3s, color 0.3s;
-  border: none;
-}
-.tab-item-light.active {
-  background-color: var(--color-bg-dark-alt);
-  color: var(--color-light);
-}
-
-/* ================================================================
-   SERVICE ITEM / STEP — Webflow exact
-   ================================================================ */
-.service-item {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  padding: 32px 0;
-  border-bottom: 1px solid rgba(16,16,18,0.16);
-  align-items: start;
-  transition: color 0.2s;
-}
-.service-item:first-child {
-  border-top: 1px solid rgba(16,16,18,0.16);
-}
-
-/* ================================================================
-   BUTTONS — Webflow exact
-   ================================================================ */
-
-/* Primary CTA (green) */
-.btn-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 16px;
-  color: #1a1a17;
-  border-radius: 32px;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
-  text-decoration: none;
-  cursor: pointer;
-  border: none;
-  position: relative;
-  background-color: var(--color-cta);
-  transition: background-color 1s, color 1s;
-  box-shadow: inset 0 1px rgba(26,26,23,0.04), inset 0 -1px rgba(26,26,23,0.08);
-}
-.btn-cta:hover {
-  background-color: rgba(26,26,23,0.88);
-  color: var(--color-light);
-}
-
-/* Dark button */
-.btn-dark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 16px;
-  background-color: #1a1a17;
-  color: var(--color-light);
-  border-radius: 32px;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
-  text-decoration: none;
-  transition: background-color 1s;
-  cursor: pointer;
-  border: none;
-  box-shadow: inset 0 1px rgba(26,26,23,0.04), inset 0 -1px rgba(26,26,23,0.08);
-}
-.btn-dark:hover {
-  background-color: rgba(26,26,23,0.88);
-}
-
-/* Secondary button (sand) */
-.btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 16px;
-  background-color: var(--color-bg-stone);
-  color: var(--color-text);
-  border: 1px solid transparent;
-  border-radius: 32px;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
-  text-decoration: none;
-  transition: background-color 1s, border-color 1s, color 1s;
-  cursor: pointer;
-  box-shadow: inset 0 1px rgba(16,15,18,0.04), inset 0 -1px rgba(16,15,18,0.08);
-}
-.btn-secondary:hover {
-  background-color: rgba(16,15,18,0.88);
-  border-color: rgba(246,243,240,0.08);
-  color: var(--color-light);
-}
-
-/* Outline light (dark section) */
-.btn-outline-light {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 16px;
-  background-color: rgba(16,15,18,0.04);
-  color: var(--color-light);
-  border: 1px solid transparent;
-  border-radius: 32px;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
-  text-decoration: none;
-  transition: background-color 1s, border-color 1s;
-  cursor: pointer;
-  backdrop-filter: blur(20px);
-  box-shadow: inset 0 1px rgba(16,15,18,0.04), inset 0 -1px rgba(16,15,18,0.08);
-}
-.btn-outline-light:hover {
-  background-color: rgba(16,15,18,0.88);
-  border-color: rgba(246,243,240,0.08);
-}
-
-/* Outline dark */
-.btn-outline {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 16px;
-  background-color: rgba(244,243,234,0.32);
-  color: var(--color-text);
-  border: 1px solid rgba(26,26,23,0.32);
-  border-radius: 32px;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
-  text-decoration: none;
-  transition: background-color 1s, border-color 1s, color 1s;
-  cursor: pointer;
-}
-.btn-outline:hover {
-  background-color: rgba(26,26,23,0.88);
-  border-color: rgba(244,243,234,0.08);
-  color: var(--color-light);
-}
-
-/* ================================================================
-   CARDS — Webflow exact
-   ================================================================ */
-
-/* Pricing card */
-.card-pricing {
-  gap: 32px;
-  background-color: var(--color-bg-card);
-  border-radius: 8px;
-  flex-flow: column;
-  width: 100%;
-  padding: 32px;
-  display: flex;
-}
-.card-pricing.highlighted {
-  background-color: var(--color-bg-dark-alt);
-  color: var(--color-light);
-}
-.card-pricing.highlighted .label-small { color: var(--color-light-48); }
-.card-pricing.highlighted .text-h4 { color: var(--color-light); }
-.card-pricing.highlighted .text-small { color: var(--color-light-64); }
-.card-pricing.highlighted .tick-icon { color: var(--color-light-64); }
-.card-pricing.highlighted .divider { background-color: rgba(246,243,236,0.16); }
-.card-pricing.highlighted li { color: var(--color-light-88); }
-.card-pricing.highlighted .btn-dark {
-  background-color: var(--color-light);
-  color: var(--color-text);
-}
-.card-pricing.highlighted .btn-dark:hover {
-  background-color: var(--color-light-88);
-}
-
-/* Feature card (dark, with overlay) */
-.card-feature {
-  border: 1px solid rgba(246,243,236,0.16);
-  border-radius: 8px;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Marquee card (dark) */
-.card-marquee {
-  gap: 48px;
-  color: var(--color-light);
-  background-color: var(--color-bg-dark-alt);
-  border-radius: 8px;
-  flex-flow: column;
-  justify-content: space-between;
-  width: 568px;
-  padding: 24px;
-  display: flex;
-}
-
-/* ================================================================
-   DIVIDERS
-   ================================================================ */
-.divider {
-  width: 100%;
-  height: 1px;
-  background-color: rgba(16,15,18,0.16);
-}
-.section-dark .divider {
-  background-color: rgba(246,243,236,0.16);
-}
-
-/* ================================================================
-   TICK ICON
-   ================================================================ */
-.tick-icon {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-  color: var(--color-text-48);
-}
-
-/* ================================================================
-   EYEBROW / LABEL with dot
-   ================================================================ */
-.eyebrow {
-  gap: 16px;
-  color: var(--color-text-48);
-  justify-content: flex-start;
-  align-items: center;
-  display: inline-flex;
-}
-.eyebrow-dot {
-  background-color: #939090;
-  border-radius: 2px;
-  width: 8px;
-  height: 8px;
-}
-
-/* ================================================================
-   DOTS DECORATION
-   ================================================================ */
-.dots-decoration {
-  z-index: 0;
-  pointer-events: none;
-  width: 1440px;
-  max-width: none;
-  height: 1080px;
-  margin-left: 50%;
-  margin-right: 50%;
-  position: absolute;
-  inset: 0% 0% auto;
-  transform: translate(-50%);
-}
-
-/* ================================================================
-   OVERLAY GRADIENT
-   ================================================================ */
-.overlay-gradient {
-  background-image: linear-gradient(0deg, #0a0a0b, transparent 50%);
-  flex-flow: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 32px;
-  display: flex;
-  position: absolute;
-  inset: 0%;
-}
-
-/* ================================================================
-   SHADOW EDGES (marquee)
-   ================================================================ */
-.shadow-left {
-  pointer-events: none;
-  background-image: linear-gradient(90deg, var(--color-bg), transparent);
-  width: 120px;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 2;
-}
-.shadow-right {
-  pointer-events: none;
-  background-image: linear-gradient(90deg, transparent, var(--color-bg));
-  width: 120px;
-  height: 100%;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 2;
-}
-
-/* ================================================================
-   GRIDS — Webflow exact
-   ================================================================ */
-.grid-2col {
-  display: grid;
-  grid-template-columns: 0.8fr 1fr;
-  gap: 80px;
-}
-.grid-2col.reverse {
-  grid-template-columns: 1fr 0.8fr;
-}
-.grid-2col.even {
-  grid-template-columns: 1fr 1fr;
-}
-
-.grid-3col {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-
-.grid-solutions {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 16px;
-}
-
-.grid-about {
-  grid-template-columns: 0.8fr 1fr;
-}
-
-/* ================================================================
-   FORM ELEMENTS
-   ================================================================ */
-.form-input {
-  width: 100%;
-  padding: 14px 16px;
-  border: 1px solid var(--color-text-16);
-  border-radius: 8px;
-  background: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.25s ease;
-}
-.form-input:focus {
-  outline: none;
-  border-color: var(--color-text-48);
-  box-shadow: 0 0 0 3px var(--color-text-4);
-}
-.form-input::placeholder { color: var(--color-text-32); }
-
-.form-textarea {
-  width: 100%;
-  padding: 14px 16px;
-  border: 1px solid var(--color-text-16);
-  border-radius: 8px;
-  background: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.25s ease;
-  resize: vertical;
-  min-height: 120px;
-}
-.form-textarea:focus {
-  outline: none;
-  border-color: var(--color-text-48);
-  box-shadow: 0 0 0 3px var(--color-text-4);
-}
-.form-textarea::placeholder { color: var(--color-text-32); }
-
-.form-label {
-  display: block;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--color-text-48);
-  margin-bottom: 8px;
-  line-height: 16px;
-}
-
-/* ================================================================
-   FOCUS / SELECTION
-   ================================================================ */
-*:focus-visible {
-  outline: 2px solid var(--color-text);
-  outline-offset: 2px;
-}
-.section-dark *:focus-visible {
-  outline-color: var(--color-light);
-}
-
-::selection {
-  background: var(--color-text);
-  color: var(--color-light);
-}
-
-/* ================================================================
-   NOISE TEXTURE
-   ================================================================ */
-.noise-overlay::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-}
-
-/* ================================================================
-   NAVIGATION — Webflow exact
-   ================================================================ */
-.nav-header {
-  z-index: 999;
-  justify-content: center;
-  align-items: center;
-  padding-top: 16px;
-  padding-left: 24px;
-  padding-right: 24px;
-  display: flex;
-  position: fixed;
-  inset: 0% 0% auto;
-}
-.nav-bg {
-  background-color: var(--color-bg-nav);
-  backdrop-filter: blur(32px);
-  -webkit-backdrop-filter: blur(32px);
-  border-radius: 16px;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  inset: 0%;
-}
-.nav-wrap {
-  gap: 24px;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  max-width: 1800px;
-  margin: 0 auto;
-  padding: 8px 8px 8px 16px;
-  display: flex;
-  position: relative;
-}
-.nav-link {
-  color: #1a1a17;
-  letter-spacing: 0;
-  cursor: pointer;
-  border: 1px solid transparent;
-  border-radius: 32px;
-  padding: 12px 16px;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
-  text-decoration: none;
-  transition: background-color 0.3s, border-color 0.3s;
-}
-.nav-link:hover {
-  background-color: var(--color-btn-header);
-  border-color: rgba(26,26,23,0.08);
-}
-.nav-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border-radius: 32px;
-  background-color: var(--color-cta);
-  padding: 12px 16px;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
-  color: #1a1a17;
-  text-decoration: none;
-  transition: background-color 1s, color 1s;
-  box-shadow: inset 0 1px rgba(26,26,23,0.04), inset 0 -1px rgba(26,26,23,0.08);
-}
-.nav-cta:hover {
-  background-color: rgba(26,26,23,0.88);
-  color: var(--color-light);
-}
-
-/* ================================================================
-   FOOTER — Webflow exact
-   ================================================================ */
-.footer-link {
-  color: #1a1a17;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 24px;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-.footer-link:hover {
-  color: var(--color-text-64);
-}
-.footer-legal {
-  color: rgba(26,26,23,0.64);
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 16px;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-.footer-legal:hover {
-  color: #1a1a17;
-}
-.footer-social {
-  color: rgba(2,1,32,0.50);
-  transition: background-color 1s;
-}
-.footer-social:hover {
-  color: #07171f;
-}
-/* Dark footer variant */
-.footer-dark .footer-link {
-  color: var(--color-light);
-}
-.footer-dark .footer-link:hover {
-  color: var(--color-light-64);
-}
-.footer-dark .footer-legal {
-  color: var(--color-light-64);
-}
-.footer-dark .footer-legal:hover {
-  color: var(--color-light);
+  background-color: var(--foreground);
+  color: var(--background);
 }
 
 /* ================================================================
@@ -838,137 +211,66 @@ a {
 }
 
 /* ================================================================
-   DIFFERENCE TABS
+   FORM ELEMENTS
    ================================================================ */
-.diff-tab-btn {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border-radius: 32px;
-  padding: 12px 16px;
-  text-align: left;
+.form-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
   font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
-  color: var(--color-light-48);
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 }
-.diff-tab-btn.active {
-  background-color: rgba(255,255,255,0.06);
-  color: var(--color-light);
+.form-input:focus {
+  outline: none;
+  border-color: var(--foreground);
+  box-shadow: 0 0 0 3px oklch(0.12 0.01 60 / 0.05);
 }
-.diff-tab-dot {
+.form-input::placeholder { color: var(--muted-foreground); }
+
+.form-textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  transition: all 0.25s ease;
+  resize: vertical;
+  min-height: 120px;
+}
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--foreground);
+  box-shadow: 0 0 0 3px oklch(0.12 0.01 60 / 0.05);
+}
+.form-textarea::placeholder { color: var(--muted-foreground); }
+
+.form-label {
   display: block;
-  width: 8px;
-  height: 8px;
-  flex-shrink: 0;
-  border-radius: 2px;
-  background-color: #939090;
-  transition: all 0.3s ease;
-}
-.diff-tab-dot.active {
-  background-color: var(--color-light);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin-bottom: 8px;
 }
 
 /* ================================================================
-   TIMELINE
+   FOCUS / SELECTION
    ================================================================ */
-.timeline-circle {
-  position: absolute;
-  left: -56px;
-  top: 0;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 100%;
-  border: 1px solid var(--color-text-16);
-  background-color: var(--color-bg);
+*:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 2px;
 }
-.section-dark .timeline-circle {
-  border-color: rgba(246,243,236,0.16);
-  background-color: var(--color-bg-dark);
-}
-.timeline-line {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 19px;
-  width: 1px;
-  background-color: var(--color-text-16);
-}
-.section-dark .timeline-line {
-  background-color: rgba(246,243,236,0.16);
+.section-dark *:focus-visible {
+  outline-color: var(--background);
 }
 
-/* ================================================================
-   COLOR UTILITIES
-   ================================================================ */
-.bg-bg { background-color: var(--color-bg); }
-.bg-stone { background-color: var(--color-bg-stone); }
-.bg-alt { background-color: var(--color-bg-alt); }
-
-.text-text { color: var(--color-text); }
-.text-text-88 { color: var(--color-text-88); }
-.text-text-64 { color: var(--color-text-64); }
-.text-text-48 { color: var(--color-text-48); }
-.text-text-32 { color: var(--color-text-32); }
-.text-text-16 { color: var(--color-text-16); }
-.text-light { color: var(--color-light); }
-.text-light-88 { color: var(--color-light-88); }
-.text-light-64 { color: var(--color-light-64); }
-.text-light-48 { color: var(--color-light-48); }
-.text-light-32 { color: var(--color-light-32); }
-
-/* Line-height utilities */
-.leading-body { line-height: 24px; }
-.leading-legal { line-height: 1.7; }
-
-/* ================================================================
-   RESPONSIVE — Webflow exact breakpoints
-   ================================================================ */
-
-/* Tablet */
-@media (max-width: 991px) {
-  .container-main { padding-left: 24px; padding-right: 24px; }
-  .container-wide { padding-left: 24px; padding-right: 24px; }
-  .service-item { grid-template-columns: 1fr; gap: 16px; }
-  .grid-2col { grid-template-columns: 1fr; gap: 40px; }
-  .grid-3col { grid-template-columns: 1fr; gap: 16px; }
-  .grid-about { grid-template-columns: 1fr; }
-  .image-wrap-marquee { width: 400px; height: 340px; }
-  .image-wrap-marquee.large { width: 500px; }
-  .image-wrap-marquee.cube { width: 200px; height: 200px; }
-}
-
-/* Mobile landscape */
-@media (max-width: 767px) {
-  .text-h1 { font-size: 41px; line-height: 37px; letter-spacing: 1px; }
-  .text-h1-2 { font-size: 40px; }
-  .text-h2 { font-size: 36px; line-height: 40px; letter-spacing: -1.5px; }
-  .text-h3 { font-size: 33px; line-height: 36px; letter-spacing: -0.5px; }
-  .text-h4 { font-size: 28px; line-height: 32px; letter-spacing: -1px; }
-  .text-h5 { font-size: 24px; line-height: 28px; letter-spacing: -0.5px; }
-  .text-h6 { font-size: 20px; line-height: 20px; letter-spacing: -0.25px; }
-  .text-body { font-size: 14px; line-height: 20px; }
-  .text-body-1 { font-size: 16px; line-height: 24px; }
-  .text-medium { font-size: 60px; line-height: 60px; letter-spacing: -2px; }
-  .label-small { font-size: 10px; line-height: 12px; letter-spacing: 0.5px; }
-  .text-button, .text-small { font-size: 12px; line-height: 20px; }
-
-  .container-main { padding-left: 16px; padding-right: 16px; }
-  .section-padding-sm { padding-top: 48px; padding-bottom: 48px; }
-  .section-padding-md { padding-top: 96px; padding-bottom: 96px; }
-  .section-padding-lg { padding-top: 120px; padding-bottom: 120px; }
-}
-
-/* Mobile portrait */
-@media (max-width: 479px) {
-  .image-wrap-marquee { width: 280px; height: 240px; }
-  .image-wrap-marquee.large { width: 340px; }
-  .image-wrap-marquee.cube { width: 160px; height: 160px; }
+::selection {
+  background: var(--foreground);
+  color: var(--background);
 }

@@ -1,11 +1,38 @@
-import { Metadata } from "next";
-import Image from "next/image";
-import { Reveal } from "@/components/scroll-reveal";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Referenciák",
-  description: "Akikkel eddig dolgoztam — minden projektben más a szakma, más a kihívás, de a megközelítés ugyanaz.",
-};
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { ArrowRight } from "lucide-react";
+
+/* ── IntersectionObserver hook ── */
+function useInView(threshold = 0.15) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.unobserve(el); } },
+      { threshold }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return { ref, visible };
+}
+
+function Section({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+  const { ref, visible } = useInView();
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+}
 
 const CTA_URL = "https://cal.com/attila-nagy-8uefco/30min";
 
@@ -37,58 +64,44 @@ const references = [
 ];
 
 const steps = [
-  {
-    number: "01",
-    title: "Megértés",
-    description:
-      "Megértem a szakmádat, a célközönségedet és a kihívásaidat.",
-  },
-  {
-    number: "02",
-    title: "Tervezés",
-    description: "Személyre szabott stratégia és rendszer.",
-  },
-  {
-    number: "03",
-    title: "Megvalósítás",
-    description: "Lépésről lépésre építjük, tesztelve.",
-  },
-  {
-    number: "04",
-    title: "Átadás",
-    description: "Megtanítalak használni és garantálom a támogatást.",
-  },
+  { number: "01", title: "Megértés", description: "Megértem a szakmádat, a célközönségedet és a kihívásaidat." },
+  { number: "02", title: "Tervezés", description: "Személyre szabott stratégia és rendszer." },
+  { number: "03", title: "Megvalósítás", description: "Lépésről lépésre építjük, tesztelve." },
+  { number: "04", title: "Átadás", description: "Megtanítalak használni és garantálom a támogatást." },
 ];
 
 export default function ReferenciakPage() {
   return (
     <>
-      {/* ========== HERO ========== */}
-      <section className="section-padding-md">
-        <div className="container-main">
-          <Reveal>
-            <p className="label-small text-text-48 mb-4">Referenciák</p>
-            <h1 className="text-h1 text-text max-w-3xl">
+      {/* ── HERO ── */}
+      <section className="py-24 lg:py-32">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <Section>
+            <div className="flex items-center gap-4 mb-8">
+              <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Referenciák</span>
+              <div className="flex-1 h-px bg-foreground/10" />
+            </div>
+            <h1 className="text-[clamp(2.5rem,6vw,4.5rem)] font-display leading-[1.05] tracking-tight max-w-3xl">
               Akikkel eddig dolgoztam
             </h1>
-          </Reveal>
-          <Reveal delay={150}>
-            <p className="mt-6 text-body text-text-48 max-w-2xl">
+          </Section>
+          <Section delay={150}>
+            <p className="mt-6 text-lg text-muted-foreground max-w-2xl leading-relaxed">
               Minden projektben más a szakma, más a kihívás &mdash; de a
               megközelítés ugyanaz: először megértem, hogyan dolgozol és kinek
               segítesz, és csak utána építek.
             </p>
-          </Reveal>
+          </Section>
         </div>
       </section>
 
-      {/* ========== REFERENCE CARDS ========== */}
-      <section className="pb-20 md:pb-32">
-        <div className="container-main">
+      {/* ── REFERENCE CARDS ── */}
+      <section className="pb-24 lg:pb-32">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {references.map((ref, i) => (
-              <Reveal key={ref.name} delay={i * 100}>
-                <div className="group overflow-hidden rounded-xl border border-text-8 bg-bg-card transition-all duration-300 hover:border-text-16 hover:shadow-lg">
+              <Section key={ref.name} delay={i * 100}>
+                <div className="group overflow-hidden rounded-lg border border-foreground/10 bg-card transition-all duration-300 hover:border-foreground/20 hover:shadow-lg hover-lift">
                   <div className="relative aspect-[16/10] w-full overflow-hidden">
                     <Image
                       src={ref.image}
@@ -99,81 +112,83 @@ export default function ReferenciakPage() {
                     />
                   </div>
                   <div className="p-6">
-                    <p className="label-small text-text-48 mb-1">
+                    <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-1">
                       {ref.role}
                     </p>
-                    <h3 className="text-h4 text-text mb-2">{ref.name}</h3>
-                    <p className="text-small text-text-48 mb-5">
+                    <h3 className="text-xl font-display tracking-tight mb-2">{ref.name}</h3>
+                    <p className="text-sm text-muted-foreground mb-5">
                       {ref.specialties}
                     </p>
-                    <span className="inline-block rounded-full bg-text-8 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-text-48">
+                    <span className="inline-block rounded-full bg-foreground/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                       Hamarosan
                     </span>
                   </div>
                 </div>
-              </Reveal>
+              </Section>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ========== APPROACH / PROCESS ========== */}
-      <section className="section-dark section-padding-md">
-        <div className="container-main">
-          <Reveal>
-            <p className="label-small text-light-48 mb-4">Megközelítés</p>
-            <h2 className="text-h2 text-light mb-16">
+      {/* ── APPROACH / PROCESS ── */}
+      <section className="section-dark py-24 lg:py-32">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <Section>
+            <div className="flex items-center gap-4 mb-4">
+              <span className="font-mono text-xs uppercase tracking-widest opacity-50">Megközelítés</span>
+              <div className="flex-1 h-px bg-white/10" />
+            </div>
+            <h2 className="text-[clamp(2rem,4vw,3rem)] font-display leading-[1.1] tracking-tight mb-16">
               Hogyan dolgozom?
             </h2>
-          </Reveal>
+          </Section>
 
           <div className="relative pl-14">
-            {/* Vertical line */}
-            <div className="absolute bottom-0 left-[19px] top-0 w-px bg-light-16" />
+            <div className="absolute bottom-0 left-[19px] top-0 w-px bg-white/10" />
 
             <div className="flex flex-col gap-12">
               {steps.map((step, i) => (
-                <Reveal key={step.number} delay={i * 120}>
+                <Section key={step.number} delay={i * 120}>
                   <div className="relative">
-                    {/* Number circle on the line */}
-                    <div className="absolute -left-14 top-1 flex h-10 w-10 items-center justify-center rounded-full border border-light-16 bg-bg-dark">
-                      <span className="text-small font-semibold text-light">
+                    <div className="absolute -left-14 top-1 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-foreground">
+                      <span className="font-mono text-xs font-semibold">
                         {step.number}
                       </span>
                     </div>
-                    <h3 className="text-h4 text-light mb-2">{step.title}</h3>
-                    <p className="text-body text-light-48 max-w-xl">
+                    <h3 className="text-xl font-display tracking-tight mb-2">{step.title}</h3>
+                    <p className="text-base opacity-50 max-w-xl">
                       {step.description}
                     </p>
                   </div>
-                </Reveal>
+                </Section>
               ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* ========== CTA ========== */}
-      <section className="section-padding-lg">
-        <div className="container-main">
-          <Reveal>
+      {/* ── CTA ── */}
+      <section className="py-32 lg:py-40">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <Section>
             <div className="text-center">
-              <h2 className="text-h2 text-text mb-4">
+              <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-display leading-[1.1] tracking-tight mb-4">
                 A következő referencia a tiéd lehet
               </h2>
-              <p className="text-body text-text-48 mb-10">
+              <p className="text-lg text-muted-foreground mb-10">
                 30 perces konzultáció. Ingyenes. Értékesítés nélkül.
               </p>
               <a
                 href={CTA_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-dark"
+                className="inline-flex items-center gap-2 bg-foreground text-background px-8 h-12 rounded-full text-sm hover:bg-foreground/90 transition-colors"
               >
                 Konzultáció foglalás
+                <ArrowRight className="w-4 h-4" />
               </a>
             </div>
-          </Reveal>
+          </Section>
         </div>
       </section>
     </>

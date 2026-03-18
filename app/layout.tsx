@@ -1,22 +1,26 @@
 import type { Metadata } from "next";
-import { DM_Sans, Merriweather } from "next/font/google";
+import { Instrument_Sans, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
 
-const dmSans = DM_Sans({
+const instrumentSans = Instrument_Sans({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-dm-sans",
+  variable: "--font-instrument",
   display: "swap",
-  weight: ["300", "400", "500", "600"],
 });
 
-const merriweather = Merriweather({
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-merriweather",
+  variable: "--font-instrument-serif",
   display: "swap",
-  weight: ["300", "400", "700"],
-  style: ["normal", "italic"],
+  weight: "400",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -52,10 +56,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="hu" className={`${dmSans.variable} ${merriweather.variable}`}>
-      <body className="antialiased">
+    <html lang="hu" className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}>
+      <body className="font-sans antialiased bg-background text-foreground">
         <Navigation />
-        <main className="pt-[80px]">{children}</main>
+        <main>{children}</main>
         <Footer />
       </body>
     </html>

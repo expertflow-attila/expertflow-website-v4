@@ -1,23 +1,49 @@
-import { Metadata } from "next";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Reveal } from "@/components/scroll-reveal";
 
-export const metadata: Metadata = {
-  title: "Rólam — Nagy Attila | Expert Flow",
-  description:
-    "Bizalom, jelenlét, felelősségvállalás. Vállalkozásépítés mint legerősebb eszköz a személyes fejlődéshez.",
-};
+/* ── IntersectionObserver hook ── */
+function useInView(threshold = 0.15) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.unobserve(el); } },
+      { threshold }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return { ref, visible };
+}
 
+function Section({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+  const { ref, visible } = useInView();
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+}
+
+/* ── DATA ── */
 const timeline = [
   {
     label: "Kezdetek",
     subtitle: "ahol minden elkezdődött",
-    text: "Középiskolás tesitanárom első nap kihívott megnézni egy rúdugró edzést \u2013 azt mondta, \u2018lesznek a pályán jó csajok is\u2019. A csajokból nem lett semmi, de a rúdugrásba azonnal beleszerettem, és attól a naptól fogva 16 évig minden erről szólt.",
+    text: "Középiskolás tesitanárom első nap kihívott megnézni egy rúdugró edzést – azt mondta, 'lesznek a pályán jó csajok is'. A csajokból nem lett semmi, de a rúdugrásba azonnal beleszerettem, és attól a naptól fogva 16 évig minden erről szólt.",
   },
   {
     label: "Újratervezés",
     subtitle: "a gyerekkortól indulva",
-    text: "A legjobb akartam lenni benne, olimpiáról álmodtam, és mindent beleadtam, amíg egy sérv véget nem vetett ennek az időszaknak. Az élsport lezárult \u2013 egyik napról a másikra új irányt kellett keresnem.",
+    text: "A legjobb akartam lenni benne, olimpiáról álmodtam, és mindent beleadtam, amíg egy sérv véget nem vetett ennek az időszaknak. Az élsport lezárult – egyik napról a másikra új irányt kellett keresnem.",
     sub: "Ehhez visszamentem a gyerekkoromhoz: mi az, amit igazán szerettem csinálni, ami mindig is érdekelt, és amit életem végéig szívesen csinálnék.",
   },
   {
@@ -29,7 +55,7 @@ const timeline = [
   {
     label: "Jelen",
     subtitle: "ami ma mozgat",
-    text: "De bármerre is vitt az élet, végül mindig a vállalkozásépítésnél kötöttem ki \u2013 mert semmi más nem ad számomra ennyi kihívást és fejlődési lehetőséget egyszerre.",
+    text: "De bármerre is vitt az élet, végül mindig a vállalkozásépítésnél kötöttem ki – mert semmi más nem ad számomra ennyi kihívást és fejlődési lehetőséget egyszerre.",
     sub: "Ma már tudom, hogy ez az, amit igazán szeretek: értéket adni és támogatni mások fejlődését.",
   },
 ];
@@ -37,15 +63,15 @@ const timeline = [
 const qaItems = [
   {
     q: "Miért pont AI? Hogyan kerültél ebbe a világba?",
-    a: "Úgy, ahogy a legtöbben \u2013 a ChatGPT-vel kezdtem, és azt hittem, mindent meg fog oldani. Ráfizettem. Aztán találkoztam Nick Saraev és Nate Herk munkásságával, akik teljesen más szemszöget adtak. Nem az AI-t tették piedesztálra, hanem azt mutatták meg, hogyan lehet felelősen, etikusan és értelmesen használni. Nekem ez rezonált, mert azt szeretném, hogy az AI egy élhetőbb, fenntarthatóbb világot szolgáljon \u2013 ne csak gyorsabbat.",
+    a: "Úgy, ahogy a legtöbben – a ChatGPT-vel kezdtem, és azt hittem, mindent meg fog oldani. Ráfizettem. Aztán találkoztam Nick Saraev és Nate Herk munkásságával, akik teljesen más szemszöget adtak. Nem az AI-t tették piedesztálra, hanem azt mutatták meg, hogyan lehet felelősen, etikusan és értelmesen használni. Nekem ez rezonált, mert azt szeretném, hogy az AI egy élhetőbb, fenntarthatóbb világot szolgáljon – ne csak gyorsabbat.",
   },
   {
     q: "Mi volt a legnagyobb kudarc, amiből tanultál?",
-    a: "Azt hittem, az AI-jal le tudom rövidíteni az utat. Mindent IS rábíztam, amiket nem szabadott volna. Részben kíváncsiságból, részben lustaságból. A legnagyobb tanulság az volt, hogy az AI felnagyítja azt, akik vagyunk. Ha nem dolgozol saját magadon, az eszköz sem fog megmenteni. Nem lehet megkerülni a személyes fejlődést \u2013 az AI nem helyettesíti, csak felerősíti.",
+    a: "Azt hittem, az AI-jal le tudom rövidíteni az utat. Mindent IS rábíztam, amiket nem szabadott volna. Részben kíváncsiságból, részben lustaságból. A legnagyobb tanulság az volt, hogy az AI felnagyítja azt, akik vagyunk. Ha nem dolgozol saját magadon, az eszköz sem fog megmenteni. Nem lehet megkerülni a személyes fejlődést – az AI nem helyettesíti, csak felerősíti.",
   },
   {
     q: "Mit csinálsz, amikor nem dolgozol?",
-    a: "Szeretek erdőben sétálni, legtöbbször Hűvösvölgyben. Olvasok, sütök, főzök, és próbálok heti kétszer eljutni edzeni \u2013 nem mindig sikerül, de próbálom tartani. Rájöttem, hogy a legegyszerűbb dolgok a legjobbak.",
+    a: "Szeretek erdőben sétálni, legtöbbször Hűvösvölgyben. Olvasok, sütök, főzök, és próbálok heti kétszer eljutni edzeni – nem mindig sikerül, de próbálom tartani. Rájöttem, hogy a legegyszerűbb dolgok a legjobbak.",
   },
   {
     q: "Mit tanított neked a 16 év versenysport?",
@@ -59,14 +85,17 @@ const qaItems = [
 
 export default function RolamPage() {
   return (
-    <div className="bg-bg">
+    <div className="bg-background">
       {/* ── HERO ── */}
-      <section className="section-padding-md">
-        <div className="container-main">
-          <Reveal>
-            <p className="label-small text-text-48 mb-6">Rólam</p>
-          </Reveal>
-          <Reveal delay={100}>
+      <section className="py-24 lg:py-32">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <Section>
+            <div className="flex items-center gap-4 mb-8">
+              <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Rólam</span>
+              <div className="flex-1 h-px bg-foreground/10" />
+            </div>
+          </Section>
+          <Section delay={100}>
             <div className="flex flex-col items-center gap-12 md:flex-row md:items-start md:gap-16">
               <div className="w-full shrink-0 md:w-[380px]">
                 <Image
@@ -74,36 +103,37 @@ export default function RolamPage() {
                   alt="Nagy Attila"
                   width={380}
                   height={480}
-                  className="image-cover w-full"
+                  className="w-full object-cover rounded-lg"
                   priority
                 />
               </div>
               <div className="flex flex-col justify-center">
-                <h1 className="text-h2 text-text">
+                <h1 className="text-[clamp(2rem,5vw,3.5rem)] font-display leading-[1.1] tracking-tight">
                   Bizalom, jelenlét,
                   <br />
                   felelősségvállalás
                 </h1>
-                <p className="mt-6 text-h5 text-text-48">
-                  Vállalkozásépítés mint legerősebb eszköz a személyes
-                  fejlődéshez
+                <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+                  Vállalkozásépítés mint legerősebb eszköz a személyes fejlődéshez
                 </p>
               </div>
             </div>
-          </Reveal>
+          </Section>
         </div>
       </section>
 
       {/* ── FILOZÓFIÁM ── */}
-      <section className="section-padding-sm">
-        <div className="container-main">
-          <Reveal>
-            <p className="label-small text-text-48 mb-10 text-center">
-              Filozófiám
-            </p>
-          </Reveal>
-          <Reveal delay={100}>
-            <div className="mx-auto max-w-[720px] space-y-6 text-h6 text-text">
+      <section className="py-16 lg:py-24">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <Section>
+            <div className="flex items-center gap-4 mb-8 justify-center max-w-[720px] mx-auto">
+              <div className="flex-1 h-px bg-foreground/10" />
+              <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Filozófiám</span>
+              <div className="flex-1 h-px bg-foreground/10" />
+            </div>
+          </Section>
+          <Section delay={100}>
+            <div className="mx-auto max-w-[720px] space-y-6 text-lg leading-relaxed">
               <p>
                 Sokáig azt hittem én is, hogy az AI majd mindent megold.
                 Gyorsabban ír, okosabban elemez, hatékonyabban szervez &ndash;
@@ -114,7 +144,7 @@ export default function RolamPage() {
                 mert megbízik benned. Mert ott vagy, amikor kell. Mert te
                 vállalod a felelősséget azért, amit mondasz és teszel.
               </p>
-              <p className="text-h3 text-text font-normal">
+              <p className="text-[clamp(1.5rem,3vw,2.5rem)] font-display tracking-tight leading-[1.2]">
                 Ezt az AI nem tudja.
               </p>
               <p>
@@ -128,54 +158,52 @@ export default function RolamPage() {
                 ami elvonja a figyelmedet attól, amiben igazán jó vagy.
               </p>
             </div>
-          </Reveal>
+          </Section>
         </div>
       </section>
 
       {/* ── TÖRTÉNETEM (Timeline) ── */}
-      <section className="section-padding-md">
-        <div className="container-main">
-          <Reveal>
-            <p className="label-small text-text-48 mb-4">Az én történetem</p>
-            <h2 className="text-h2 text-text mb-16">
+      <section className="py-24 lg:py-32">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <Section>
+            <div className="flex items-center gap-4 mb-4">
+              <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Az én történetem</span>
+              <div className="flex-1 h-px bg-foreground/10" />
+            </div>
+            <h2 className="text-[clamp(2rem,4vw,3rem)] font-display leading-[1.1] tracking-tight mb-16">
               Vállalkozásépítés mint legerősebb eszköz
               <br className="hidden md:block" /> a személyes fejlődéshez
             </h2>
-          </Reveal>
+          </Section>
 
           <div className="flex flex-col gap-12 md:flex-row md:gap-20">
-            {/* Sticky heading on desktop */}
             <div className="hidden shrink-0 md:block md:w-[200px]" />
 
-            {/* Timeline */}
             <div className="relative flex-1 pl-8">
-              {/* Vertical line */}
-              <div className="absolute top-0 bottom-0 left-0 w-px bg-text-16" />
+              <div className="absolute top-0 bottom-0 left-0 w-px bg-foreground/10" />
 
               <div className="space-y-16">
                 {timeline.map((item, i) => (
-                  <Reveal key={item.label} delay={i * 120}>
+                  <Section key={item.label} delay={i * 120}>
                     <div className="relative">
-                      {/* Dot */}
-                      <div className="absolute -left-8 top-1.5 h-3 w-3 -translate-x-1/2 rounded-full border-2 border-text-32 bg-bg" />
+                      <div className="absolute -left-8 top-1.5 h-3 w-3 -translate-x-1/2 rounded-full border-2 border-foreground/20 bg-background" />
 
-                      <p className="label-small text-text-48 mb-1">
+                      <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-1">
                         {item.label}
-                        <span className="normal-case tracking-normal font-normal">
-                          {" "}
-                          &mdash; {item.subtitle}
+                        <span className="normal-case tracking-normal font-sans">
+                          {" "}&mdash; {item.subtitle}
                         </span>
                       </p>
-                      <p className="mt-3 text-body text-text leading-relaxed">
+                      <p className="mt-3 text-base leading-relaxed">
                         {item.text}
                       </p>
                       {item.sub && (
-                        <p className="mt-3 text-body text-text-64 leading-relaxed">
+                        <p className="mt-3 text-base text-muted-foreground leading-relaxed">
                           {item.sub}
                         </p>
                       )}
                     </div>
-                  </Reveal>
+                  </Section>
                 ))}
               </div>
             </div>
@@ -184,16 +212,19 @@ export default function RolamPage() {
       </section>
 
       {/* ── AKIKET SZOLGÁLOK ── */}
-      <section className="section-dark section-padding-md">
-        <div className="container-main">
-          <Reveal>
-            <p className="label-small text-light-48 mb-4">
-              Akiket én szolgálok
-            </p>
-            <h2 className="text-h3 text-light mb-10">Egyéni vállalkozók</h2>
-          </Reveal>
-          <Reveal delay={100}>
-            <div className="mx-auto max-w-[720px] space-y-6 text-h6 text-light-88">
+      <section className="section-dark py-24 lg:py-32">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <Section>
+            <div className="flex items-center gap-4 mb-4">
+              <span className="font-mono text-xs uppercase tracking-widest opacity-50">Akiket én szolgálok</span>
+              <div className="flex-1 h-px bg-white/10" />
+            </div>
+            <h2 className="text-[clamp(2rem,4vw,3rem)] font-display leading-[1.1] tracking-tight mb-10">
+              Egyéni vállalkozók
+            </h2>
+          </Section>
+          <Section delay={100}>
+            <div className="mx-auto max-w-[720px] space-y-6 text-lg opacity-90 leading-relaxed">
               <p>
                 Egyéni vállalkozóknak segítek, mert magam is az vagyok &ndash;
                 ugyanazokkal a kérdésekkel, ugyanazokkal a nehézségekkel küzdök,
@@ -208,17 +239,17 @@ export default function RolamPage() {
                 ami nem.
               </p>
             </div>
-          </Reveal>
+          </Section>
         </div>
       </section>
 
       {/* ── SIMON SINEK QUOTE ── */}
-      <section className="section-padding-lg">
-        <div className="container-main">
-          <Reveal>
+      <section className="py-32 lg:py-40">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <Section>
             <blockquote className="mx-auto max-w-[720px] text-center">
-              <p className="label-small text-text-48 mb-8">Mások szolgálata</p>
-              <p className="text-h4 text-text leading-snug">
+              <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-8">Mások szolgálata</p>
+              <p className="text-[clamp(1.25rem,2.5vw,1.75rem)] font-display leading-snug tracking-tight">
                 &ldquo;A vállalkozás nem arról szól, hogy mit csinálsz vagy mit
                 adsz el. Arról szól, hogy miért csinálod. Azok, akik másokat
                 szolgálnak &ndash; nem önmaguk gazdagítása végett, hanem mert
@@ -226,61 +257,63 @@ export default function RolamPage() {
                 ők azok, akik valódi és tartós hatást érnek el. Az üzleti élet
                 legnagyobb titka nem a stratégia. A bizalom.&rdquo;
               </p>
-              <footer className="mt-8 text-small text-text-48">
+              <footer className="mt-8 text-sm text-muted-foreground">
                 &mdash; Simon Sinek
               </footer>
             </blockquote>
-          </Reveal>
+          </Section>
         </div>
       </section>
 
       {/* ── Q&A ── */}
-      <section className="section-padding-md">
-        <div className="container-main">
-          <Reveal>
-            <p className="label-small text-text-48 mb-4 text-center">
-              Néhány infó még rólam
-            </p>
-          </Reveal>
+      <section className="py-24 lg:py-32">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <Section>
+            <div className="flex items-center gap-4 mb-4 justify-center max-w-[940px] mx-auto">
+              <div className="flex-1 h-px bg-foreground/10" />
+              <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Néhány infó még rólam</span>
+              <div className="flex-1 h-px bg-foreground/10" />
+            </div>
+          </Section>
 
           <div className="mt-12 mx-auto grid max-w-[940px] gap-6 md:grid-cols-2">
             {qaItems.map((item, i) => (
-              <Reveal key={item.q} delay={i * 80}>
-                <div className="rounded-xl border border-text-8 bg-bg-card p-8">
-                  <h3 className="text-body font-semibold text-text">
+              <Section key={item.q} delay={i * 80}>
+                <div className="rounded-lg border border-foreground/10 bg-card p-8 hover-lift">
+                  <h3 className="text-base font-semibold">
                     {item.q}
                   </h3>
-                  <p className="mt-4 text-small text-text-64 leading-relaxed">
+                  <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
                     {item.a}
                   </p>
                 </div>
-              </Reveal>
+              </Section>
             ))}
           </div>
         </div>
       </section>
 
       {/* ── CTA ── */}
-      <section className="section-padding-lg">
-        <div className="container-main">
-          <Reveal>
+      <section className="py-32 lg:py-40">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <Section>
             <div className="text-center">
-              <h2 className="text-h2 text-text">
+              <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-display leading-[1.1] tracking-tight">
                 Beszéljünk a vállalkozásodról
               </h2>
-              <p className="mt-4 text-h5 text-text-48">
+              <p className="mt-4 text-lg text-muted-foreground">
                 30 perces konzultáció. Ingyenes. Kötöttségek nélkül.
               </p>
               <a
                 href="https://cal.com/attila-nagy-8uefco/30min"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-dark mt-10 inline-flex"
+                className="mt-10 inline-flex items-center gap-2 bg-foreground text-background px-8 h-12 rounded-full text-sm hover:bg-foreground/90 transition-colors"
               >
                 Konzultáció
               </a>
             </div>
-          </Reveal>
+          </Section>
         </div>
       </section>
     </div>
