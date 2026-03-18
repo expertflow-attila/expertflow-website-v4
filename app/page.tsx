@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Reveal, StaggerContainer, StaggerItem } from "@/components/scroll-reveal";
+import { MagneticButton } from "@/components/magnetic-button";
 
 /* ------------------------------------------------------------------ */
 /*  DATA                                                               */
@@ -122,7 +123,7 @@ export default function Home() {
   return (
     <div className="noise-overlay">
       {/* ========== 1. HERO ========== */}
-      <section className="relative overflow-hidden section-padding-lg" style={{ backgroundColor: "var(--color-bg)" }}>
+      <section className="relative overflow-hidden section-padding-lg bg-bg">
         <Image
           src="/images/dots.svg"
           alt=""
@@ -150,19 +151,19 @@ export default function Home() {
 
           <Reveal delay={350}>
             <div className="mt-10 flex flex-wrap gap-4">
-              <a href="https://cal.com/attila-nagy-8uefco/30min" target="_blank" rel="noopener noreferrer" className="btn-dark">
+              <MagneticButton href="https://cal.com/attila-nagy-8uefco/30min" className="btn-dark" strength={0.25}>
                 Ingyenes konzultáció
-              </a>
-              <Link href="/szolgaltatas" className="btn-outline">
+              </MagneticButton>
+              <MagneticButton href="/szolgaltatas" className="btn-outline" strength={0.2}>
                 Szolgáltatásaink
-              </Link>
+              </MagneticButton>
             </div>
           </Reveal>
         </div>
       </section>
 
       {/* ========== 2. IMAGE MARQUEE ========== */}
-      <section className="relative overflow-hidden py-6" style={{ backgroundColor: "var(--color-bg)" }}>
+      <section className="relative overflow-hidden py-6 bg-bg">
         <div className="shadow-left" />
         <div className="shadow-right" />
         <div className="marquee-track">
@@ -175,7 +176,7 @@ export default function Home() {
       </section>
 
       {/* ========== 3. EBBEN SEGÍTÜNK ========== */}
-      <section className="section-padding-md" style={{ backgroundColor: "var(--color-bg)" }}>
+      <section className="section-padding-md bg-bg">
         <div className="container-main">
           <Reveal>
             <span className="label-small" style={{ color: "var(--color-text-48)" }}>EBBEN SEGÍTÜNK</span>
@@ -249,10 +250,10 @@ export default function Home() {
       </section>
 
       {/* ========== 5. KÖZÖS MUNKA LÉPÉSEI ========== */}
-      <section className="section-padding-lg" style={{ backgroundColor: "var(--color-bg)" }}>
+      <section className="section-padding-lg bg-bg">
         <div className="container-main">
           <Reveal>
-            <span className="label-small" style={{ color: "var(--color-text-48)" }}>Együttműködés</span>
+            <span className="label-small text-text-48">Együttműködés</span>
             <h2 className="text-h2 mt-5" style={{ color: "var(--color-text)" }}>Közös munka lépései</h2>
           </Reveal>
 
@@ -376,9 +377,9 @@ export default function Home() {
       </section>
 
       {/* ========== 9. ABOUT — asymmetric layout ========== */}
-      <section className="section-padding-lg" style={{ backgroundColor: "var(--color-bg)" }}>
+      <section className="section-padding-lg bg-bg">
         <div className="container-main">
-          <div className="grid gap-16 items-center" style={{ gridTemplateColumns: "5fr 7fr" }}>
+          <div className="grid gap-16 items-center grid-about">
             <Reveal direction="left">
               <div className="aspect-portrait overflow-hidden rounded-lg">
                 <Image
