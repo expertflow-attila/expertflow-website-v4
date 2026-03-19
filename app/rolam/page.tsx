@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { trackCTAClick } from "@/lib/analytics";
 
 /* ── IntersectionObserver hook ── */
 function useInView(threshold = 0.15) {
@@ -308,6 +309,7 @@ export default function RolamPage() {
                 href="https://cal.com/attila-nagy-8uefco/30min"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackCTAClick("rolam_cta")}
                 className="mt-10 inline-flex items-center gap-2 bg-foreground text-background px-8 h-12 rounded-full text-sm hover:bg-foreground/90 transition-colors"
               >
                 Konzultáció

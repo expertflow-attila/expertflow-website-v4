@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
+import { trackCTAClick } from "@/lib/analytics";
 
 /* ------------------------------------------------------------------ */
 /*  DATA                                                               */
@@ -203,6 +204,7 @@ export default function Home() {
                 href="https://cal.com/attila-nagy-8uefco/30min"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackCTAClick("hero")}
                 className="inline-flex items-center gap-2 bg-foreground hover:bg-foreground/90 text-background px-8 h-14 text-base rounded-full group transition-colors"
               >
                 Ingyenes konzultáció

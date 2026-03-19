@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
+import { trackCTAClick, trackContactForm, identifyUser } from "@/lib/analytics";
 
 /* ── IntersectionObserver hook ── */
 function useInView(threshold = 0.15) {
@@ -54,6 +55,8 @@ export default function KapcsolatPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    identifyUser(formState.email, formState.name);
+    trackContactForm("mailto");
     const mailtoLink = `mailto:hello@expertflow.hu?subject=${encodeURIComponent(
       `Kapcsolatfelvétel: ${formState.name}`
     )}&body=${encodeURIComponent(
@@ -247,6 +250,7 @@ export default function KapcsolatPage() {
                 href={CTA_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackCTAClick("kapcsolat_cta")}
                 className="mt-10 inline-flex items-center gap-2 border border-white/20 text-white px-8 h-12 rounded-full text-sm hover:bg-white/10 transition-colors"
               >
                 Konzultáció foglalás

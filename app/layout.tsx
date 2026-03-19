@@ -3,6 +3,7 @@ import { Instrument_Sans, Instrument_Serif, JetBrains_Mono } from "next/font/goo
 import "./globals.css";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
+import { PostHogProvider } from "@/components/posthog-provider";
 
 const instrumentSans = Instrument_Sans({
   subsets: ["latin", "latin-ext"],
@@ -58,9 +59,11 @@ export default function RootLayout({
   return (
     <html lang="hu" className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}>
       <body className="font-sans antialiased bg-background text-foreground">
-        <Navigation />
-        <main>{children}</main>
-        <Footer />
+        <PostHogProvider>
+          <Navigation />
+          <main>{children}</main>
+          <Footer />
+        </PostHogProvider>
       </body>
     </html>
   );

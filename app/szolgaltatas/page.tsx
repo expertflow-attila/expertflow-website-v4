@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ArrowRight, Check } from "lucide-react";
+import { trackCTAClick, trackTabSwitch, trackFAQOpen } from "@/lib/analytics";
 
 /* ── IntersectionObserver hook ── */
 function useInView(threshold = 0.15) {
@@ -158,8 +159,10 @@ export default function SzolgaltatasPage() {
 
   const pillar = pillars[activeTab];
 
-  const toggleFaq = (key: string) =>
+  const toggleFaq = (key: string, question?: string) => {
     setOpenFaq((prev) => (prev === key ? null : key));
+    if (openFaq !== key && question) trackFAQOpen(question, "szolgaltatas");
+  };
 
   return (
     <>
@@ -240,7 +243,7 @@ export default function SzolgaltatasPage() {
               {pillars.map((p, i) => (
                 <button
                   key={p.id}
-                  onClick={() => setActiveTab(i)}
+                  onClick={() => { setActiveTab(i); trackTabSwitch(p.id, "szolgaltatas_pillerek"); }}
                   className={`px-6 py-4 text-sm transition-all border-b-2 ${
                     activeTab === i
                       ? "border-white text-white"
@@ -384,6 +387,7 @@ export default function SzolgaltatasPage() {
                     href={CTA_URL}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => trackCTAClick("szolgaltatas_cta")}
                     className="inline-flex items-center gap-2 bg-foreground text-background px-8 h-12 rounded-full text-sm hover:bg-foreground/90 transition-colors"
                   >
                     Jelentkezek konzultációra
@@ -438,7 +442,7 @@ export default function SzolgaltatasPage() {
                   <div className="border-b border-foreground/10">
                     <div className="py-5">
                       <button
-                        onClick={() => toggleFaq(key)}
+                        onClick={() => toggleFaq(key, item.q)}
                         className="w-full flex items-center justify-between text-left"
                       >
                         <span className="text-base font-medium pr-4">{item.q}</span>

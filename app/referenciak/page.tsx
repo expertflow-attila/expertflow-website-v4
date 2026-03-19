@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import { trackCTAClick } from "@/lib/analytics";
 
 /* ── IntersectionObserver hook ── */
 function useInView(threshold = 0.15) {
@@ -182,6 +183,7 @@ export default function ReferenciakPage() {
                 href={CTA_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackCTAClick("referenciak_cta")}
                 className="inline-flex items-center gap-2 bg-foreground text-background px-8 h-12 rounded-full text-sm hover:bg-foreground/90 transition-colors"
               >
                 Konzultáció foglalás
