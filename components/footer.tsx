@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import SubscribeForm from "@/components/subscribe-form";
 
 const footerLinks = {
   Szolgáltatás: [
@@ -31,6 +32,24 @@ export default function Footer() {
   return (
     <footer className="relative border-t border-foreground/10">
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12">
+        {/* Newsletter */}
+        <div className="py-16 lg:py-20 border-b border-foreground/10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Hírlevél</span>
+              <h2 className="text-[clamp(1.5rem,3vw,2rem)] font-display tracking-tight mt-3">
+                Heti gondolatok vállalkozóknak
+              </h2>
+            </div>
+            <SubscribeForm
+              funnel="welcome"
+              heading=""
+              description="Tippek, gondolatok és gyakorlati tanácsok — AI, rendszerek, működés. Nincs spam, bármikor leiratkozhatsz."
+              buttonText="Feliratkozás"
+            />
+          </div>
+        </div>
+
         {/* Main footer */}
         <div className="py-16 lg:py-24">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-12 lg:gap-8">
