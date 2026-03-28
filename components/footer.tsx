@@ -11,11 +11,10 @@ const footerLinks = {
     { name: "Háttérműködés", href: "/szolgaltatas#hattermukodes" },
   ],
   Információ: [
-    { name: "Áraink", href: "/araink" },
     { name: "Rólam", href: "/rolam" },
     { name: "Referenciák", href: "/referenciak" },
-    { name: "Kapcsolat", href: "/kapcsolat" },
-    { name: "Jelentkezés", href: "/kerdoiv" },
+    { name: "Konzultáció", href: "/kapcsolat" },
+    { name: "Agentic Start", href: "/agentic-start" },
   ],
   Jogi: [
     { name: "Adatvédelem", href: "/adatvedelmi" },
@@ -48,10 +47,9 @@ const socialLinks = [
     href: "https://dirt-and-clouds.vercel.app",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-        <path d="M12 6.5c1.5-2 4-3 6-2s3 4 1.5 6.5c-1 1.5-3 2.5-5 3"/>
-        <path d="M12 6.5c-1.5-2-4-3-6-2s-3 4-1.5 6.5c1 1.5 3 2.5 5 3"/>
-        <line x1="12" y1="13.5" x2="12" y2="21"/>
-        <path d="M9 18h6"/>
+        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+        <line x1="8" y1="7" x2="16" y2="7" />
+        <line x1="8" y1="11" x2="13" y2="11" />
       </svg>
     ),
   },

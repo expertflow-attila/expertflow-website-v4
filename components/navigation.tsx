@@ -7,10 +7,10 @@ import { Menu, X, ArrowRight } from "lucide-react";
 
 const navLinks = [
   { href: "/szolgaltatas", label: "Szolgáltatás" },
-  { href: "/araink", label: "Áraink" },
   { href: "/rolam", label: "Rólam" },
   { href: "/referenciak", label: "Referenciák" },
-  { href: "/kapcsolat", label: "Kapcsolat" },
+  { href: "/kapcsolat", label: "Konzultáció" },
+  { href: "/agentic-start", label: "Agentic Start" },
 ];
 
 const CTA_URL = "https://cal.com/attila-nagy-8uefco/30min";

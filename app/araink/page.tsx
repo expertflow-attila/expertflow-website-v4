@@ -74,8 +74,8 @@ const packages = [
   {
     label: "Prémium",
     name: "Blueprint Pro",
-    price: "600 000",
-    unit: "Ft / hónap",
+    price: "900 000",
+    unit: "Ft / projekt",
     desc: "Folyamatos partneri együttműködés — havi optimalizálás, fejlesztés és stratégiai tanácsadás.",
     cta: "Egyeztetés",
     highlighted: false,

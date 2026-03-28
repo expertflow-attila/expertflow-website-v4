@@ -250,10 +250,13 @@ export default function ChatWidget({ variant = "main" }: { variant?: "quiz" | "m
               <line x1="12" y1="17" x2="12" y2="21" />
             </svg>
           ) : (
-            /* Idle — headphones/voice icon */
-            <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
-              <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
+            /* Idle — sound wave icon */
+            <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" strokeWidth="1.5" strokeLinecap="round">
+              <line x1="4" y1="8" x2="4" y2="16" />
+              <line x1="8" y1="5" x2="8" y2="19" />
+              <line x1="12" y1="3" x2="12" y2="21" />
+              <line x1="16" y1="5" x2="16" y2="19" />
+              <line x1="20" y1="8" x2="20" y2="16" />
             </svg>
           )}
         </button>

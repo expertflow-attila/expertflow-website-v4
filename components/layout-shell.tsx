@@ -3,9 +3,9 @@
 import { usePathname } from "next/navigation";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
-import ChatWidget from "@/components/chat-widget";
+// ChatWidget only used on /agentic-start page
 
-const BARE_ROUTES = ["/kerdoiv"];
+const BARE_ROUTES = ["/kerdoiv", "/agentic-start"];
 
 export default function LayoutShellClient({
   children,
@@ -24,7 +24,6 @@ export default function LayoutShellClient({
       <Navigation />
       <main>{children}</main>
       <Footer />
-      <ChatWidget variant="main" />
     </>
   );
 }
