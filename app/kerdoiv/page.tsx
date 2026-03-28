@@ -192,20 +192,22 @@ export default function KerdoivPage() {
             <button
               type="submit"
               disabled={submitting || !form.name || !form.email || !form.profession || !form.problem || !form.time_commitment || !form.budget}
-              className="transition-all duration-200"
+              className="transition-all duration-300 w-full"
               style={{
-                fontSize: 14,
-                color: submitting ? "#b0b0b0" : PURPLE_GLOW,
-                textDecoration: "underline",
-                textUnderlineOffset: "4px",
-                background: "none",
-                border: "none",
+                fontSize: 15,
+                fontWeight: 500,
+                fontFamily: "Arial, Helvetica, sans-serif",
+                color: "#f0f0f0",
+                backgroundColor: submitting ? "rgba(109, 40, 217, 0.3)" : "rgba(109, 40, 217, 0.6)",
+                border: "1px solid rgba(109, 40, 217, 0.8)",
                 cursor: submitting ? "wait" : "pointer",
-                padding: 0,
+                padding: "14px 32px",
+                borderRadius: 0,
                 opacity: (!form.name || !form.email || !form.profession || !form.problem || !form.time_commitment || !form.budget) ? 0.3 : 1,
+                boxShadow: "0 0 20px rgba(109, 40, 217, 0.2)",
               }}
             >
-              {submitting ? "küldés..." : "kérdőív beküldése →"}
+              {submitting ? "Küldés..." : "Kérdőív beküldése →"}
             </button>
           </div>
         </form>

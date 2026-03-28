@@ -6,71 +6,54 @@ import posthog from "posthog-js";
 const PURPLE_GLOW = "#a78bfa";
 const PURPLE_NEON = "#7c3aed";
 
-export default function ChatWidget() {
+/**
+ * variant="quiz"  → kis play háromszög, kérdőív oldalon
+ * variant="main"  → "E" betűs kör, főoldalon és minden oldalon
+ */
+export default function ChatWidget({ variant = "quiz" }: { variant?: "quiz" | "main" }) {
   const [isConnected, setIsConnected] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [isListening, setIsListening] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const wsRef = useRef<WebSocket | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const mediaStreamRef = useRef<MediaStream | null>(null);
-  const processorRef = useRef<ScriptProcessorNode | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const processorRef = useRef<any>(null);
 
   const disconnect = useCallback(() => {
-    if (wsRef.current) {
-      wsRef.current.close();
-      wsRef.current = null;
-    }
-    if (mediaStreamRef.current) {
-      mediaStreamRef.current.getTracks().forEach((t) => t.stop());
-      mediaStreamRef.current = null;
-    }
-    if (processorRef.current) {
-      processorRef.current.disconnect();
-      processorRef.current = null;
-    }
-    if (audioContextRef.current) {
-      audioContextRef.current.close();
-      audioContextRef.current = null;
-    }
+    if (wsRef.current) { wsRef.current.close(); wsRef.current = null; }
+    if (mediaStreamRef.current) { mediaStreamRef.current.getTracks().forEach((t) => t.stop()); mediaStreamRef.current = null; }
+    if (processorRef.current) { processorRef.current.disconnect(); processorRef.current = null; }
+    if (audioContextRef.current) { audioContextRef.current.close(); audioContextRef.current = null; }
     setIsConnected(false);
     setIsSpeaking(false);
-    setIsListening(false);
     setIsLoading(false);
   }, []);
 
   const connect = useCallback(async () => {
     try {
       setIsLoading(true);
-
-      // Get signed URL via server proxy
       const response = await fetch("/api/voice-agent");
       if (!response.ok) throw new Error("Signed URL failed");
       const { signed_url } = await response.json();
 
-      // Request microphone
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaStreamRef.current = stream;
-
-      // Audio context
       const audioContext = new AudioContext({ sampleRate: 16000 });
       audioContextRef.current = audioContext;
 
-      // Connect WebSocket
       const ws = new WebSocket(signed_url);
       wsRef.current = ws;
 
       ws.onopen = () => {
         setIsConnected(true);
-        setIsListening(true);
         setIsLoading(false);
 
-        // Start sending audio
         const source = audioContext.createMediaStreamSource(stream);
         const processor = audioContext.createScriptProcessor(4096, 1, 1);
         processorRef.current = processor;
 
-        processor.onaudioprocess = (e) => {
+        processor.onaudioprocess = (e: AudioProcessingEvent) => {
           if (ws.readyState === WebSocket.OPEN) {
             const inputData = e.inputBuffer.getChannelData(0);
             const pcm16 = new Int16Array(inputData.length);
@@ -84,81 +67,61 @@ export default function ChatWidget() {
 
         source.connect(processor);
         processor.connect(audioContext.destination);
-        posthog.capture("voice_agent_started", { page: "kerdoiv" });
+        posthog.capture("voice_agent_started", { page: variant });
       };
 
       ws.onmessage = (event) => {
         const data = JSON.parse(event.data);
-
         if (data.type === "audio") {
           setIsSpeaking(true);
-          setIsListening(false);
-
           const audioData = atob(data.audio_event?.audio_base_64 || data.audio?.chunk || "");
           const audioArray = new Uint8Array(audioData.length);
-          for (let i = 0; i < audioData.length; i++) {
-            audioArray[i] = audioData.charCodeAt(i);
-          }
-
+          for (let i = 0; i < audioData.length; i++) audioArray[i] = audioData.charCodeAt(i);
           const audioBlob = new Blob([audioArray], { type: "audio/mpeg" });
           const audioUrl = URL.createObjectURL(audioBlob);
           const audio = new Audio(audioUrl);
           audio.play().catch(() => {});
-          audio.onended = () => {
-            URL.revokeObjectURL(audioUrl);
-            setIsSpeaking(false);
-            setIsListening(true);
-          };
+          audio.onended = () => { URL.revokeObjectURL(audioUrl); setIsSpeaking(false); };
         }
-
-        if (data.type === "agent_response") {
-          setIsSpeaking(true);
-          setIsListening(false);
-        }
-
-        if (data.type === "user_transcript") {
-          setIsListening(true);
-          setIsSpeaking(false);
-        }
+        if (data.type === "agent_response") setIsSpeaking(true);
+        if (data.type === "user_transcript") setIsSpeaking(false);
       };
 
-      ws.onclose = () => {
-        disconnect();
-        posthog.capture("voice_agent_ended", { page: "kerdoiv" });
-      };
-
-      ws.onerror = () => {
-        disconnect();
-      };
+      ws.onclose = () => { disconnect(); posthog.capture("voice_agent_ended", { page: variant }); };
+      ws.onerror = () => { disconnect(); };
     } catch {
       setIsLoading(false);
       setIsConnected(false);
     }
-  }, [disconnect]);
+  }, [disconnect, variant]);
 
   const handleClick = () => {
     if (isLoading) return;
-    if (isConnected) {
-      disconnect();
-    } else {
-      connect();
-    }
+    if (isConnected) disconnect();
+    else connect();
   };
 
-  useEffect(() => {
-    return () => { disconnect(); };
-  }, [disconnect]);
+  useEffect(() => { return () => { disconnect(); }; }, [disconnect]);
+
+  /* ── SIZE & POSITION ── */
+  const size = variant === "quiz" ? 44 : 52;
+  const glowInset = variant === "quiz" ? -4 : -5;
+
+  /* ── NEON INTENSITY based on state ── */
+  const glowIntensity = isSpeaking ? 0.55 : isConnected ? 0.35 : 0.2;
+  const borderColor = isConnected ? PURPLE_GLOW : PURPLE_NEON;
+  const bgOpacity = isSpeaking ? 0.2 : isConnected ? 0.12 : 0.06;
 
   return (
-    <div className="fixed bottom-8 right-8 z-50 flex flex-col items-center gap-3">
-      {/* Outer glow ring */}
+    <div className="fixed bottom-8 right-8 z-50">
       <div className="relative">
+        {/* Outer glow ring — subtle neon pulse */}
         <span
           className="absolute rounded-full"
           style={{
-            inset: -6,
-            border: `1px solid rgba(109, 40, 217, 0.15)`,
-            animation: isConnected ? "voice-pulse 2s ease-in-out infinite" : "voice-glow 3s ease-in-out infinite",
+            inset: glowInset,
+            border: `1px solid rgba(109, 40, 217, ${glowIntensity * 0.4})`,
+            animation: isConnected ? "voice-breathe 2.5s ease-in-out infinite" : "voice-glow 3s ease-in-out infinite",
           }}
         />
 
@@ -166,68 +129,62 @@ export default function ChatWidget() {
         <button
           onClick={handleClick}
           aria-label="Beszélgetés az AI asszisztenssel"
-          className="relative flex items-center justify-center transition-all duration-300"
+          className="relative flex items-center justify-center transition-all duration-500"
           style={{
-            width: 60,
-            height: 60,
+            width: size,
+            height: size,
             borderRadius: "50%",
-            border: `1.5px solid ${isConnected ? PURPLE_GLOW : PURPLE_NEON}`,
-            backgroundColor: isConnected
-              ? "rgba(109, 40, 217, 0.2)"
-              : "rgba(109, 40, 217, 0.08)",
-            boxShadow: isConnected
-              ? `0 0 30px rgba(109, 40, 217, 0.5), 0 0 60px rgba(109, 40, 217, 0.2), inset 0 0 20px rgba(109, 40, 217, 0.1)`
-              : `0 0 20px rgba(109, 40, 217, 0.35), 0 0 50px rgba(109, 40, 217, 0.12)`,
+            border: `1.5px solid ${borderColor}`,
+            backgroundColor: `rgba(109, 40, 217, ${bgOpacity})`,
+            boxShadow: `0 0 ${isSpeaking ? 35 : 18}px rgba(109, 40, 217, ${glowIntensity}), 0 0 ${isSpeaking ? 70 : 40}px rgba(109, 40, 217, ${glowIntensity * 0.4})`,
             cursor: isLoading ? "wait" : "pointer",
+            transition: "box-shadow 0.5s ease, background-color 0.5s ease, border-color 0.5s ease",
           }}
         >
-          {/* Icon states */}
           {isLoading ? (
             /* Loading spinner */
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={PURPLE_GLOW} strokeWidth="1.5">
-              <circle cx="12" cy="12" r="10" strokeDasharray="31.4 31.4" strokeDashoffset="0">
+            <svg width={size * 0.36} height={size * 0.36} viewBox="0 0 24 24" fill="none" stroke={PURPLE_GLOW} strokeWidth="1.5">
+              <circle cx="12" cy="12" r="10" strokeDasharray="31.4 31.4">
                 <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite" />
               </circle>
             </svg>
-          ) : isSpeaking ? (
-            /* Speaking waves */
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <rect x="4" y="8" width="2" height="8" rx="1" fill={PURPLE_GLOW} style={{ animation: "wave 0.8s ease-in-out infinite" }} />
-              <rect x="8" y="5" width="2" height="14" rx="1" fill={PURPLE_GLOW} style={{ animation: "wave 0.8s ease-in-out 0.1s infinite" }} />
-              <rect x="12" y="7" width="2" height="10" rx="1" fill={PURPLE_GLOW} style={{ animation: "wave 0.8s ease-in-out 0.2s infinite" }} />
-              <rect x="16" y="4" width="2" height="16" rx="1" fill={PURPLE_GLOW} style={{ animation: "wave 0.8s ease-in-out 0.3s infinite" }} />
-              <rect x="20" y="9" width="2" height="6" rx="1" fill={PURPLE_GLOW} style={{ animation: "wave 0.8s ease-in-out 0.4s infinite" }} />
-            </svg>
-          ) : isListening ? (
-            /* Microphone */
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={PURPLE_GLOW} strokeWidth="1.5">
-              <rect x="9" y="2" width="6" height="12" rx="3" />
-              <path d="M5 10a7 7 0 0 0 14 0" />
-              <line x1="12" y1="17" x2="12" y2="21" />
-              <line x1="8" y1="21" x2="16" y2="21" />
-            </svg>
+          ) : variant === "main" ? (
+            /* "E" letter for main site */
+            <span
+              style={{
+                color: PURPLE_GLOW,
+                fontSize: size * 0.4,
+                fontWeight: 600,
+                fontFamily: "Arial, Helvetica, sans-serif",
+                lineHeight: 1,
+                opacity: isSpeaking ? 1 : 0.85,
+                transition: "opacity 0.5s ease",
+              }}
+            >
+              E
+            </span>
           ) : (
-            /* Play triangle */
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <polygon points="8,4 20,12 8,20" fill={PURPLE_GLOW} opacity="0.9" />
+            /* Play triangle for quiz page */
+            <svg width={size * 0.36} height={size * 0.36} viewBox="0 0 24 24" fill="none">
+              <polygon
+                points="8,4 20,12 8,20"
+                fill={PURPLE_GLOW}
+                opacity={isSpeaking ? 1 : 0.85}
+                style={{ transition: "opacity 0.5s ease" }}
+              />
             </svg>
           )}
         </button>
       </div>
 
-      {/* CSS animations */}
       <style jsx>{`
-        @keyframes voice-pulse {
-          0%, 100% { transform: scale(1); opacity: 0.6; }
-          50% { transform: scale(1.35); opacity: 0; }
+        @keyframes voice-breathe {
+          0%, 100% { opacity: 0.5; transform: scale(1); }
+          50% { opacity: 0.9; transform: scale(1.08); }
         }
         @keyframes voice-glow {
-          0%, 100% { opacity: 0.4; transform: scale(1); }
-          50% { opacity: 0.8; transform: scale(1.1); }
-        }
-        @keyframes wave {
-          0%, 100% { transform: scaleY(0.5); }
-          50% { transform: scaleY(1.2); }
+          0%, 100% { opacity: 0.3; transform: scale(1); }
+          50% { opacity: 0.6; transform: scale(1.06); }
         }
       `}</style>
     </div>

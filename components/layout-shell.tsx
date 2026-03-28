@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
+import ChatWidget from "@/components/chat-widget";
 
 const BARE_ROUTES = ["/kerdoiv"];
 
@@ -23,6 +24,7 @@ export default function LayoutShellClient({
       <Navigation />
       <main>{children}</main>
       <Footer />
+      <ChatWidget variant="main" />
     </>
   );
 }
