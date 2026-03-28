@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import posthog from "posthog-js";
 import ChatWidget from "@/components/chat-widget";
 
@@ -9,7 +10,16 @@ import ChatWidget from "@/components/chat-widget";
    COLORS & CONSTANTS
    ================================================================ */
 const PURPLE_GLOW = "#a78bfa";
+const PURPLE_BORDER = "rgba(109, 40, 217, 0.6)";
+const PURPLE_BG = "rgba(109, 40, 217, 0.08)";
 const CTA_URL = "https://cal.com/attila-nagy-8uefco/30min";
+
+const STEPS = [
+  { fields: ["name", "email"] as const, label: "Alapadatok" },
+  { fields: ["business_name", "profession"] as const, label: "Vállalkozás" },
+  { fields: ["problem", "previous_attempts"] as const, label: "Helyzet" },
+  { fields: ["time_commitment", "budget", "how_found"] as const, label: "Részletek" },
+];
 
 /* ================================================================
    QUIZ PAGE
@@ -61,6 +71,19 @@ export default function KerdoivPage() {
     posthog.capture("quiz_page_viewed", { version: "2.0" });
   }, []);
 
+  /* Progress calculation */
+  const filledSteps = useMemo(() => {
+    return STEPS.map((step) =>
+      step.fields.every((f) => form[f].trim() !== "")
+    );
+  }, [form]);
+
+  const progressPercent = useMemo(() => {
+    const requiredFields: (keyof FormData)[] = ["name", "email", "profession", "problem", "time_commitment", "budget"];
+    const filled = requiredFields.filter((f) => form[f].trim() !== "").length;
+    return Math.round((filled / requiredFields.length) * 100);
+  }, [form]);
+
   const updateField = (field: keyof FormData, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
@@ -100,125 +123,363 @@ export default function KerdoivPage() {
     return (
       <div className="min-h-screen flex items-center justify-center px-6" style={{ backgroundColor: "#0a0a0a" }}>
         <div className="max-w-[560px] w-full text-center">
+          {/* Animated check circle */}
           <div
-            className="inline-flex items-center justify-center w-16 h-16 mb-8"
-            style={{ border: "1.5px solid #6d28d9", borderRadius: "50%", boxShadow: "0 0 32px rgba(109,40,217,0.3)" }}
+            className="inline-flex items-center justify-center w-20 h-20 mb-10"
+            style={{
+              border: "1.5px solid rgba(109,40,217,0.5)",
+              borderRadius: "50%",
+              boxShadow: "0 0 48px rgba(109,40,217,0.25), 0 0 96px rgba(109,40,217,0.1)",
+              background: "radial-gradient(circle at center, rgba(109,40,217,0.08) 0%, transparent 70%)",
+              animation: "pulse-glow 2s ease-in-out infinite",
+            }}
           >
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={PURPLE_GLOW} strokeWidth="2">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={PURPLE_GLOW} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="20 6 9 17 4 12" />
             </svg>
           </div>
-          <h1 style={{ color: "#f0f0f0", fontSize: 24, fontWeight: 500, marginBottom: 12 }}>
-            Köszönöm, {form.name}!
+          <h1 style={{
+            color: "#f0f0f0",
+            fontSize: 28,
+            fontWeight: 600,
+            fontFamily: "Arial, Helvetica, sans-serif",
+            marginBottom: 16,
+            letterSpacing: "-0.02em",
+          }}>
+            Koszonom, {form.name}!
           </h1>
-          <p style={{ color: "#b0b0b0", fontSize: 16, lineHeight: 1.6 }}>
-            A válaszaid megérkeztek. Átirányítalak az időpontfoglaláshoz...
+          <p style={{
+            color: "#a0a0a0",
+            fontSize: 16,
+            lineHeight: 1.7,
+            fontFamily: "Arial, Helvetica, sans-serif",
+            maxWidth: 400,
+            margin: "0 auto",
+          }}>
+            A valaszaid megérkeztek. Atiranyitalak az idopontfoglalashoz...
           </p>
-          <div className="mt-8">
-            <a href={CTA_URL} style={{ color: PURPLE_GLOW, fontSize: 14, textDecoration: "underline", textUnderlineOffset: "4px" }}>
-              vagy kattints ide a foglaláshoz &rarr;
+
+          {/* Loading indicator */}
+          <div className="mt-8 flex justify-center">
+            <div style={{
+              width: 200,
+              height: 2,
+              backgroundColor: "rgba(255,255,255,0.06)",
+              borderRadius: 1,
+              overflow: "hidden",
+            }}>
+              <div style={{
+                width: "100%",
+                height: "100%",
+                background: `linear-gradient(90deg, transparent, ${PURPLE_GLOW}, transparent)`,
+                animation: "shimmer 1.5s ease-in-out infinite",
+              }} />
+            </div>
+          </div>
+
+          <div className="mt-10">
+            <a
+              href={CTA_URL}
+              className="transition-colors duration-300"
+              style={{
+                color: "#707070",
+                fontSize: 13,
+                fontFamily: "Arial, Helvetica, sans-serif",
+                letterSpacing: "0.02em",
+              }}
+              onMouseOver={(e) => { e.currentTarget.style.color = PURPLE_GLOW; }}
+              onMouseOut={(e) => { e.currentTarget.style.color = "#707070"; }}
+            >
+              vagy kattints ide a foglalashoz &rarr;
             </a>
+          </div>
+
+          {/* Back link */}
+          <div className="mt-16">
+            <Link
+              href="/"
+              className="transition-colors duration-300"
+              style={{ color: "#404040", fontSize: 12, fontFamily: "Arial, Helvetica, sans-serif" }}
+              onMouseOver={(e) => { e.currentTarget.style.color = "#707070"; }}
+              onMouseOut={(e) => { e.currentTarget.style.color = "#404040"; }}
+            >
+              &larr; Vissza a fooldalra
+            </Link>
           </div>
         </div>
         <ChatWidget />
+
+        <style>{`
+          @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 48px rgba(109,40,217,0.25), 0 0 96px rgba(109,40,217,0.1); }
+            50% { box-shadow: 0 0 64px rgba(109,40,217,0.35), 0 0 128px rgba(109,40,217,0.15); }
+          }
+          @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+          }
+        `}</style>
       </div>
     );
   }
 
   /* ── FORM ── */
+  const isDisabled = submitting || !form.name || !form.email || !form.profession || !form.problem || !form.time_commitment || !form.budget;
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#0a0a0a" }}>
-      {/* Hero */}
-      <div className="pt-16 pb-12 px-6">
+      {/* Back link */}
+      <div className="px-6 pt-6">
         <div className="max-w-[700px] mx-auto">
-          <div className="flex items-center gap-5 mb-10">
-            <div className="overflow-hidden" style={{ width: 48, height: 48, borderRadius: "50%", border: "1px solid rgba(255,255,255,0.1)" }}>
-              <Image src="/images/attila.jpg" alt="Nagy Attila" width={48} height={48} className="w-full h-full object-cover" />
+          <Link
+            href="/"
+            className="inline-flex items-center gap-1.5 transition-colors duration-300"
+            style={{ color: "#525252", fontSize: 12, fontFamily: "Arial, Helvetica, sans-serif", letterSpacing: "0.02em" }}
+            onMouseOver={(e) => { e.currentTarget.style.color = "#909090"; }}
+            onMouseOut={(e) => { e.currentTarget.style.color = "#525252"; }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M19 12H5M12 5l-7 7 7 7" />
+            </svg>
+            expertflow.hu
+          </Link>
+        </div>
+      </div>
+
+      {/* Hero */}
+      <div className="pt-10 pb-10 px-6">
+        <div className="max-w-[700px] mx-auto">
+          <div className="flex items-center gap-4 mb-10">
+            <div
+              className="overflow-hidden"
+              style={{
+                width: 44,
+                height: 44,
+                borderRadius: "50%",
+                border: "1px solid rgba(255,255,255,0.08)",
+                boxShadow: "0 0 24px rgba(109,40,217,0.12)",
+              }}
+            >
+              <Image src="/images/attila.jpg" alt="Nagy Attila" width={44} height={44} className="w-full h-full object-cover" />
             </div>
             <div>
-              <p style={{ color: "#f0f0f0", fontSize: 14, fontWeight: 500 }}>Nagy Attila</p>
-              <p style={{ color: "#b0b0b0", fontSize: 12 }}>Expert Flow</p>
+              <p style={{ color: "#e8e8e8", fontSize: 14, fontWeight: 500, fontFamily: "Arial, Helvetica, sans-serif", letterSpacing: "-0.01em" }}>Nagy Attila</p>
+              <p style={{ color: "#606060", fontSize: 12, fontFamily: "Arial, Helvetica, sans-serif" }}>Expert Flow</p>
             </div>
           </div>
-          <h1 style={{ color: "#f0f0f0", fontSize: 22, fontWeight: 500, lineHeight: 1.5, marginBottom: 12 }}>
-            Beszéljünk arról, hogyan segíthetek a vállalkozásodnak
+          <h1 style={{
+            color: "#f0f0f0",
+            fontSize: 26,
+            fontWeight: 600,
+            lineHeight: 1.4,
+            marginBottom: 14,
+            fontFamily: "Arial, Helvetica, sans-serif",
+            letterSpacing: "-0.025em",
+          }}>
+            Beszeljunk arrol, hogyan segithetek a vallalkozasodnak
           </h1>
-          <p style={{ color: "#b0b0b0", fontSize: 15, lineHeight: 1.7, maxWidth: 560 }}>
-            Töltsd ki az alábbi kérdőívet, hogy felkészülhessek a beszélgetésünkre.
-            Utána átirányítalak a konzultációs időpont-foglaló felületre.
+          <p style={{
+            color: "#808080",
+            fontSize: 15,
+            lineHeight: 1.75,
+            maxWidth: 540,
+            fontFamily: "Arial, Helvetica, sans-serif",
+          }}>
+            Toltsd ki az alabbi kérdoivet, hogy felkeszulhessek a beszelgetesunkre.
+            Utana atiranyitalak a konzultacios idopont-foglalo feluletre.
+          </p>
+        </div>
+      </div>
+
+      {/* Progress bar */}
+      <div className="px-6 mb-2">
+        <div className="max-w-[700px] mx-auto">
+          <div className="flex items-center justify-between mb-3">
+            {STEPS.map((step, i) => (
+              <div key={step.label} className="flex items-center gap-2" style={{ flex: i < STEPS.length - 1 ? 1 : "none" }}>
+                <div
+                  className="transition-all duration-300 ease-out flex items-center justify-center"
+                  style={{
+                    width: 24,
+                    height: 24,
+                    borderRadius: "50%",
+                    fontSize: 10,
+                    fontWeight: 600,
+                    fontFamily: "Arial, Helvetica, sans-serif",
+                    color: filledSteps[i] ? "#f0f0f0" : "#525252",
+                    backgroundColor: filledSteps[i] ? "rgba(109,40,217,0.4)" : "rgba(255,255,255,0.04)",
+                    border: `1px solid ${filledSteps[i] ? "rgba(109,40,217,0.6)" : "rgba(255,255,255,0.06)"}`,
+                    boxShadow: filledSteps[i] ? "0 0 16px rgba(109,40,217,0.2)" : "none",
+                  }}
+                >
+                  {filledSteps[i] ? (
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  ) : (
+                    i + 1
+                  )}
+                </div>
+                <span
+                  className="hidden sm:inline transition-colors duration-300"
+                  style={{
+                    fontSize: 11,
+                    fontFamily: "Arial, Helvetica, sans-serif",
+                    color: filledSteps[i] ? "#808080" : "#404040",
+                    letterSpacing: "0.03em",
+                  }}
+                >
+                  {step.label}
+                </span>
+                {i < STEPS.length - 1 && (
+                  <div
+                    className="flex-1 mx-2 transition-all duration-300 ease-out"
+                    style={{
+                      height: 1,
+                      backgroundColor: filledSteps[i] ? "rgba(109,40,217,0.3)" : "rgba(255,255,255,0.04)",
+                    }}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+          {/* Continuous progress bar */}
+          <div style={{
+            width: "100%",
+            height: 2,
+            backgroundColor: "rgba(255,255,255,0.04)",
+            borderRadius: 1,
+            overflow: "hidden",
+          }}>
+            <div
+              className="transition-all duration-500 ease-out"
+              style={{
+                width: `${progressPercent}%`,
+                height: "100%",
+                background: `linear-gradient(90deg, rgba(109,40,217,0.6), ${PURPLE_GLOW})`,
+                borderRadius: 1,
+                boxShadow: progressPercent > 0 ? `0 0 8px rgba(167,139,250,0.3)` : "none",
+              }}
+            />
+          </div>
+          <p className="transition-colors duration-300" style={{
+            textAlign: "right",
+            fontSize: 11,
+            fontFamily: "Arial, Helvetica, sans-serif",
+            color: "#404040",
+            marginTop: 6,
+          }}>
+            {progressPercent}% kesz
           </p>
         </div>
       </div>
 
       {/* Separator */}
       <div className="px-6">
-        <div className="max-w-[700px] mx-auto" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }} />
+        <div className="max-w-[700px] mx-auto" style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }} />
       </div>
 
       {/* Form */}
       <div className="py-12 px-6">
-        <form onSubmit={handleSubmit} className="max-w-[560px] mx-auto flex flex-col" style={{ gap: 32 }}>
+        <form onSubmit={handleSubmit} className="max-w-[560px] mx-auto flex flex-col" style={{ gap: 36 }}>
           <Field label="neved *">
             <TextInput value={form.name} onChange={(v) => updateField("name", v)} placeholder="Teljes neved" required />
           </Field>
           <Field label="email *">
             <TextInput type="email" value={form.email} onChange={(v) => updateField("email", v)} placeholder="email@pelda.hu" required />
           </Field>
-          <Field label="vállalkozásod neve / weboldal">
-            <TextInput value={form.business_name} onChange={(v) => updateField("business_name", v)} placeholder="Pl. Példa Kft. vagy pelda.hu" />
+          <Field label="vallalkozasod neve / weboldal">
+            <TextInput value={form.business_name} onChange={(v) => updateField("business_name", v)} placeholder="Pl. Pelda Kft. vagy pelda.hu" />
           </Field>
           <Field label="mivel foglalkozol? *">
-            <TextInput value={form.profession} onChange={(v) => updateField("profession", v)} placeholder="Pl. pénzügyi tanácsadó, coach, ügyvéd..." required />
+            <TextInput value={form.profession} onChange={(v) => updateField("profession", v)} placeholder="Pl. penzugyi tanacsado, coach, ugyved..." required />
           </Field>
-          <Field label="mi az a konkrét probléma, ami sürget? *">
-            <TextArea value={form.problem} onChange={(v) => updateField("problem", v)} placeholder="Miben érzed, hogy elakadtál, vagy mit szeretnél másképp csinálni?" required />
+          <Field label="mi az a konkret problema, ami surget? *">
+            <TextArea value={form.problem} onChange={(v) => updateField("problem", v)} placeholder="Miben erzed, hogy elakadtal, vagy mit szeretnel maskent csinalni?" required />
           </Field>
-          <Field label="mit próbáltál eddig ennek megoldására?">
-            <TextArea value={form.previous_attempts} onChange={(v) => updateField("previous_attempts", v)} placeholder="Milyen megoldásokat próbáltál már ki? (vagy még semmit)" />
+          <Field label="mit probaltal eddig ennek megoldasara?">
+            <TextArea value={form.previous_attempts} onChange={(v) => updateField("previous_attempts", v)} placeholder="Milyen megoldasokat probaltal mar ki? (vagy meg semmit)" />
           </Field>
-          <Field label="mennyi időt tudsz erre szánni? *">
+          <Field label="mennyi idot tudsz erre szanni? *">
             <OptionButtons options={timeOptions} selected={form.time_commitment} onSelect={(v) => updateField("time_commitment", v)} />
           </Field>
           <Field label="mekkora kereted van erre? *">
             <OptionButtons options={budgetOptions} selected={form.budget} onSelect={(v) => updateField("budget", v)} />
           </Field>
-          <Field label="honnan hallottál rólam?">
-            <TextInput value={form.how_found} onChange={(v) => updateField("how_found", v)} placeholder="Pl. Google, ismerős ajánlása, YouTube..." />
+          <Field label="honnan hallottal rolam?">
+            <TextInput value={form.how_found} onChange={(v) => updateField("how_found", v)} placeholder="Pl. Google, ismeros ajanlasa, YouTube..." />
           </Field>
 
-          {error && <p style={{ color: "#ef4444", fontSize: 14 }}>{error}</p>}
+          {error && (
+            <div
+              className="transition-all duration-300"
+              style={{
+                padding: "12px 16px",
+                backgroundColor: "rgba(239,68,68,0.06)",
+                border: "1px solid rgba(239,68,68,0.15)",
+                color: "#f87171",
+                fontSize: 14,
+                fontFamily: "Arial, Helvetica, sans-serif",
+              }}
+            >
+              {error}
+            </div>
+          )}
 
-          <div className="pt-4">
+          <div className="pt-6">
             <button
               type="submit"
-              disabled={submitting || !form.name || !form.email || !form.profession || !form.problem || !form.time_commitment || !form.budget}
-              className="transition-all duration-300 w-full"
+              disabled={isDisabled}
+              className="btn-premium w-full transition-all duration-300 ease-out"
               style={{
                 fontSize: 15,
                 fontWeight: 500,
                 fontFamily: "Arial, Helvetica, sans-serif",
-                color: "#f0f0f0",
-                backgroundColor: submitting ? "rgba(109, 40, 217, 0.3)" : "rgba(109, 40, 217, 0.6)",
-                border: "1px solid rgba(109, 40, 217, 0.8)",
-                cursor: submitting ? "wait" : "pointer",
-                padding: "14px 32px",
+                color: isDisabled ? "#606060" : "#f0f0f0",
+                backgroundColor: submitting ? "rgba(109, 40, 217, 0.2)" : isDisabled ? "rgba(255,255,255,0.02)" : "rgba(109, 40, 217, 0.5)",
+                border: `1px solid ${isDisabled ? "rgba(255,255,255,0.06)" : "rgba(109, 40, 217, 0.7)"}`,
+                cursor: submitting ? "wait" : isDisabled ? "not-allowed" : "pointer",
+                padding: "16px 32px",
                 borderRadius: 0,
-                opacity: (!form.name || !form.email || !form.profession || !form.problem || !form.time_commitment || !form.budget) ? 0.3 : 1,
-                boxShadow: "0 0 20px rgba(109, 40, 217, 0.2)",
+                boxShadow: !isDisabled ? "0 0 32px rgba(109, 40, 217, 0.15), 0 4px 16px rgba(0,0,0,0.3)" : "none",
+                letterSpacing: "0.02em",
               }}
             >
-              {submitting ? "Küldés..." : "Kérdőív beküldése →"}
+              {submitting ? "Kuldes..." : "Kerdoiv bekuldese"}
+              {!submitting && (
+                <span className="inline-block ml-2 transition-transform duration-300 ease-out group-hover:translate-x-1">&rarr;</span>
+              )}
             </button>
+            <p style={{
+              textAlign: "center",
+              fontSize: 11,
+              fontFamily: "Arial, Helvetica, sans-serif",
+              color: "#353535",
+              marginTop: 12,
+            }}>
+              Az adataidat bizalmasan kezeljuk.
+            </p>
           </div>
         </form>
       </div>
 
       {/* Footer */}
       <div className="px-6 pb-16">
-        <div className="max-w-[700px] mx-auto pt-10" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-          <p style={{ color: "#525252", fontSize: 12, textAlign: "center" }}>
-            Expert Flow &mdash; AI rendszerek szolgáltató vállalkozóknak
-          </p>
+        <div className="max-w-[700px] mx-auto pt-10" style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+          <div className="flex items-center justify-between">
+            <Link
+              href="/"
+              className="transition-colors duration-300"
+              style={{ color: "#353535", fontSize: 12, fontFamily: "Arial, Helvetica, sans-serif" }}
+              onMouseOver={(e) => { e.currentTarget.style.color = "#606060"; }}
+              onMouseOut={(e) => { e.currentTarget.style.color = "#353535"; }}
+            >
+              &larr; expertflow.hu
+            </Link>
+            <p style={{ color: "#353535", fontSize: 12, fontFamily: "Arial, Helvetica, sans-serif" }}>
+              Expert Flow &mdash; AI rendszerek szolgaltato vallalkozoknak
+            </p>
+          </div>
         </div>
       </div>
 
@@ -235,7 +496,16 @@ export default function KerdoivPage() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label style={{ display: "block", fontSize: 12, letterSpacing: "0.05em", color: "#b0b0b0", marginBottom: 8, textTransform: "lowercase" }}>
+      <label style={{
+        display: "block",
+        fontSize: 11,
+        letterSpacing: "0.08em",
+        color: "#707070",
+        marginBottom: 10,
+        textTransform: "lowercase",
+        fontFamily: "Arial, Helvetica, sans-serif",
+        fontWeight: 500,
+      }}>
         {label}
       </label>
       {children}
@@ -247,10 +517,27 @@ function TextInput({ value, onChange, placeholder, type = "text", required }: { 
   return (
     <input
       type={type} value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} required={required}
-      className="w-full transition-colors duration-200"
-      style={{ padding: "10px 12px", backgroundColor: "transparent", border: "1px solid rgba(255,255,255,0.1)", color: "#f0f0f0", fontSize: 15, fontFamily: "Arial, Helvetica, sans-serif", outline: "none", borderRadius: 0 }}
-      onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(109, 40, 217, 0.5)"; }}
-      onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}
+      className="w-full transition-all duration-300 ease-out"
+      style={{
+        padding: "12px 14px",
+        backgroundColor: "rgba(255,255,255,0.02)",
+        border: "1px solid rgba(255,255,255,0.08)",
+        color: "#f0f0f0",
+        fontSize: 15,
+        fontFamily: "Arial, Helvetica, sans-serif",
+        outline: "none",
+        borderRadius: 0,
+      }}
+      onFocus={(e) => {
+        e.currentTarget.style.borderColor = PURPLE_BORDER;
+        e.currentTarget.style.backgroundColor = PURPLE_BG;
+        e.currentTarget.style.boxShadow = "0 0 24px rgba(109,40,217,0.08)";
+      }}
+      onBlur={(e) => {
+        e.currentTarget.style.borderColor = e.currentTarget.value ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.08)";
+        e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.02)";
+        e.currentTarget.style.boxShadow = "none";
+      }}
     />
   );
 }
@@ -259,31 +546,67 @@ function TextArea({ value, onChange, placeholder, required }: { value: string; o
   return (
     <textarea
       value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} required={required} rows={3}
-      className="w-full transition-colors duration-200"
-      style={{ padding: "10px 12px", backgroundColor: "transparent", border: "1px solid rgba(255,255,255,0.1)", color: "#f0f0f0", fontSize: 15, fontFamily: "Arial, Helvetica, sans-serif", outline: "none", resize: "vertical", minHeight: 90, borderRadius: 0 }}
-      onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(109, 40, 217, 0.5)"; }}
-      onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}
+      className="w-full transition-all duration-300 ease-out"
+      style={{
+        padding: "12px 14px",
+        backgroundColor: "rgba(255,255,255,0.02)",
+        border: "1px solid rgba(255,255,255,0.08)",
+        color: "#f0f0f0",
+        fontSize: 15,
+        fontFamily: "Arial, Helvetica, sans-serif",
+        outline: "none",
+        resize: "vertical",
+        minHeight: 100,
+        borderRadius: 0,
+      }}
+      onFocus={(e) => {
+        e.currentTarget.style.borderColor = PURPLE_BORDER;
+        e.currentTarget.style.backgroundColor = PURPLE_BG;
+        e.currentTarget.style.boxShadow = "0 0 24px rgba(109,40,217,0.08)";
+      }}
+      onBlur={(e) => {
+        e.currentTarget.style.borderColor = e.currentTarget.value ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.08)";
+        e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.02)";
+        e.currentTarget.style.boxShadow = "none";
+      }}
     />
   );
 }
 
 function OptionButtons({ options, selected, onSelect }: { options: string[]; selected: string; onSelect: (v: string) => void }) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2.5">
       {options.map((opt) => {
         const isSelected = selected === opt;
         return (
           <button
             key={opt} type="button" onClick={() => onSelect(opt)}
-            className="text-left w-full transition-all duration-200"
+            className="text-left w-full transition-all duration-300 ease-out"
             style={{
-              padding: "10px 14px", backgroundColor: "transparent",
-              border: `1px solid ${isSelected ? "rgba(109, 40, 217, 0.6)" : "rgba(255,255,255,0.1)"}`,
-              color: isSelected ? "#f0f0f0" : "#b0b0b0",
-              fontSize: 14, fontFamily: "Arial, Helvetica, sans-serif", cursor: "pointer", borderRadius: 0,
+              padding: "12px 16px",
+              backgroundColor: isSelected ? PURPLE_BG : "rgba(255,255,255,0.02)",
+              border: `1px solid ${isSelected ? PURPLE_BORDER : "rgba(255,255,255,0.08)"}`,
+              color: isSelected ? "#e8e8e8" : "#909090",
+              fontSize: 14,
+              fontFamily: "Arial, Helvetica, sans-serif",
+              cursor: "pointer",
+              borderRadius: 0,
+              boxShadow: isSelected ? "0 0 20px rgba(109,40,217,0.1)" : "none",
+            }}
+            onMouseOver={(e) => {
+              if (!isSelected) {
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";
+                e.currentTarget.style.color = "#c0c0c0";
+              }
+            }}
+            onMouseOut={(e) => {
+              if (!isSelected) {
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+                e.currentTarget.style.color = "#909090";
+              }
             }}
           >
-            {isSelected && <span style={{ color: PURPLE_GLOW, marginRight: 8 }}>&gt;</span>}
+            {isSelected && <span style={{ color: PURPLE_GLOW, marginRight: 8, fontWeight: 600 }}>&gt;</span>}
             {opt}
           </button>
         );

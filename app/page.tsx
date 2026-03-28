@@ -129,8 +129,21 @@ export default function Home() {
   const [diffTab, setDiffTab] = useState(0);
   const [wordIndex, setWordIndex] = useState(0);
   const [heroVisible, setHeroVisible] = useState(false);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { setHeroVisible(true); }, []);
+
+  // Parallax effect on hero grid lines
+  useEffect(() => {
+    const handleScroll = () => {
+      if (gridRef.current) {
+        const y = window.scrollY * 0.15;
+        gridRef.current.style.transform = `translateY(${y}px)`;
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => setWordIndex((p) => (p + 1) % heroWords.length), 2500);
@@ -153,10 +166,13 @@ export default function Home() {
   return (
     <main className="relative min-h-screen overflow-x-hidden noise-overlay">
 
+      {/* Gradient accent line at top */}
+      <div className="fixed top-0 left-0 right-0 h-px z-50" style={{ background: 'linear-gradient(90deg, transparent, oklch(0.12 0.01 60 / 0.15), oklch(0.45 0.02 60 / 0.2), oklch(0.12 0.01 60 / 0.15), transparent)' }} />
+
       {/* ========== 1. HERO ========== */}
       <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
-        {/* Subtle grid lines */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
+        {/* Subtle grid lines with parallax */}
+        <div ref={gridRef} className="absolute inset-0 overflow-hidden pointer-events-none opacity-30" style={{ transform: 'translateZ(0)', willChange: 'transform' }}>
           {[...Array(8)].map((_, i) => (
             <div key={`h-${i}`} className="absolute h-px bg-foreground/10" style={{ top: `${12.5 * (i + 1)}%`, left: 0, right: 0 }} />
           ))}
@@ -179,8 +195,8 @@ export default function Home() {
             <h1 className={`text-[clamp(3rem,10vw,8rem)] font-display leading-[0.9] tracking-tight transition-all duration-1000 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
               <span className="block">Vállalkozást</span>
               <span className="block">
-                <span className="relative inline-block">
-                  <span key={wordIndex} className="inline-flex">
+                <span className="relative inline-block overflow-hidden">
+                  <span key={wordIndex} className="inline-flex" style={{ animation: 'clip-reveal 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards' }}>
                     {heroWords[wordIndex].split("").map((char, i) => (
                       <span key={`${wordIndex}-${i}`} className="inline-block animate-char-in" style={{ animationDelay: `${i * 50}ms` }}>
                         {char}
@@ -205,14 +221,14 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackCTAClick("hero")}
-                className="inline-flex items-center gap-2 bg-foreground hover:bg-foreground/90 text-background px-8 h-14 text-base rounded-full group transition-colors"
+                className="btn-premium inline-flex items-center gap-2 bg-foreground hover:bg-foreground/90 text-background px-8 h-14 text-base rounded-full group"
               >
                 Ingyenes konzultáció
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </a>
               <Link
                 href="/szolgaltatas"
-                className="inline-flex items-center h-14 px-8 text-base rounded-full border border-foreground/20 hover:bg-foreground/5 transition-colors"
+                className="btn-premium inline-flex items-center h-14 px-8 text-base rounded-full border border-foreground/20 hover:bg-foreground/5"
               >
                 Szolgáltatásaink
               </Link>
@@ -239,6 +255,8 @@ export default function Home() {
         </div>
       </section>
 
+      <div className="divider-fade" />
+
       {/* ========== 3. EBBEN SEGÍTÜNK ========== */}
       <section ref={helpSection.ref} className="relative py-24 lg:py-32">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -246,16 +264,18 @@ export default function Home() {
             <span className="w-8 h-px bg-foreground/30" />
             Ebben segítünk
           </span>
-          <h2 className={`text-4xl lg:text-6xl font-display tracking-tight mb-8 transition-all duration-700 ${helpSection.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+          <h2 className={`text-4xl lg:text-6xl font-display tracking-tight mb-8 reveal-up ${helpSection.visible ? "visible" : ""}`}>
             Segítünk felépíteni szolgáltatói
             <br />
             <span className="text-muted-foreground">vállalkozásod AI-rendszerekkel.</span>
           </h2>
-          <p className={`text-xl text-muted-foreground leading-relaxed max-w-2xl transition-all duration-700 delay-200 ${helpSection.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+          <p className={`text-xl text-muted-foreground leading-relaxed max-w-2xl reveal-up ${helpSection.visible ? "visible" : ""}`} style={{ transitionDelay: '200ms' }}>
             Abban támogatunk, hogy a hivatásodból olyan vállalkozást építs, amely készen áll az AI-korszak kihívásaira és lehetőségeire.
           </p>
         </div>
       </section>
+
+      <div className="divider-fade" />
 
       {/* ========== 4. SZOLGÁLTATÁSUNK (DARK) ========== */}
       <section ref={serviceSection.ref} className="relative py-24 lg:py-32 section-dark overflow-hidden">
@@ -270,7 +290,7 @@ export default function Home() {
               <span className="w-8 h-px bg-background/30" />
               Szolgáltatásunk
             </span>
-            <h2 className={`text-4xl lg:text-6xl font-display tracking-tight transition-all duration-700 ${serviceSection.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+            <h2 className={`text-4xl lg:text-6xl font-display tracking-tight reveal-up ${serviceSection.visible ? "visible" : ""}`}>
               Három kihívás.
               <br />
               <span className="text-background/50">Egy rendszer.</span>
@@ -279,7 +299,7 @@ export default function Home() {
 
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
             {/* Tab list */}
-            <div className="space-y-0">
+            <div className={`space-y-0 stagger-children ${serviceSection.visible ? "visible" : ""}`}>
               {serviceTabs.map((tab, i) => (
                 <button
                   key={tab.number}
@@ -308,14 +328,16 @@ export default function Home() {
 
             {/* Tab image */}
             <div className="lg:sticky lg:top-32 self-start">
-              <div className="border border-background/10 overflow-hidden">
-                <Image
-                  src={serviceTabs[serviceTab].image}
-                  alt={serviceTabs[serviceTab].name}
-                  width={940}
-                  height={600}
-                  className="w-full h-auto object-cover"
-                />
+              <div className="glass-card border border-background/10 overflow-hidden">
+                <div className="img-zoom">
+                  <Image
+                    src={serviceTabs[serviceTab].image}
+                    alt={serviceTabs[serviceTab].name}
+                    width={940}
+                    height={600}
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
                 <div className="p-8">
                   <h4 className="font-display text-2xl mb-3">{serviceTabs[serviceTab].title}</h4>
                   <p className="text-background/60 leading-relaxed">{serviceTabs[serviceTab].desc}</p>
@@ -333,6 +355,8 @@ export default function Home() {
         `}</style>
       </section>
 
+      <div className="divider-fade" />
+
       {/* ========== 5. KÖZÖS MUNKA LÉPÉSEI ========== */}
       <section ref={processSection.ref} className="relative py-24 lg:py-32">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -341,20 +365,24 @@ export default function Home() {
               <span className="w-8 h-px bg-foreground/30" />
               Együttműködés
             </span>
-            <h2 className={`text-4xl lg:text-6xl font-display tracking-tight transition-all duration-700 ${processSection.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+            <h2 className={`text-4xl lg:text-6xl font-display tracking-tight reveal-up ${processSection.visible ? "visible" : ""}`}>
               Közös munka lépései
             </h2>
           </div>
 
-          <div>
+          <div className="relative">
+            {/* Connecting line between steps */}
+            <div className="absolute left-[1.1rem] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-foreground/10 to-transparent hidden lg:block" />
             {processSteps.map((step, i) => (
               <div
                 key={step.num}
-                className={`flex flex-col lg:flex-row gap-8 lg:gap-16 py-12 lg:py-20 border-b border-foreground/10 transition-all duration-700 ${processSection.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
+                className={`flex flex-col lg:flex-row gap-8 lg:gap-16 py-12 lg:py-20 border-b border-foreground/10 reveal-up ${processSection.visible ? "visible" : ""}`}
                 style={{ transitionDelay: `${i * 100}ms` }}
               >
-                <div className="shrink-0">
-                  <span className="font-mono text-sm text-muted-foreground">{step.num}</span>
+                <div className="shrink-0 relative z-10">
+                  <span className={`counter-reveal font-mono text-sm text-muted-foreground ${processSection.visible ? "visible" : ""}`}>
+                    <span>{step.num}</span>
+                  </span>
                 </div>
                 <div className="flex-1 grid lg:grid-cols-2 gap-8 items-center">
                   <h3 className="text-3xl lg:text-4xl font-display">{step.title}</h3>
@@ -366,8 +394,10 @@ export default function Home() {
         </div>
       </section>
 
+      <div className="divider-fade" />
+
       {/* ========== 6. MIBEN VAGYUNK MÁS? ========== */}
-      <section ref={diffSection.ref} className="relative py-32 lg:py-40 border-t border-foreground/10">
+      <section ref={diffSection.ref} className="relative py-32 lg:py-40">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="flex items-center gap-4 mb-16">
             <span className="font-mono text-xs tracking-widest text-muted-foreground uppercase">Miben vagyunk más?</span>
@@ -379,7 +409,7 @@ export default function Home() {
 
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
             <div className="lg:col-span-8">
-              <h2 className={`font-display text-5xl md:text-6xl lg:text-7xl tracking-tight leading-[1.05] transition-all duration-700 ${diffSection.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+              <h2 className={`font-display text-5xl md:text-6xl lg:text-7xl tracking-tight leading-[1.05] reveal-up ${diffSection.visible ? "visible" : ""}`}>
                 Expert Flow
                 <br />
                 <span className="text-stroke">különbség</span>
@@ -432,14 +462,16 @@ export default function Home() {
         </div>
       </section>
 
+      <div className="divider-fade" />
+
       {/* ========== 7. PILLAR CARDS (PRICING STYLE) ========== */}
-      <section ref={pillarSection.ref} className="relative py-32 lg:py-40 border-t border-foreground/10">
+      <section ref={pillarSection.ref} className="relative py-32 lg:py-40">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="max-w-3xl mb-20">
             <span className="font-mono text-xs tracking-widest text-muted-foreground uppercase block mb-6">
               Agentic AI
             </span>
-            <h2 className={`font-display text-5xl md:text-6xl lg:text-7xl tracking-tight mb-6 transition-all duration-700 ${pillarSection.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+            <h2 className={`font-display text-5xl md:text-6xl lg:text-7xl tracking-tight mb-6 reveal-up ${pillarSection.visible ? "visible" : ""}`}>
               Egyéni
               <br />
               <span className="text-stroke">szolgáltatásunk</span>
@@ -449,12 +481,11 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-px bg-foreground/10">
-            {pillarCards.map((card, i) => (
+          <div className={`grid md:grid-cols-3 gap-px bg-foreground/10 stagger-children ${pillarSection.visible ? "visible" : ""}`}>
+            {pillarCards.map((card) => (
               <div
                 key={card.name}
-                className={`relative p-8 lg:p-12 bg-background transition-all duration-700 ${pillarSection.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-                style={{ transitionDelay: `${i * 100}ms` }}
+                className="shimmer-border relative p-8 lg:p-12 bg-background"
               >
                 <div className="mb-8">
                   <span className="font-mono text-xs text-muted-foreground">{card.pillar}</span>
@@ -483,21 +514,23 @@ export default function Home() {
       <section className="relative py-24 lg:py-32">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <div className="flex justify-center gap-4">
-            <Link href="/szolgaltatas" className="inline-flex items-center h-14 px-8 text-base rounded-full border border-foreground/20 hover:bg-foreground/5 transition-colors">
+            <Link href="/szolgaltatas" className="btn-premium inline-flex items-center h-14 px-8 text-base rounded-full border border-foreground/20 hover:bg-foreground/5">
               További részletek
             </Link>
-            <Link href="/araink" className="inline-flex items-center h-14 px-8 text-base rounded-full border border-foreground/20 hover:bg-foreground/5 transition-colors">
+            <Link href="/araink" className="btn-premium inline-flex items-center h-14 px-8 text-base rounded-full border border-foreground/20 hover:bg-foreground/5">
               Áraink
             </Link>
           </div>
         </div>
       </section>
 
+      <div className="divider-fade" />
+
       {/* ========== 9. ABOUT ========== */}
-      <section ref={aboutSection.ref} className="relative py-24 lg:py-32 border-t border-foreground/10">
+      <section ref={aboutSection.ref} className="relative py-24 lg:py-32">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-            <div className={`overflow-hidden transition-all duration-700 ${aboutSection.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <div className={`img-zoom reveal-up ${aboutSection.visible ? "visible" : ""}`}>
               <Image
                 src="/images/attila.jpg"
                 alt="Nagy Attila"
@@ -507,7 +540,7 @@ export default function Home() {
               />
             </div>
 
-            <div className={`transition-all duration-700 delay-200 ${aboutSection.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <div className={`glass-card p-8 lg:p-12 reveal-up ${aboutSection.visible ? "visible" : ""}`} style={{ transitionDelay: '200ms' }}>
               <div className="h-px w-full bg-foreground/10 mb-10" />
               <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-4">
                 <span className="w-8 h-px bg-foreground/30" />
@@ -519,7 +552,7 @@ export default function Home() {
               </p>
               <Link
                 href="/rolam"
-                className="inline-flex items-center gap-2 h-14 px-8 text-base rounded-full border border-foreground/20 hover:bg-foreground/5 transition-colors group"
+                className="btn-premium inline-flex items-center gap-2 h-14 px-8 text-base rounded-full border border-foreground/20 hover:bg-foreground/5 group"
               >
                 Ismerj meg jobban
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />

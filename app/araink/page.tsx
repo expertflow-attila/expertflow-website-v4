@@ -26,7 +26,7 @@ function Section({ children, className = "", delay = 0 }: { children: React.Reac
   return (
     <div
       ref={ref}
-      className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} ${className}`}
+      className={`transition-opacity duration-300 ease-out ${visible ? "opacity-100" : "opacity-0"} ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
@@ -130,7 +130,7 @@ export default function AraikPage() {
               Válaszd ki a hozzád illő csomagot
             </h1>
           </Section>
-          <Section delay={150}>
+          <Section>
             <p className="text-lg text-muted-foreground mt-6 max-w-[620px] leading-relaxed">
               Minden csomag személyre szabható. A bevezető konzultáción
               közösen döntjük el, melyik a legjobb megoldás a te helyzetedre.
@@ -142,28 +142,30 @@ export default function AraikPage() {
       {/* ===== PRICING CARDS ===== */}
       <section className="pb-24 lg:pb-32">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-          <Section delay={200}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-foreground/10 rounded-lg overflow-hidden">
+          <Section>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4 lg:gap-6">
               {packages.map((pkg, i) => (
                 <div
                   key={i}
-                  className={`flex flex-col p-8 ${
-                    pkg.highlighted ? "bg-foreground text-background" : "bg-card"
+                  className={`flex flex-col p-8 lg:p-10 rounded-lg ${
+                    pkg.highlighted
+                      ? "bg-foreground text-background border border-foreground"
+                      : "glass-card"
                   }`}
                 >
-                  <span className={`font-mono text-xs uppercase tracking-widest mb-3 ${
+                  <span className={`font-mono text-xs uppercase tracking-widest mb-4 ${
                     pkg.highlighted ? "opacity-60" : "text-muted-foreground"
                   }`}>
                     {pkg.label}
                   </span>
-                  <h3 className="text-xl font-display tracking-tight mb-2">{pkg.name}</h3>
-                  <div className="flex items-baseline gap-1 mb-4">
+                  <h3 className="text-xl font-display tracking-tight mb-3">{pkg.name}</h3>
+                  <div className="flex items-baseline gap-1 mb-5">
                     <span className="text-[clamp(1.5rem,3vw,2rem)] font-display tracking-tight">{pkg.price}</span>
                     <span className={`text-sm ${pkg.highlighted ? "opacity-60" : "text-muted-foreground"}`}>
                       {pkg.unit}
                     </span>
                   </div>
-                  <p className={`text-sm mb-6 leading-relaxed ${pkg.highlighted ? "opacity-80" : "text-muted-foreground"}`}>
+                  <p className={`text-sm mb-8 leading-relaxed ${pkg.highlighted ? "opacity-80" : "text-muted-foreground"}`}>
                     {pkg.desc}
                   </p>
 
@@ -172,7 +174,7 @@ export default function AraikPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => { trackCTAClick(`araink_${pkg.name}`); trackPricingView(pkg.name); }}
-                    className={`w-full flex items-center justify-center gap-2 h-12 rounded-full text-sm transition-colors mb-6 ${
+                    className={`btn-premium w-full flex items-center justify-center gap-2 h-12 rounded-full text-sm transition-colors duration-200 mb-8 ${
                       pkg.highlighted
                         ? "bg-background text-foreground hover:bg-background/90"
                         : "bg-foreground text-background hover:bg-foreground/90"
@@ -184,12 +186,12 @@ export default function AraikPage() {
 
                   <div className={`h-px mb-6 ${pkg.highlighted ? "bg-white/20" : "bg-foreground/10"}`} />
 
-                  <span className={`font-mono text-[10px] uppercase tracking-widest mb-4 ${
+                  <span className={`font-mono text-[10px] uppercase tracking-widest mb-5 ${
                     pkg.highlighted ? "opacity-50" : "text-muted-foreground"
                   }`}>
                     TARTALMAZZA
                   </span>
-                  <ul className="flex flex-col gap-3 flex-1">
+                  <ul className="flex flex-col gap-4 flex-1">
                     {pkg.features.map((f, j) => (
                       <li key={j} className="flex items-start gap-3 text-sm">
                         <Check className={`w-4 h-4 mt-0.5 shrink-0 ${pkg.highlighted ? "opacity-60" : "text-muted-foreground"}`} />
@@ -203,6 +205,11 @@ export default function AraikPage() {
           </Section>
         </div>
       </section>
+
+      {/* ===== DIVIDER ===== */}
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+        <div className="divider-fade" />
+      </div>
 
       {/* ===== GUARANTEES ===== */}
       <section className="section-dark py-24 lg:py-32">
@@ -219,7 +226,7 @@ export default function AraikPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10 rounded-lg overflow-hidden">
             {guarantees.map((g, i) => (
-              <Section key={i} delay={i * 100}>
+              <Section key={i}>
                 <div className="bg-foreground p-8 h-full">
                   <h3 className="text-xl font-display tracking-tight mb-3">{g.title}</h3>
                   <p className="text-sm opacity-60 leading-relaxed">{g.desc}</p>
@@ -247,7 +254,7 @@ export default function AraikPage() {
             {faq.map((item, i) => {
               const isOpen = openFaq === i;
               return (
-                <Section key={i} delay={i * 60}>
+                <Section key={i}>
                   <div className="border-b border-foreground/10">
                     <div className="py-5">
                       <button
@@ -289,7 +296,7 @@ export default function AraikPage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackCTAClick("araink_bottom_cta")}
-                className="mt-10 inline-flex items-center gap-2 bg-foreground text-background px-8 h-12 rounded-full text-sm hover:bg-foreground/90 transition-colors"
+                className="btn-premium mt-10 inline-flex items-center gap-2 bg-foreground text-background px-8 h-12 rounded-full text-sm hover:bg-foreground/90 transition-colors duration-200"
               >
                 Konzultáció foglalás
                 <ArrowRight className="w-4 h-4" />

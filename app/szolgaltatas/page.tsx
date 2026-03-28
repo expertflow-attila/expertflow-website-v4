@@ -22,13 +22,12 @@ function useInView(threshold = 0.15) {
   return { ref, visible };
 }
 
-function Section({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+function Section({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const { ref, visible } = useInView();
   return (
     <div
       ref={ref}
-      className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      className={`transition-opacity duration-300 ease-out ${visible ? "opacity-100" : "opacity-0"} ${className}`}
     >
       {children}
     </div>
@@ -147,7 +146,7 @@ const faqCategories = [
       { q: "Hogyan kezdjük?", a: "Egy bevezető konzultációval, ahol feltérképezzük, hol tartasz most, és mire van leginkább szükséged. Ebből készül egy terv, és ha mindketten úgy látjuk, hogy van értelme, indulunk." },
       { q: "Nekem is dolgoznom kell rajta, vagy mindent ti csináltok?", a: "Az elején közösen dolgozunk, mert a te vállalkozásodat senki nem ismeri jobban nálad. Utána a napi működéshez minimális beavatkozás kell tőled — erre készítjük fel az egészet." },
       { q: "Mennyibe kerül?", a: "A pontos árat a bevezető konzultáción beszéljük meg, mert függ attól, melyik területen kezdünk és milyen mélységben. A legtöbb projektünk 400 000 – 600 000 forint közötti tartományban van. Alapító ügyfeleknek kedvezményes feltételekkel dolgozunk." },
-      { q: "Van lehetőség részletfizetésre?", a: "Igen, természetesen! Tudom, hogy ez nagy befektetés lehet valaki számára, ezért biztosítunk részletfizetési lehetőséget, hogy könnyebben elérhető legyen mindenki számára." },
+      { q: "Van lehetőség részletfizetésre?", a: "Igen, természetesen! Tudom, hogy ez nagy befektetés lehet valaki számára, ezért biztosítunk részletfizetési lehetőséget, hogy könnyebben elérhető legyen mindenki számára!" },
     ],
   },
 ];
@@ -167,7 +166,7 @@ export default function SzolgaltatasPage() {
   return (
     <>
       {/* ===== HERO ===== */}
-      <section className="py-24 lg:py-32">
+      <section className="py-28 lg:py-36">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <Section>
             <div className="flex items-center gap-4 mb-8">
@@ -177,21 +176,19 @@ export default function SzolgaltatasPage() {
             <h1 className="text-[clamp(2.5rem,6vw,4.5rem)] font-display leading-[1.05] tracking-tight max-w-[720px]">
               Hiszünk abban, hogy a tudásod érték
             </h1>
-          </Section>
-          <Section delay={150}>
-            <p className="text-lg text-muted-foreground mt-6 max-w-[620px] leading-relaxed">
+            <p className="text-lg text-muted-foreground mt-8 max-w-[620px] leading-relaxed">
               Szolgáltatásunk fő célja az egyéni vállalkozók támogatása egy
               hatékony és fenntartható üzleti rendszer felépítésében.
             </p>
           </Section>
-          <Section delay={300}>
-            <div className="mt-12 overflow-hidden rounded-lg">
+          <Section>
+            <div className="mt-14 img-zoom rounded-lg">
               <Image
                 src="/images/service-image.webp"
                 alt="Expert Flow szolgáltatás"
                 width={940}
                 height={480}
-                className="w-full object-cover"
+                className="w-full object-cover rounded-lg"
                 priority
               />
             </div>
@@ -199,8 +196,10 @@ export default function SzolgaltatasPage() {
         </div>
       </section>
 
+      <div className="divider-fade max-w-[1400px] mx-auto" />
+
       {/* ===== KINEK SZÓL ===== */}
-      <section className="py-24 lg:py-32 bg-secondary">
+      <section className="py-28 lg:py-36 bg-secondary">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <Section>
             <div className="flex items-center gap-4 mb-4">
@@ -211,12 +210,12 @@ export default function SzolgaltatasPage() {
             <p className="text-lg text-muted-foreground mt-4">Neked szól, ha:</p>
           </Section>
 
-          <div className="mt-12 flex flex-col gap-0">
+          <div className="mt-14 flex flex-col gap-0">
             {targetAudience.map((text, i) => (
-              <Section key={i} delay={i * 120}>
-                <div className="flex items-start gap-6 py-6 border-b border-foreground/10">
+              <Section key={i}>
+                <div className="flex items-start gap-6 py-7 border-b border-foreground/10">
                   <span className="font-mono text-sm text-muted-foreground shrink-0">{String(i + 1).padStart(2, "0")}</span>
-                  <p className="text-base">{text}</p>
+                  <p className="text-base leading-relaxed">{text}</p>
                 </div>
               </Section>
             ))}
@@ -224,8 +223,10 @@ export default function SzolgaltatasPage() {
         </div>
       </section>
 
+      <div className="divider-fade max-w-[1400px] mx-auto" />
+
       {/* ===== THREE PILLARS — TABS ===== */}
-      <section className="section-dark py-24 lg:py-32">
+      <section className="section-dark py-28 lg:py-36">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <Section>
             <div className="flex items-center gap-4 mb-4">
@@ -238,13 +239,13 @@ export default function SzolgaltatasPage() {
           </Section>
 
           {/* Tab navigation */}
-          <Section delay={100}>
-            <div className="mt-12 flex gap-0 border-b border-white/10">
+          <Section>
+            <div className="mt-14 flex gap-0 border-b border-white/10">
               {pillars.map((p, i) => (
                 <button
                   key={p.id}
                   onClick={() => { setActiveTab(i); trackTabSwitch(p.id, "szolgaltatas_pillerek"); }}
-                  className={`px-6 py-4 text-sm transition-all border-b-2 ${
+                  className={`px-6 py-4 text-sm transition-colors duration-200 border-b-2 ${
                     activeTab === i
                       ? "border-white text-white"
                       : "border-transparent text-white/50 hover:text-white/80"
@@ -257,15 +258,15 @@ export default function SzolgaltatasPage() {
           </Section>
 
           {/* Tab content */}
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+          <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-14 items-start">
             <Section key={`img-${activeTab}`}>
-              <div className="overflow-hidden rounded-lg">
+              <div className="img-zoom rounded-lg">
                 <Image
                   src={pillar.image}
                   alt={pillar.navLabel}
                   width={460}
                   height={320}
-                  className="w-full object-cover"
+                  className="w-full object-cover rounded-lg"
                 />
               </div>
             </Section>
@@ -277,10 +278,10 @@ export default function SzolgaltatasPage() {
                 </p>
               </Section>
 
-              <Section key={`results-${activeTab}`} delay={100}>
-                <div className="mt-8">
-                  <p className="font-mono text-xs uppercase tracking-widest opacity-50 mb-4">Eredmények</p>
-                  <div className="flex flex-col gap-3">
+              <Section key={`results-${activeTab}`}>
+                <div className="mt-10">
+                  <p className="font-mono text-xs uppercase tracking-widest opacity-50 mb-5">Eredmények</p>
+                  <div className="flex flex-col gap-4">
                     {pillar.results.map((r, i) => (
                       <div key={i} className="flex items-start gap-3">
                         <Check className="w-4 h-4 mt-0.5 shrink-0 opacity-60" />
@@ -294,13 +295,13 @@ export default function SzolgaltatasPage() {
           </div>
 
           {/* Solutions grid */}
-          <Section key={`solutions-${activeTab}`} delay={200}>
-            <div className="mt-16">
-              <p className="font-mono text-xs uppercase tracking-widest opacity-50 mb-8 text-center">Megoldások</p>
+          <Section key={`solutions-${activeTab}`}>
+            <div className="mt-20">
+              <p className="font-mono text-xs uppercase tracking-widest opacity-50 mb-10 text-center">Megoldások</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/10 rounded-lg overflow-hidden">
                 {pillar.solutions.map((s, i) => (
-                  <div key={i} className="bg-foreground p-6">
-                    <h4 className="text-sm font-semibold mb-2">{s.title}</h4>
+                  <div key={i} className="bg-foreground p-8 shimmer-border">
+                    <h4 className="text-sm font-semibold mb-3">{s.title}</h4>
                     <p className="text-sm opacity-60 leading-relaxed">{s.desc}</p>
                   </div>
                 ))}
@@ -310,8 +311,10 @@ export default function SzolgaltatasPage() {
         </div>
       </section>
 
+      <div className="divider-fade max-w-[1400px] mx-auto" />
+
       {/* ===== PROCESS TIMELINE ===== */}
-      <section className="py-24 lg:py-32">
+      <section className="py-28 lg:py-36">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <Section>
             <div className="flex items-center gap-4 mb-4">
@@ -321,17 +324,17 @@ export default function SzolgaltatasPage() {
             <h2 className="text-[clamp(2rem,4vw,3rem)] font-display leading-[1.1] tracking-tight">
               Együttműködés folyamata
             </h2>
-            <p className="text-lg text-muted-foreground mt-3 max-w-[540px]">
+            <p className="text-lg text-muted-foreground mt-4 max-w-[540px]">
               Hét lépésben a stratégiától az önálló működésig.
             </p>
           </Section>
 
-          <div className="relative mt-16 flex flex-col gap-0 pl-14">
+          <div className="relative mt-18 flex flex-col gap-0 pl-14">
             <div className="absolute top-0 bottom-0 left-[19px] w-px bg-foreground/10" />
 
-            {processSteps.map((step, i) => (
-              <Section key={step.num} delay={i * 80}>
-                <div className="relative pb-10">
+            {processSteps.map((step) => (
+              <Section key={step.num}>
+                <div className="relative pb-12">
                   <div className="absolute -left-14 top-1 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/10 bg-background">
                     <span className="font-mono text-xs font-semibold">{step.num}</span>
                   </div>
@@ -346,8 +349,10 @@ export default function SzolgaltatasPage() {
         </div>
       </section>
 
+      <div className="divider-fade max-w-[1400px] mx-auto" />
+
       {/* ===== CTA WITH ATTILA ===== */}
-      <section className="py-24 lg:py-32 bg-secondary">
+      <section className="py-28 lg:py-36 bg-secondary">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <Section>
             <div className="text-center max-w-[720px] mx-auto">
@@ -359,9 +364,9 @@ export default function SzolgaltatasPage() {
             </div>
           </Section>
 
-          <Section delay={150}>
-            <div className="mt-16 flex flex-col items-center gap-12 md:flex-row md:items-start">
-              <div className="shrink-0">
+          <Section>
+            <div className="mt-18 flex flex-col items-center gap-14 md:flex-row md:items-start">
+              <div className="shrink-0 img-zoom rounded-lg">
                 <Image
                   src="/images/attila.jpg"
                   alt="Nagy Attila"
@@ -371,7 +376,7 @@ export default function SzolgaltatasPage() {
                 />
               </div>
 
-              <div className="flex-1 flex flex-col gap-6">
+              <div className="flex-1 flex flex-col gap-7">
                 {ctaSteps.map((item, i) => (
                   <div key={i} className="flex items-start gap-3">
                     <Check className="w-4 h-4 mt-1 shrink-0 text-muted-foreground" />
@@ -382,13 +387,13 @@ export default function SzolgaltatasPage() {
                   </div>
                 ))}
 
-                <div className="mt-4">
+                <div className="mt-6">
                   <a
                     href={CTA_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => trackCTAClick("szolgaltatas_cta")}
-                    className="inline-flex items-center gap-2 bg-foreground text-background px-8 h-12 rounded-full text-sm hover:bg-foreground/90 transition-colors"
+                    className="btn-premium inline-flex items-center gap-2 bg-foreground text-background px-8 h-12 rounded-full text-sm"
                   >
                     Jelentkezek konzultációra
                     <ArrowRight className="w-4 h-4" />
@@ -400,8 +405,10 @@ export default function SzolgaltatasPage() {
         </div>
       </section>
 
+      <div className="divider-fade max-w-[1400px] mx-auto" />
+
       {/* ===== FAQ ===== */}
-      <section className="py-24 lg:py-32">
+      <section className="py-28 lg:py-36">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <Section>
             <div className="flex items-center gap-4 mb-4">
@@ -414,13 +421,13 @@ export default function SzolgaltatasPage() {
           </Section>
 
           {/* FAQ category tabs */}
-          <Section delay={100}>
-            <div className="mt-10 flex gap-0 border-b border-foreground/10">
+          <Section>
+            <div className="mt-12 flex gap-0 border-b border-foreground/10">
               {faqCategories.map((cat, i) => (
                 <button
                   key={cat.name}
                   onClick={() => { setActiveFaqCat(i); setOpenFaq(null); }}
-                  className={`px-6 py-4 text-sm transition-all border-b-2 ${
+                  className={`px-6 py-4 text-sm transition-colors duration-200 border-b-2 ${
                     activeFaqCat === i
                       ? "border-foreground text-foreground"
                       : "border-transparent text-muted-foreground hover:text-foreground"
@@ -432,21 +439,21 @@ export default function SzolgaltatasPage() {
             </div>
           </Section>
 
-          <div className="mt-8">
+          <div className="mt-10">
             {faqCategories[activeFaqCat].items.map((item, i) => {
               const key = `${faqCategories[activeFaqCat].name}-${i}`;
               const isOpen = openFaq === key;
 
               return (
-                <Section key={key} delay={i * 60}>
+                <Section key={key}>
                   <div className="border-b border-foreground/10">
-                    <div className="py-5">
+                    <div className="py-6">
                       <button
                         onClick={() => toggleFaq(key, item.q)}
                         className="w-full flex items-center justify-between text-left"
                       >
                         <span className="text-base font-medium pr-4">{item.q}</span>
-                        <span className={`shrink-0 text-xl text-muted-foreground transition-transform duration-300 ${isOpen ? "rotate-45" : ""}`}>
+                        <span className={`shrink-0 text-xl text-muted-foreground transition-transform duration-200 ${isOpen ? "rotate-45" : ""}`}>
                           +
                         </span>
                       </button>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+// Icons are inline SVG in socialLinks
 import SubscribeForm from "@/components/subscribe-form";
 
 const footerLinks = {
@@ -15,6 +15,7 @@ const footerLinks = {
     { name: "Rólam", href: "/rolam" },
     { name: "Referenciák", href: "/referenciak" },
     { name: "Kapcsolat", href: "/kapcsolat" },
+    { name: "Jelentkezés", href: "/kerdoiv" },
   ],
   Jogi: [
     { name: "Adatvédelem", href: "/adatvedelmi" },
@@ -24,19 +25,52 @@ const footerLinks = {
 };
 
 const socialLinks = [
-  { name: "YouTube", href: "https://youtube.com/@expertflow-attila" },
-  { name: "LinkedIn", href: "https://www.linkedin.com/in/nagyattila-expertflow/" },
+  {
+    name: "YouTube",
+    href: "https://youtube.com/@expertflow-attila",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+        <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8zM9.5 15.6V8.4l6.3 3.6-6.3 3.6z"/>
+      </svg>
+    ),
+  },
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/in/nagyattila-expertflow/",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+        <path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/>
+      </svg>
+    ),
+  },
+  {
+    name: "Dirt & Clouds",
+    href: "https://dirt-and-clouds.vercel.app",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+        <path d="M12 6.5c1.5-2 4-3 6-2s3 4 1.5 6.5c-1 1.5-3 2.5-5 3"/>
+        <path d="M12 6.5c-1.5-2-4-3-6-2s-3 4-1.5 6.5c1 1.5 3 2.5 5 3"/>
+        <line x1="12" y1="13.5" x2="12" y2="21"/>
+        <path d="M9 18h6"/>
+      </svg>
+    ),
+  },
 ];
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-foreground/10">
+    <footer className="relative">
+      {/* Premium divider at top */}
+      <div className="divider-fade" />
+
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12">
         {/* Newsletter */}
         <div className="py-16 lg:py-20 border-b border-foreground/10">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div>
-              <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Hírlevél</span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                Hírlevél
+              </span>
               <h2 className="text-[clamp(1.5rem,3vw,2rem)] font-display tracking-tight mt-3">
                 Heti gondolatok vállalkozóknak
               </h2>
@@ -52,28 +86,29 @@ export default function Footer() {
 
         {/* Main footer */}
         <div className="py-16 lg:py-24">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-12 lg:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-y-12 gap-x-8 lg:gap-8">
             {/* Brand */}
             <div className="col-span-2">
               <Link href="/" className="inline-flex items-center gap-2 mb-6">
                 <span className="text-2xl font-display">Expert Flow</span>
               </Link>
-              <p className="text-muted-foreground leading-relaxed mb-8 max-w-xs">
+              <p className="text-sm text-muted-foreground leading-relaxed mb-8 max-w-xs">
                 AI-alapú rendszereket építünk szolgáltató egyéni vállalkozóknak — ügyfélszerzésre, kiszolgálásra és háttérműködésre.
               </p>
 
               {/* Social */}
-              <div className="flex gap-6">
+              <div className="flex gap-5">
                 {socialLinks.map((link) => (
                   <a
                     key={link.name}
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 group"
+                    title={link.name}
+                    className="text-muted-foreground hover:text-foreground transition-all duration-300 hover:-translate-y-px flex items-center gap-2 group"
                   >
-                    {link.name}
-                    <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                    {link.icon}
+                    <span className="text-sm">{link.name}</span>
                   </a>
                 ))}
               </div>
@@ -82,13 +117,15 @@ export default function Footer() {
             {/* Link columns */}
             {Object.entries(footerLinks).map(([title, links]) => (
               <div key={title}>
-                <h3 className="text-sm font-medium mb-6">{title}</h3>
+                <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-6">
+                  {title}
+                </h3>
                 <ul className="space-y-4">
                   {links.map((link) => (
                     <li key={link.name}>
                       <Link
                         href={link.href}
-                        className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                        className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
                       >
                         {link.name}
                       </Link>
@@ -101,13 +138,13 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="py-8 border-t border-foreground/10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">
+        <div className="py-8 border-t border-foreground/[0.06] flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-muted-foreground">
             &copy; 2026 Expert Flow. Minden jog fenntartva.
           </p>
-          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+          <div className="flex items-center gap-4 text-xs text-muted-foreground">
             <span className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-green-500" />
+              <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
               Rendszerek működnek
             </span>
           </div>

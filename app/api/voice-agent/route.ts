@@ -1,34 +1,76 @@
 /**
- * Voice Agent Proxy — Signed URL lekérés szerver oldalon
- * Az ElevenLabs API key nem kerül ki a kliensre.
+ * Voice Agent — Gemini 3.1 Flash Live WebSocket proxy
+ *
+ * A kliens WebSocket-en keresztül küld audio-t, a szerver Gemini Live API-val kommunikál.
+ * A Supabase tudásbázisból kontextust ad a modellnek.
  */
 
 import { NextResponse } from "next/server";
 
-const AGENT_ID = process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID || "agent_9701kmtc90n5ejvb1amefgqmbejm";
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
+
+const SYSTEM_INSTRUCTION = `Te az Expert Flow AI asszisztense vagy. Magyar nyelven válaszolsz, barátságosan és szakértően.
+
+Az Expert Flow egy AI-vezérelt üzleti automatizációs platform magyar szolgáltató egyéni vállalkozóknak: ügyvédeknek, könyvelőknek, ingatlanosoknak, orvosoknak, fotósoknak.
+
+Amit tudsz:
+- AI alapú ügyfélszerzés automatizálása
+- Sales funnel és pipeline kezelés
+- Email marketing automatizáció
+- Weboldal és landing page építés
+- YouTube tartalom készítés
+- CRM és üzleti intelligencia
+
+Ha a látogató érdeklődik, ajánld fel a 30 perces ingyenes konzultációt: https://cal.com/expertflow/konzultacio
+
+Legyél tömör, közvetlen, és segítőkész. Ne használj túl sok szakkifejezést. Beszélj természetesen, mintha egy barátságos tanácsadó lennél.`;
 
 export async function GET() {
-  const apiKey = process.env.ELEVENLABS_API_KEY;
-  if (!apiKey) {
-    return NextResponse.json({ error: "API key not configured" }, { status: 500 });
+  if (!GEMINI_API_KEY) {
+    return NextResponse.json({ error: "Gemini API key not configured" }, { status: 500 });
   }
 
-  try {
-    const res = await fetch(
-      `https://api.elevenlabs.io/v1/convai/conversation/get_signed_url?agent_id=${AGENT_ID}`,
-      { headers: { "xi-api-key": apiKey } }
-    );
-
-    if (!res.ok) {
-      const err = await res.text();
-      console.error("ElevenLabs signed URL error:", err);
-      return NextResponse.json({ error: "Failed to get signed URL" }, { status: res.status });
+  // Supabase tudásbázis lekérdezés (ha elérhető)
+  let knowledgeContext = "";
+  if (SUPABASE_URL && SUPABASE_KEY) {
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/business_knowledge?select=category,content&confidence=gte.0.7&order=created_at.desc&limit=20`, {
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": `Bearer ${SUPABASE_KEY}`,
+        },
+      });
+      if (res.ok) {
+        const knowledge = await res.json();
+        if (knowledge.length > 0) {
+          knowledgeContext = "\n\nTudásbázis kontextus:\n" + knowledge.map((k: { category: string; content: string }) => `[${k.category}] ${k.content}`).join("\n");
+        }
+      }
+    } catch {
+      // Tudásbázis nem elérhető — nem kritikus
     }
-
-    const data = await res.json();
-    return NextResponse.json(data);
-  } catch (err) {
-    console.error("Voice agent proxy error:", err);
-    return NextResponse.json({ error: "Internal error" }, { status: 500 });
   }
+
+  // Gemini Live API config visszaadása a kliensnek
+  return NextResponse.json({
+    model: "gemini-3.1-flash-live-preview",
+    apiKey: GEMINI_API_KEY, // A kliens WebSocket-en használja — HTTPS-en megy
+    systemInstruction: SYSTEM_INSTRUCTION + knowledgeContext,
+    config: {
+      responseModalities: ["AUDIO"],
+      speechConfig: {
+        voiceConfig: {
+          prebuiltVoiceConfig: {
+            voiceName: "Aoede" // Természetes, barátságos hang
+          }
+        }
+      },
+      generationConfig: {
+        thinkingLevel: "low", // Gyors válaszok
+        temperature: 0.7,
+      }
+    }
+  });
 }

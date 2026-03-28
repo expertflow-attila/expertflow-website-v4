@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { trackCTAClick, trackContactForm, identifyUser } from "@/lib/analytics";
 
 /* ── IntersectionObserver hook ── */
@@ -22,13 +22,12 @@ function useInView(threshold = 0.15) {
   return { ref, visible };
 }
 
-function Section({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+function Section({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const { ref, visible } = useInView();
   return (
     <div
       ref={ref}
-      className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      className={`transition-opacity duration-300 ease-out ${visible ? "opacity-100" : "opacity-0"} ${className}`}
     >
       {children}
     </div>
@@ -79,8 +78,6 @@ export default function KapcsolatPage() {
             <h1 className="text-[clamp(2.5rem,6vw,4.5rem)] font-display leading-[1.05] tracking-tight max-w-[720px]">
               Beszéljünk a vállalkozásodról
             </h1>
-          </Section>
-          <Section delay={150}>
             <p className="text-lg text-muted-foreground mt-6 max-w-[620px] leading-relaxed">
               Ha érdekel a szolgáltatásom, vagy egyszerűen csak kérdésed van,
               keress bátran. A konzultáció ingyenes és kötelezettségmentes.
@@ -94,17 +91,17 @@ export default function KapcsolatPage() {
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {contactInfo.map((item, i) => (
-              <Section key={i} delay={i * 100}>
+              <Section key={i}>
                 <a
                   href={item.href}
                   target={item.href.startsWith("http") ? "_blank" : undefined}
                   rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="block p-8 rounded-lg border border-foreground/10 bg-card transition-all duration-300 hover:border-foreground/20 hover:shadow-lg hover-lift group"
+                  className="block p-8 rounded-lg border border-foreground/10 bg-card transition-all duration-200 ease-out hover:border-foreground/20 hover:shadow-lg group"
                 >
                   <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-3">{item.label}</p>
                   <p className="text-xl font-display tracking-tight flex items-center gap-2">
                     {item.value}
-                    <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                   </p>
                 </a>
               </Section>
@@ -113,13 +110,15 @@ export default function KapcsolatPage() {
         </div>
       </section>
 
+      <div className="divider-fade max-w-[1400px] mx-auto" />
+
       {/* ===== FORM + ATTILA ===== */}
-      <section className="py-24 lg:py-32 bg-secondary">
+      <section className="py-24 lg:py-32">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
             {/* Left — Form */}
             <Section>
-              <div>
+              <div className="glass-card rounded-2xl p-8 md:p-10">
                 <h2 className="text-[clamp(1.5rem,3vw,2rem)] font-display tracking-tight mb-8">Írj nekem</h2>
 
                 {submitted ? (
@@ -131,14 +130,14 @@ export default function KapcsolatPage() {
                     </p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                  <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                     <div>
                       <label htmlFor="contact-name" className="form-label">Név</label>
                       <input
                         id="contact-name"
                         type="text"
                         required
-                        className="form-input rounded-lg"
+                        className="form-input rounded-lg transition-all duration-200 ease-out focus:border-foreground focus:shadow-[0_0_0_3px_oklch(0.12_0.01_60/0.06)]"
                         placeholder="Teljes neved"
                         value={formState.name}
                         onChange={(e) => setFormState({ ...formState, name: e.target.value })}
@@ -150,7 +149,7 @@ export default function KapcsolatPage() {
                         id="contact-email"
                         type="email"
                         required
-                        className="form-input rounded-lg"
+                        className="form-input rounded-lg transition-all duration-200 ease-out focus:border-foreground focus:shadow-[0_0_0_3px_oklch(0.12_0.01_60/0.06)]"
                         placeholder="email@example.com"
                         value={formState.email}
                         onChange={(e) => setFormState({ ...formState, email: e.target.value })}
@@ -161,7 +160,7 @@ export default function KapcsolatPage() {
                       <textarea
                         id="contact-message"
                         required
-                        className="form-textarea rounded-lg"
+                        className="form-textarea rounded-lg transition-all duration-200 ease-out focus:border-foreground focus:shadow-[0_0_0_3px_oklch(0.12_0.01_60/0.06)]"
                         placeholder="Miben segíthetek?"
                         value={formState.message}
                         onChange={(e) => setFormState({ ...formState, message: e.target.value })}
@@ -169,7 +168,7 @@ export default function KapcsolatPage() {
                     </div>
                     <button
                       type="submit"
-                      className="mt-2 inline-flex items-center justify-center gap-2 bg-foreground text-background px-8 h-12 rounded-full text-sm hover:bg-foreground/90 transition-colors"
+                      className="btn-premium mt-2 inline-flex items-center justify-center gap-2 bg-foreground text-background px-8 h-12 rounded-full text-sm"
                     >
                       Üzenet küldése
                       <ArrowRight className="w-4 h-4" />
@@ -180,9 +179,9 @@ export default function KapcsolatPage() {
             </Section>
 
             {/* Right — Portrait + info */}
-            <Section delay={200}>
+            <Section>
               <div>
-                <div className="overflow-hidden rounded-lg mb-6">
+                <div className="img-zoom rounded-lg mb-6">
                   <Image
                     src="/images/attila.jpg"
                     alt="Nagy Attila"
@@ -202,6 +201,8 @@ export default function KapcsolatPage() {
         </div>
       </section>
 
+      <div className="divider-fade max-w-[1400px] mx-auto" />
+
       {/* ===== TIMELINE ===== */}
       <section className="py-24 lg:py-32">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -218,8 +219,8 @@ export default function KapcsolatPage() {
           <div className="relative pl-14">
             <div className="absolute top-0 bottom-0 left-[19px] w-px bg-foreground/10" />
 
-            {timeline.map((step, i) => (
-              <Section key={step.num} delay={i * 80}>
+            {timeline.map((step) => (
+              <Section key={step.num}>
                 <div className="relative pb-10">
                   <div className="absolute -left-14 top-1 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/10 bg-background">
                     <span className="font-mono text-xs font-semibold">{step.num}</span>
@@ -251,7 +252,7 @@ export default function KapcsolatPage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackCTAClick("kapcsolat_cta")}
-                className="mt-10 inline-flex items-center gap-2 border border-white/20 text-white px-8 h-12 rounded-full text-sm hover:bg-white/10 transition-colors"
+                className="btn-premium mt-10 inline-flex items-center gap-2 border border-white/20 text-white px-8 h-12 rounded-full text-sm"
               >
                 Konzultáció foglalás
                 <ArrowRight className="w-4 h-4" />

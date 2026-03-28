@@ -21,13 +21,12 @@ function useInView(threshold = 0.15) {
   return { ref, visible };
 }
 
-function Section({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+function Section({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const { ref, visible } = useInView();
   return (
     <div
       ref={ref}
-      className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      className={`transition-opacity duration-300 ease-out ${visible ? "opacity-100" : "opacity-0"} ${className}`}
     >
       {children}
     </div>
@@ -95,10 +94,8 @@ export default function RolamPage() {
               <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Rólam</span>
               <div className="flex-1 h-px bg-foreground/10" />
             </div>
-          </Section>
-          <Section delay={100}>
             <div className="flex flex-col items-center gap-12 md:flex-row md:items-start md:gap-16">
-              <div className="w-full shrink-0 md:w-[380px]">
+              <div className="img-zoom w-full shrink-0 md:w-[380px] rounded-lg">
                 <Image
                   src="/images/attila.jpg"
                   alt="Nagy Attila"
@@ -109,12 +106,13 @@ export default function RolamPage() {
                 />
               </div>
               <div className="flex flex-col justify-center">
+                <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">Nagy Attila</p>
                 <h1 className="text-[clamp(2rem,5vw,3.5rem)] font-display leading-[1.1] tracking-tight">
                   Bizalom, jelenlét,
                   <br />
                   felelősségvállalás
                 </h1>
-                <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+                <p className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-[480px]">
                   Vállalkozásépítés mint legerősebb eszköz a személyes fejlődéshez
                 </p>
               </div>
@@ -122,6 +120,8 @@ export default function RolamPage() {
           </Section>
         </div>
       </section>
+
+      <div className="divider-fade max-w-[1400px] mx-auto" />
 
       {/* ── FILOZÓFIÁM ── */}
       <section className="py-16 lg:py-24">
@@ -132,8 +132,6 @@ export default function RolamPage() {
               <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Filozófiám</span>
               <div className="flex-1 h-px bg-foreground/10" />
             </div>
-          </Section>
-          <Section delay={100}>
             <div className="mx-auto max-w-[720px] space-y-6 text-lg leading-relaxed">
               <p>
                 Sokáig azt hittem én is, hogy az AI majd mindent megold.
@@ -163,6 +161,8 @@ export default function RolamPage() {
         </div>
       </section>
 
+      <div className="divider-fade max-w-[1400px] mx-auto" />
+
       {/* ── TÖRTÉNETEM (Timeline) ── */}
       <section className="py-24 lg:py-32">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -184,8 +184,8 @@ export default function RolamPage() {
               <div className="absolute top-0 bottom-0 left-0 w-px bg-foreground/10" />
 
               <div className="space-y-16">
-                {timeline.map((item, i) => (
-                  <Section key={item.label} delay={i * 120}>
+                {timeline.map((item) => (
+                  <Section key={item.label}>
                     <div className="relative">
                       <div className="absolute -left-8 top-1.5 h-3 w-3 -translate-x-1/2 rounded-full border-2 border-foreground/20 bg-background" />
 
@@ -224,7 +224,7 @@ export default function RolamPage() {
               Egyéni vállalkozók
             </h2>
           </Section>
-          <Section delay={100}>
+          <Section>
             <div className="mx-auto max-w-[720px] space-y-6 text-lg opacity-90 leading-relaxed">
               <p>
                 Egyéni vállalkozóknak segítek, mert magam is az vagyok &ndash;
@@ -278,10 +278,10 @@ export default function RolamPage() {
           </Section>
 
           <div className="mt-12 mx-auto grid max-w-[940px] gap-6 md:grid-cols-2">
-            {qaItems.map((item, i) => (
-              <Section key={item.q} delay={i * 80}>
-                <div className="rounded-lg border border-foreground/10 bg-card p-8 hover-lift">
-                  <h3 className="text-base font-semibold">
+            {qaItems.map((item) => (
+              <Section key={item.q}>
+                <div className="rounded-lg border border-foreground/10 bg-card p-8 transition-shadow duration-200 ease-out hover:shadow-md">
+                  <h3 className="text-base font-semibold tracking-tight">
                     {item.q}
                   </h3>
                   <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
@@ -293,6 +293,8 @@ export default function RolamPage() {
           </div>
         </div>
       </section>
+
+      <div className="divider-fade max-w-[1400px] mx-auto" />
 
       {/* ── CTA ── */}
       <section className="py-32 lg:py-40">
@@ -310,7 +312,7 @@ export default function RolamPage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackCTAClick("rolam_cta")}
-                className="mt-10 inline-flex items-center gap-2 bg-foreground text-background px-8 h-12 rounded-full text-sm hover:bg-foreground/90 transition-colors"
+                className="btn-premium mt-10 inline-flex items-center gap-2 bg-foreground text-background px-8 h-12 rounded-full text-sm"
               >
                 Konzultáció
               </a>

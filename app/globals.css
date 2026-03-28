@@ -144,6 +144,12 @@
     transform: rotateY(360deg);
   }
 
+  /* Clip-mask word reveal */
+  @keyframes clip-reveal {
+    0% { clip-path: inset(0 100% 0 0); }
+    100% { clip-path: inset(0 0 0 0); }
+  }
+
   /* Character animation */
   .animate-char-in {
     animation: char-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -185,6 +191,154 @@
       linear-gradient(var(--background), var(--background)) padding-box,
       linear-gradient(135deg, var(--foreground) 25%, transparent 25%, transparent 50%, var(--foreground) 50%, var(--foreground) 75%, transparent 75%) border-box;
     background-size: 100% 100%, 8px 8px;
+  }
+
+  /* ── PREMIUM EFFECTS ── */
+
+  /* Subtle gradient shimmer on cards */
+  .shimmer-border {
+    position: relative;
+    overflow: hidden;
+  }
+  .shimmer-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid transparent;
+    border-radius: inherit;
+    background: linear-gradient(135deg, transparent, oklch(0.12 0.01 60 / 0.06), transparent) border-box;
+    mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    pointer-events: none;
+  }
+
+  /* Glass card effect */
+  .glass-card {
+    background: oklch(1 0 0 / 0.6);
+    backdrop-filter: blur(20px) saturate(1.2);
+    border: 1px solid oklch(0.88 0.01 90 / 0.5);
+    box-shadow:
+      0 1px 2px oklch(0.12 0.01 60 / 0.04),
+      0 4px 16px oklch(0.12 0.01 60 / 0.03),
+      inset 0 1px 0 oklch(1 0 0 / 0.4);
+  }
+
+  /* Premium section divider */
+  .divider-fade {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, oklch(0.12 0.01 60 / 0.1), transparent);
+  }
+
+  /* Smooth reveal with slight scale */
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal-up.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  /* Stagger children reveal */
+  .stagger-children > * {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .stagger-children.visible > *:nth-child(1) { transition-delay: 0ms; opacity: 1; transform: translateY(0); }
+  .stagger-children.visible > *:nth-child(2) { transition-delay: 80ms; opacity: 1; transform: translateY(0); }
+  .stagger-children.visible > *:nth-child(3) { transition-delay: 160ms; opacity: 1; transform: translateY(0); }
+  .stagger-children.visible > *:nth-child(4) { transition-delay: 240ms; opacity: 1; transform: translateY(0); }
+  .stagger-children.visible > *:nth-child(5) { transition-delay: 320ms; opacity: 1; transform: translateY(0); }
+  .stagger-children.visible > *:nth-child(6) { transition-delay: 400ms; opacity: 1; transform: translateY(0); }
+
+  /* Premium button with subtle gradient */
+  .btn-premium {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .btn-premium::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.08), transparent);
+    transition: left 0.6s ease;
+  }
+  .btn-premium:hover::after {
+    left: 100%;
+  }
+  .btn-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px oklch(0.12 0.01 60 / 0.12);
+  }
+
+  /* Smooth image zoom on hover */
+  .img-zoom {
+    overflow: hidden;
+  }
+  .img-zoom img {
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .img-zoom:hover img {
+    transform: scale(1.04);
+  }
+
+  /* Number counter reveal */
+  .counter-reveal {
+    display: inline-block;
+    overflow: hidden;
+  }
+  .counter-reveal span {
+    display: inline-block;
+    transform: translateY(100%);
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .counter-reveal.visible span {
+    transform: translateY(0);
+  }
+
+  /* Floating label animation */
+  .float-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+    animation: float-subtle 6s ease-in-out infinite;
+  }
+  @keyframes float-subtle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+
+  /* Voice widget animations */
+  @keyframes voice-breathe {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.12); }
+  }
+  @keyframes voice-pulse {
+    0%, 100% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.06); }
+  }
+
+  /* Grain texture (lighter, more premium) */
+  .grain {
+    position: relative;
+  }
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    opacity: 0.018;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    border-radius: inherit;
   }
 }
 
