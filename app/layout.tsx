@@ -60,11 +60,17 @@ export default function RootLayout({
     <html lang="hu" className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}>
       <body className="font-sans antialiased bg-background text-foreground">
         <PostHogProvider>
-          <Navigation />
-          <main>{children}</main>
-          <Footer />
+          <LayoutShell>{children}</LayoutShell>
         </PostHogProvider>
       </body>
     </html>
   );
 }
+
+/* Conditional nav/footer — kerdoiv oldal saját layoutot használ */
+function LayoutShell({ children }: { children: React.ReactNode }) {
+  return <LayoutShellClient>{children}</LayoutShellClient>;
+}
+
+import LayoutShellClient from "@/components/layout-shell";
+

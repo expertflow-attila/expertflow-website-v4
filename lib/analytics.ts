@@ -64,3 +64,30 @@ export function identifyUser(email: string, name?: string) {
     source: "expertflow-website",
   });
 }
+
+/* ── Quiz 2.0 Funnel Analytics ── */
+
+/** Quiz oldal megtekintés */
+export function trackQuizView() {
+  posthog.capture("quiz_page_viewed", { version: "2.0" });
+}
+
+/** Quiz beküldés */
+export function trackQuizSubmit(data: {
+  has_budget: boolean;
+  has_time: boolean;
+  profession: string;
+  how_found: string;
+}) {
+  posthog.capture("quiz_submitted", { version: "2.0", ...data });
+}
+
+/** Quiz sikeres beküldés → Cal.com redirect */
+export function trackQuizCompleted() {
+  posthog.capture("quiz_completed", { version: "2.0" });
+}
+
+/** Voice agent interakció */
+export function trackVoiceAgent(action: "started" | "ended", page: string) {
+  posthog.capture(`voice_agent_${action}`, { page });
+}
