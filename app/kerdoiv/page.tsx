@@ -207,7 +207,6 @@ export default function KerdoivPage() {
             </Link>
           </div>
         </div>
-        <ChatWidget />
 
         <style>{`
           @keyframes pulse-glow {
@@ -483,8 +482,7 @@ export default function KerdoivPage() {
         </div>
       </div>
 
-      {/* Chat Widget */}
-      <ChatWidget />
+      {/* Chat Widget eltávolítva — nem működik */}
     </div>
   );
 }

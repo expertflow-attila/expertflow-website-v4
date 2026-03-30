@@ -375,8 +375,7 @@ export default function AgenticStartPage() {
         </div>
       </footer>
 
-      {/* ── VOICE AGENT (kurzus specifikus) ── */}
-      <ChatWidget variant="main" />
+      {/* Voice agent eltávolítva — nem működik */}
     </div>
   );
 }
