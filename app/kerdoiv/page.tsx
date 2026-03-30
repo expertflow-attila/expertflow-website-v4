@@ -146,7 +146,7 @@ export default function KerdoivPage() {
             marginBottom: 16,
             letterSpacing: "-0.02em",
           }}>
-            Koszonom, {form.name}!
+            Köszönöm, {form.name}!
           </h1>
           <p style={{
             color: "#a0a0a0",
@@ -156,7 +156,7 @@ export default function KerdoivPage() {
             maxWidth: 400,
             margin: "0 auto",
           }}>
-            A valaszaid megérkeztek. Atiranyitalak az idopontfoglalashoz...
+            A válaszaid megérkeztek. Átirányítalak az időpontfoglaláshoz...
           </p>
 
           {/* Loading indicator */}
@@ -190,7 +190,7 @@ export default function KerdoivPage() {
               onMouseOver={(e) => { e.currentTarget.style.color = PURPLE_GLOW; }}
               onMouseOut={(e) => { e.currentTarget.style.color = "#707070"; }}
             >
-              vagy kattints ide a foglalashoz &rarr;
+              vagy kattints ide a foglaláshoz &rarr;
             </a>
           </div>
 
@@ -203,7 +203,7 @@ export default function KerdoivPage() {
               onMouseOver={(e) => { e.currentTarget.style.color = "#707070"; }}
               onMouseOut={(e) => { e.currentTarget.style.color = "#404040"; }}
             >
-              &larr; Vissza a fooldalra
+              &larr; Vissza a főoldalra
             </Link>
           </div>
         </div>
@@ -276,7 +276,7 @@ export default function KerdoivPage() {
             fontFamily: "Arial, Helvetica, sans-serif",
             letterSpacing: "-0.025em",
           }}>
-            Beszeljunk arrol, hogyan segithetek a vallalkozasodnak
+            Beszéljünk arról, hogyan segíthetek a vállalkozásodnak
           </h1>
           <p style={{
             color: "#808080",
@@ -285,8 +285,8 @@ export default function KerdoivPage() {
             maxWidth: 540,
             fontFamily: "Arial, Helvetica, sans-serif",
           }}>
-            Toltsd ki az alabbi kérdoivet, hogy felkeszulhessek a beszelgetesunkre.
-            Utana atiranyitalak a konzultacios idopont-foglalo feluletre.
+            Töltsd ki az alábbi kérdőívet, hogy felkészülhessek a beszélgetésünkre.
+            Utána átirányítalak a konzultációs időpont-foglaló felületre.
           </p>
         </div>
       </div>
@@ -369,7 +369,7 @@ export default function KerdoivPage() {
             color: "#404040",
             marginTop: 6,
           }}>
-            {progressPercent}% kesz
+            {progressPercent}% kész
           </p>
         </div>
       </div>
@@ -382,32 +382,32 @@ export default function KerdoivPage() {
       {/* Form */}
       <div className="py-12 px-6">
         <form onSubmit={handleSubmit} className="max-w-[560px] mx-auto flex flex-col" style={{ gap: 36 }}>
-          <Field label="neved *">
+          <Field label="Neved *">
             <TextInput value={form.name} onChange={(v) => updateField("name", v)} placeholder="Teljes neved" required />
           </Field>
-          <Field label="email *">
+          <Field label="Email *">
             <TextInput type="email" value={form.email} onChange={(v) => updateField("email", v)} placeholder="email@pelda.hu" required />
           </Field>
-          <Field label="vallalkozasod neve / weboldal">
-            <TextInput value={form.business_name} onChange={(v) => updateField("business_name", v)} placeholder="Pl. Pelda Kft. vagy pelda.hu" />
+          <Field label="Vállalkozásod neve / weboldal">
+            <TextInput value={form.business_name} onChange={(v) => updateField("business_name", v)} placeholder="Pl. Példa Kft. vagy pelda.hu" />
           </Field>
-          <Field label="mivel foglalkozol? *">
-            <TextInput value={form.profession} onChange={(v) => updateField("profession", v)} placeholder="Pl. penzugyi tanacsado, coach, ugyved..." required />
+          <Field label="Mivel foglalkozol? *">
+            <TextInput value={form.profession} onChange={(v) => updateField("profession", v)} placeholder="Pl. pénzügyi tanácsadó, coach, ügyvéd..." required />
           </Field>
-          <Field label="mi az a konkret problema, ami surget? *">
-            <TextArea value={form.problem} onChange={(v) => updateField("problem", v)} placeholder="Miben erzed, hogy elakadtal, vagy mit szeretnel maskent csinalni?" required />
+          <Field label="Mi az a konkrét probléma, ami sürget? *">
+            <TextArea value={form.problem} onChange={(v) => updateField("problem", v)} placeholder="Miben érzed, hogy elakadtál, vagy mit szeretnél másként csinálni?" required />
           </Field>
-          <Field label="mit probaltal eddig ennek megoldasara?">
-            <TextArea value={form.previous_attempts} onChange={(v) => updateField("previous_attempts", v)} placeholder="Milyen megoldasokat probaltal mar ki? (vagy meg semmit)" />
+          <Field label="Mit próbáltál eddig ennek megoldására?">
+            <TextArea value={form.previous_attempts} onChange={(v) => updateField("previous_attempts", v)} placeholder="Milyen megoldásokat próbáltál már ki? (vagy még semmit)" />
           </Field>
-          <Field label="mennyi idot tudsz erre szanni? *">
+          <Field label="Mennyi időt tudsz erre szánni? *">
             <OptionButtons options={timeOptions} selected={form.time_commitment} onSelect={(v) => updateField("time_commitment", v)} />
           </Field>
-          <Field label="mekkora kereted van erre? *">
+          <Field label="Mekkora kereted van erre? *">
             <OptionButtons options={budgetOptions} selected={form.budget} onSelect={(v) => updateField("budget", v)} />
           </Field>
-          <Field label="honnan hallottal rolam?">
-            <TextInput value={form.how_found} onChange={(v) => updateField("how_found", v)} placeholder="Pl. Google, ismeros ajanlasa, YouTube..." />
+          <Field label="Honnan hallottál rólam?">
+            <TextInput value={form.how_found} onChange={(v) => updateField("how_found", v)} placeholder="Pl. Google, ismerős ajánlása, YouTube..." />
           </Field>
 
           {error && (
@@ -445,7 +445,7 @@ export default function KerdoivPage() {
                 letterSpacing: "0.02em",
               }}
             >
-              {submitting ? "Kuldes..." : "Kerdoiv bekuldese"}
+              {submitting ? "Küldés..." : "Kérdőív beküldése"}
               {!submitting && (
                 <span className="inline-block ml-2 transition-transform duration-300 ease-out group-hover:translate-x-1">&rarr;</span>
               )}
@@ -457,7 +457,7 @@ export default function KerdoivPage() {
               color: "#353535",
               marginTop: 12,
             }}>
-              Az adataidat bizalmasan kezeljuk.
+              Az adataidat bizalmasan kezeljük.
             </p>
           </div>
         </form>
@@ -477,7 +477,7 @@ export default function KerdoivPage() {
               &larr; expertflow.hu
             </Link>
             <p style={{ color: "#353535", fontSize: 12, fontFamily: "Arial, Helvetica, sans-serif" }}>
-              Expert Flow &mdash; AI rendszerek szolgaltato vallalkozoknak
+              Expert Flow &mdash; AI rendszerek szolgáltató vállalkozóknak
             </p>
           </div>
         </div>
